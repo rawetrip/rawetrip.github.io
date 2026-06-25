@@ -6,8 +6,12 @@
 <script>(function(){var s=localStorage.getItem("theme");if(s!="dark")document.documentElement.className="light"})()</script>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>JBB FILM</title>
+<meta name="description" content="JBB FILM — 电影级视觉叙事与沉浸式创意表达的影视工作室。Cinematic creative studio focused on immersive storytelling.">
 
-<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -404,7 +408,7 @@ html.light button[type=submit],.light button[type=submit]{background:#111;color:
 
 <div class="logo">JBB FILM</div>
 
-<audio id="bgm" loop>
+<audio id="bgm" loop preload="none">
   <source src="audio/music.mp3" type="audio/mpeg">
 </audio>
 
@@ -517,7 +521,7 @@ document.write(`
 <div class="tooltip" id="team${i}_role"></div>
 <p class="member-desc" id="team${i}_desc"></p>
 </div>
-<img src="images/team${i}.jpg">
+<img src="images/team${i}.jpg" loading="lazy" decoding="async" width="180" height="260">
 </div>
 `);
 
@@ -535,12 +539,11 @@ document.write(`
 
 <div class="film-grid">
 
-<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film0.jpg"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film0_title"></p></div>
-<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film1.jpg"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film1_title"></p></div>
-<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film2.jpg"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film2_title"></p></div>
-<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film3.jpg"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film3_title"></p></div>
-<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film4.jpg"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film4_title"></p></div>
-<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film5.jpg"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film5_title"></p></div>
+<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film0.jpg" loading="lazy" decoding="async"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film0_title"></p></div>
+<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film1.jpg" loading="lazy" decoding="async"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film1_title"></p></div>
+<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film2.jpg" loading="lazy" decoding="async"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film2_title"></p></div>
+<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film3.jpg" loading="lazy" decoding="async"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film3_title"></p></div>
+<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film4.jpg" loading="lazy" decoding="async"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film4_title"></p></div>
 
 </div>
 
@@ -555,15 +558,15 @@ document.write(`
 <div class="location-wrap card">
 
 <div class="location-slide active">
-<img src="images/Chongqing.jpg">
+<img src="images/Chongqing.jpg" loading="lazy" decoding="async">
 </div>
 
 <div class="location-slide">
-<img src="images/Chongqing0.jpg">
+<img src="images/Chongqing0.jpg" loading="lazy" decoding="async">
 </div>
 
 <div class="location-slide">
-<img src="images/Chongqing1.jpg">
+<img src="images/Chongqing1.jpg" loading="lazy" decoding="async">
 </div>
 
 <div class="location-overlay"></div>
@@ -641,7 +644,7 @@ for(var i=0;i<s.length;i++){
   var name=s[i][0], src="images/sponsors/"+s[i][1]+"."+s[i][2], dark=s[i][3];
   var filt=dark?"brightness(0) invert(1)":"";
   h+='<div class="sp-card" style="border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:28px 16px;display:flex;align-items:center;justify-content:center;height:120px;transition:all .25s;position:relative;overflow:hidden;">';
-  h+='<img src="'+src+'" alt="'+name+'" style="max-width:85%;max-height:75px;filter:'+filt+';object-fit:contain;'+s[i][4]+'" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'block\'">';
+  h+='<img src="'+src+'" alt="'+name+'" loading="lazy" decoding="async" style="max-width:85%;max-height:75px;filter:'+filt+';object-fit:contain;'+s[i][4]+'" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'block\'">';
   h+='<span style="display:none;position:absolute;opacity:.4;font-size:13px;font-weight:700;color:#fff;text-align:center">'+name+'</span>';
   h+='</div>';
 }
@@ -693,7 +696,6 @@ film1_title:"阿鸡蒸转",
 film2_title:"绝命财神",
 film3_title:"教禽",
 film4_title:"奥本海富",
-film5_title:"点击输入文本",
 
 team0_role:"导演 / 编剧",
 team0_desc:"负责整体视觉与故事统筹，参与《世界大战1》《世界大战2》制作，基霸比影业创始人。",
@@ -743,7 +745,6 @@ film1_title:"阿雞蒸傳",
 film2_title:"絕命財神",
 film3_title:"教禽",
 film4_title:"奧本海富",
-film5_title:"点击输入文本",
 
 team0_role:"導演 / 編劇",
 team0_desc:"擅長營造視覺衝擊與情感張力，因《世界戰爭1》《世界戰爭2》而聞名，雞巴逼影業創始人，中國大陸最佳導演獎項。",
@@ -793,7 +794,6 @@ film1_title:"Forrest Cluck",
 film2_title:"Riching Bad",
 film3_title:"The Godchicken",
 film4_title:"Oppen Ricch",
-film5_title:"点击输入文本",
 
 team0_role:"Director/Screenwriter",
 team0_desc:"Responsible for the overall visual and story coordination, participated in the production of 'World War 1' and 'World War 2', and is the founder of Jibabi Films.",
@@ -844,7 +844,6 @@ film1_title:"フォレスト・コッコ",
 film2_title:"ブレイキング・リッチ",
 film3_title:"ゴッドチキン",
 film4_title:"オッペンリッチ",
-film5_title:"点击输入文本",
 
 team0_role:"監督・脚本家",
 team0_desc:"ビジュアルとストーリーの総合コーディネートを担当し、『ワールド・ウォー1』『ワールド・ウォー2』の製作に参加、ジバビ・フィルムズの創設者。",
@@ -895,7 +894,6 @@ film1_title:"Forrest Gockel",
 film2_title:"Breaking Cash",
 film3_title:"Der Geflügelpate",
 film4_title:"Oppenreicher",
-film5_title:"点击输入文本",
 
 team0_role:"Regisseur/Drehbuchautor",
 team0_desc:"Verantwortlich für die gesamte visuelle und Story-Koordination, war an der Produktion von „World War 1“ und „World War 2“ beteiligt und ist Gründer von Jibabi Films.",
@@ -946,7 +944,6 @@ film1_title:"Forrest Glousse",
 film2_title:"Breaking Fric",
 film3_title:"Le Poussin",
 film4_title:"Oppenriche",
-film5_title:"点击输入文本",
 
 team0_role:"Réalisateur/Scénariste",
 team0_desc:"Responsable de la coordination globale des visuels et de l'histoire, a participé à la production de 'World War 1' et 'World War 2' et est le fondateur de Jibabi Films.",
@@ -997,7 +994,6 @@ film1_title:"Форрест Кудах",
 film2_title:"Во все богатые",
 film3_title:"Крёстный птенец",
 film4_title:"Оппенрич",
-film5_title:"点击输入文本",
 
 team0_role:"Режиссер/Сценарист",
 team0_desc:"Отвечал за общую визуальную и сюжетную координацию, участвовал в производстве фильмов «Первая мировая война» и «Вторая мировая война», а также является основателем Jibabi Films.",
