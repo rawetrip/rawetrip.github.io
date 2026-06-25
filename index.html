@@ -7,6 +7,11 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>JBB FILM — 维鸡百科</title>
 <meta name="description" content="JBB FILM 影视工作室 · 维鸡百科，自由的鸡百科">
+<meta property="og:title" content="JBB FILM — 维鸡百科">
+<meta property="og:description" content="JBB FILM 影视工作室 · 自由的鸡百科">
+<meta property="og:image" content="https://jbbfilm.xyz/images/Team.png">
+<meta property="og:url" content="https://jbbfilm.xyz">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -17,6 +22,7 @@
 :root{--bg:#f6f6f6;--paper:#fff;--text:#202122;--text2:#54595d;--link:#0645ad;--link-hover:#447ff5;--border:#a2a9b1;--border-light:#eaecf0;--sidebar-bg:#f8f9fa;--header-bg:#fff;--infobox-bg:#f8f9fa;--infobox-header:#eaecf0;--toc-bg:#f8f9fa;--toc-border:#a2a9b1;--btn-bg:#f8f9fa}
 .dark{--bg:#101418;--paper:#1b1d21;--text:#d8d9da;--text2:#a2a4a6;--link:#6da3f5;--link-hover:#8cb8ff;--border:#54595d;--border-light:#2a2d31;--sidebar-bg:#1b1d21;--header-bg:#1b1d21;--infobox-bg:#1b1d21;--infobox-header:#2a2d31;--toc-bg:#1b1d21;--toc-border:#54595d;--btn-bg:#2a2d31}
 body{background:var(--bg);color:var(--text);font-family:"Noto Sans SC",sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
+html{scroll-behavior:smooth}
 a{color:var(--link);text-decoration:none}a:hover{color:var(--link-hover);text-decoration:underline}a:visited{color:#795cb2}.dark a:visited{color:#a78bdb}
 #topbar{position:sticky;top:0;z-index:999;background:var(--header-bg);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:8px 20px;gap:16px}
 #topbar .logo-area{display:flex;align-items:center;gap:8px;white-space:nowrap}
@@ -135,7 +141,7 @@ p{margin:8px 0}
 
 <div class="infobox">
 <div class="infobox-header">JBB FILM</div>
-<div class="infobox-image"><img src="images/Team.png" loading="lazy" decoding="async" alt="JBB FILM"><div class="caption">JBB FILM 工作室标识</div></div>
+<div class="infobox-image"><img src="images/Team.png" loading="lazy" decoding="async" alt="JBB FILM"><div class="caption" data-i18n="ib_caption"></div></div>
 <div class="infobox-row"><div class="infobox-label">类型</div><div class="infobox-value" data-i18n="ib_type"></div></div>
 <div class="infobox-row"><div class="infobox-label">创始人</div><div class="infobox-value">Anjiu Ovieo</div></div>
 <div class="infobox-row"><div class="infobox-label">总部</div><div class="infobox-value" data-i18n="ib_hq"></div></div>
@@ -163,7 +169,7 @@ p{margin:8px 0}
 <h2 class="mw-heading h2" id="team"><span data-i18n="team_title"></span><span class="edit-link"><a href="#">[编辑]</a></span></h2>
 <p data-i18n="team_subtitle"></p>
 <div style="overflow-x:auto"><table class="wikitable" id="teamTable"><thead><tr>
-<th data-i18n="team_col_name"></th><th data-i18n="team_col_role"></th><th data-i18n="team_col_desc"></th>
+<th data-i18n="team_col_photo"></th><th data-i18n="team_col_name"></th><th data-i18n="team_col_role"></th><th data-i18n="team_col_desc"></th>
 </tr></thead><tbody></tbody></table></div>
 
 <h2 class="mw-heading h2" id="films"><span data-i18n="films_title"></span><span class="edit-link"><a href="#">[编辑]</a></span></h2>
@@ -218,14 +224,14 @@ article_title:"JBB FILM",article_sub:"维鸡百科，自由的鸡百科",
 toc_title:"目录",
 about_title:"关于我们",about_text:"JBB FILM 是一家专注于电影级视觉叙事与沉浸式创意表达的影视工作室，由 Anjiu Ovieo 创立。工作室致力于以独特的视觉语言连接全球观众。",
 vision_title:"愿景",vision_text:"通过电影语言与未来视觉连接全球观众，打造具有影响力的影视作品。",
-team_title:"团队成员",team_subtitle:"JBB FILM 核心创作团队由以下 8 名成员组成，涵盖导演、编剧、摄影、声音设计等关键职位。",team_col_name:"姓名",team_col_role:"职位",team_col_desc:"简介",
+team_title:"团队成员",team_subtitle:"JBB FILM 核心创作团队由以下 8 名成员组成，涵盖导演、编剧、摄影、声音设计等关键职位。",team_col_photo:"头像",team_col_name:"姓名",team_col_role:"职位",team_col_desc:"简介",
 films_title:"代表作品",films_sub:"以下是 JBB FILM 的主要制作作品列表。",
 location_title:"公司位置",location_sub:"总部位于中国重庆市。",location_text:"JBB FILM 总部位于中国重庆市，专注于电影级视觉叙事与未来感影像表达。",
 contact_title:"联系我们",contact_sub:"如需合作或咨询，请通过此表单联系我们。",send_btn:"发送",
 placeholder_name:"姓名",placeholder_email:"邮箱",placeholder_message:"留言内容",
 sponsor_title:"赞助商",sponsor_sub:"特别鸣谢以下合作伙伴。",
 refs_title:"参考资料",disclaimer:"本页面由维鸡百科编辑者维护。内容遵循 CC BY-SA 协议。",
-ib_type:"影视工作室",ib_hq:"中国 重庆",
+ib_type:"影视工作室",ib_hq:"中国 重庆",ib_caption:"JBB FILM 工作室标识",
 team0_role:"导演 / 编剧",team0_desc:"负责整体视觉与故事统筹，参与《世界大战1》《世界大战2》制作，基霸比影业创始人。",
 team1_role:"声音设计师 / 后期音乐",team1_desc:"声音设计与后期混音，按导演要求完成音频处理，参与《世界大战1》《世界大战2》，参加说唱节目有相关经历。",
 team2_role:"剪辑师 / 编剧",team2_desc:"负责按导演节奏完成剪辑与素材整理，参与《韩骨的痛》后期制作，目前参与新项目剧本筹备。",
@@ -241,14 +247,14 @@ article_title:"JBB FILM",article_sub:"維雞百科，自由的雞百科",
 toc_title:"目錄",
 about_title:"關於我們",about_text:"JBB FILM 是一家專注於電影級視覺敘事與沉浸式創意表達的影視工作室，由 Anjiu Ovieo 創立。工作室致力於以獨特的視覺語言連接全球觀眾。",
 vision_title:"願景",vision_text:"用電影語言與未來視覺連結全球觀眾，打造具有影響力的影視作品。",
-team_title:"團隊成員",team_subtitle:"JBB FILM 核心創作團隊由以下成員組成。",team_col_name:"姓名",team_col_role:"職位",team_col_desc:"簡介",
+team_title:"團隊成員",team_subtitle:"JBB FILM 核心創作團隊由以下成員組成。",team_col_photo:"頭像",team_col_name:"姓名",team_col_role:"職位",team_col_desc:"簡介",
 films_title:"代表作品",films_sub:"以下是 JBB FILM 的主要製作作品列表。",
 location_title:"公司位置",location_sub:"總部位於中國重慶市。",location_text:"JBB FILM 總部位於中國重慶市，專注於電影級視覺敘事與未來感影像表達。",
 contact_title:"聯繫我們",contact_sub:"我們通常會在24-72小時內回覆。",send_btn:"發送",
 placeholder_name:"姓名",placeholder_email:"郵箱",placeholder_message:"留言內容",
 sponsor_title:"贊助商",sponsor_sub:"特別鳴謝以下合作夥伴。",
 refs_title:"參考資料",disclaimer:"本頁面由維雞百科編輯者維護。內容遵循 CC BY-SA 協議。",
-ib_type:"影視工作室",ib_hq:"中國 重慶",
+ib_type:"影視工作室",ib_hq:"中國 重慶",ib_caption:"JBB FILM 工作室標識",
 team0_role:"導演 / 編劇",team0_desc:"擅長營造視覺衝擊與情感張力，因《世界戰爭1》《世界戰爭2》而聞名，雞巴逼影業創始人，中國大陸最佳導演獎項。",
 team1_role:"聲音設計師 / 後期音樂",team1_desc:"不知名聲音設計與混音師，說唱界黑老大，曾客串《世界戰爭1》《世界戰爭2》，參加摸來摸去說唱節目屢屢獲獎。",
 team2_role:"剪輯師 / 編劇",team2_desc:"擁有超強的節奏掌控力，曾主力《韓骨舊事》後期處理，正在醞釀新的拍攝腳本，榮獲第91屆最佳剪刀手獎項。",
@@ -264,14 +270,14 @@ article_title:"JBB FILM",article_sub:"From Chickenpedia, the free chicken encycl
 toc_title:"Contents",
 about_title:"About",about_text:"JBB FILM is a cinematic creative studio focused on immersive visual storytelling, founded by Anjiu Ovieo. The studio is dedicated to connecting global audiences through unique visual language.",
 vision_title:"Vision",vision_text:"Connecting global audiences through cinematic language and futuristic visuals, creating impactful film and television works.",
-team_title:"Team Members",team_subtitle:"The core creative team of JBB FILM consists of the following members.",team_col_name:"Name",team_col_role:"Role",team_col_desc:"Description",
+team_title:"Team Members",team_subtitle:"The core creative team of JBB FILM consists of the following members.",team_col_photo:"Photo",team_col_name:"Name",team_col_role:"Role",team_col_desc:"Description",
 films_title:"Filmography",films_sub:"The following is a list of major productions by JBB FILM.",
 location_title:"Location",location_sub:"Headquartered in Chongqing, China.",location_text:"JBB FILM is headquartered in Chongqing, China.",
 contact_title:"Contact",contact_sub:"We usually reply within 24-72 hours.",send_btn:"Send",
 placeholder_name:"Name",placeholder_email:"Email",placeholder_message:"Message",
 sponsor_title:"Sponsors",sponsor_sub:"Proudly supported by the following partners.",
 refs_title:"References",disclaimer:"This page is maintained by Chickenpedia editors. Content is available under CC BY-SA.",
-ib_type:"Film Studio",ib_hq:"Chongqing, China",
+ib_type:"Film Studio",ib_hq:"Chongqing, China",ib_caption:"JBB FILM Studio Logo",
 team0_role:"Director / Screenwriter",team0_desc:"Responsible for overall visual and story coordination. Participated in 'World War 1' and 'World War 2' productions. Founder of Jibabi Films.",
 team1_role:"Sound Designer / Post Music",team1_desc:"Sound design and post-mixing. Participated in 'War of the Worlds 1' and 'War of the Worlds 2'.",
 team2_role:"Editor / Screenwriter",team2_desc:"Responsible for editing and material arrangement. Participated in post-production of 'The Pain in Korean Bones'.",
@@ -287,14 +293,14 @@ article_title:"JBB FILM",article_sub:"チキンペディア、自由な鶏の百
 toc_title:"目次",
 about_title:"概要",about_text:"JBB FILM は、映画級の映像表現と没入型の物語を追求するクリエイティブスタジオで、Anjiu Ovieo によって設立されました。独自の視覚言語で世界中の視聴者とつながります。",
 vision_title:"ビジョン",vision_text:"映画言語と未来的な映像で世界中の観客とつながり、影響力のある作品を生み出します。",
-team_title:"チームメンバー",team_subtitle:"JBB FILM のコアクリエイティブチームは以下のメンバーで構成されています。",team_col_name:"名前",team_col_role:"役職",team_col_desc:"概要",
+team_title:"チームメンバー",team_subtitle:"JBB FILM のコアクリエイティブチームは以下のメンバーで構成されています。",team_col_photo:"写真",team_col_name:"名前",team_col_role:"役職",team_col_desc:"概要",
 films_title:"作品一覧",films_sub:"以下は JBB FILM の主要作品です。",
 location_title:"所在地",location_sub:"中国・重慶市に本社を構えています。",location_text:"JBB FILM 本社は中国重慶市にあります。",
 contact_title:"連絡",contact_sub:"24〜72時間以内に返信します。",send_btn:"送信",
 placeholder_name:"名前",placeholder_email:"メール",placeholder_message:"メッセージ",
 sponsor_title:"スポンサー",sponsor_sub:"以下のパートナーに感謝します。",
 refs_title:"参考文献",disclaimer:"このページはチキンペディア編集者によって管理されています。CC BY-SA の下で利用可能です。",
-ib_type:"映画スタジオ",ib_hq:"中国 重慶",
+ib_type:"映画スタジオ",ib_hq:"中国 重慶",ib_caption:"JBB FILM スタジオロゴ",
 team0_role:"監督・脚本家",team0_desc:"ビジュアルとストーリーの総合コーディネートを担当。「ワールド・ウォー1」「ワールド・ウォー2」の製作に参加。ジバビ・フィルムズ創設者。",
 team1_role:"サウンドデザイナー/ポストミュージック",team1_desc:"サウンドデザインとポストミキシング。「宇宙戦争1」「宇宙戦争2」に参加。",
 team2_role:"編集者/脚本家",team2_desc:"監督のペースに合わせた編集と素材の手配。「朝鮮骨の痛み」のポストプロダクションに参加。",
@@ -310,14 +316,14 @@ article_title:"JBB FILM",article_sub:"Hühnerpedia, das freie Hühnerlexikon",
 toc_title:"Inhaltsverzeichnis",
 about_title:"Über uns",about_text:"JBB FILM ist ein kreatives Filmstudio mit Fokus auf immersive visuelle Erzählkunst, gegründet von Anjiu Ovieo. Das Studio verbindet globales Publikum durch einzigartige Bildsprache.",
 vision_title:"Vision",vision_text:"Globale Zuschauer durch Filmsprache und futuristische Bilder verbinden und wirkungsvolle Werke schaffen.",
-team_title:"Teammitglieder",team_subtitle:"Das Kernteam von JBB FILM besteht aus folgenden Mitgliedern.",team_col_name:"Name",team_col_role:"Rolle",team_col_desc:"Beschreibung",
+team_title:"Teammitglieder",team_subtitle:"Das Kernteam von JBB FILM besteht aus folgenden Mitgliedern.",team_col_photo:"Foto",team_col_name:"Name",team_col_role:"Rolle",team_col_desc:"Beschreibung",
 films_title:"Filmografie",films_sub:"Im Folgenden finden Sie eine Liste der wichtigsten Produktionen von JBB FILM.",
 location_title:"Standort",location_sub:"Hauptsitz in Chongqing, China.",location_text:"JBB FILM hat seinen Hauptsitz in Chongqing, China.",
 contact_title:"Kontakt",contact_sub:"Antwort innerhalb von 24-72 Stunden.",send_btn:"Senden",
 placeholder_name:"Name",placeholder_email:"E-Mail",placeholder_message:"Nachricht",
 sponsor_title:"Sponsoren",sponsor_sub:"Mit Stolz unterstützt von folgenden Partnern.",
 refs_title:"Referenzen",disclaimer:"Diese Seite wird von Hühnerpedia-Redakteuren gepflegt. Inhalt verfügbar unter CC BY-SA.",
-ib_type:"Filmstudio",ib_hq:"Chongqing, China",
+ib_type:"Filmstudio",ib_hq:"Chongqing, China",ib_caption:"JBB FILM Studio-Logo",
 team0_role:"Regisseur/Drehbuchautor",team0_desc:"Verantwortlich für visuelle und Story-Koordination. Beteiligt an 'World War 1' und 'World War 2'. Gründer von Jibabi Films.",
 team1_role:"Sounddesigner/Postmusik",team1_desc:"Sounddesign und Postmixing. Mitwirkung bei 'War of the Worlds 1' und 'War of the Worlds 2'.",
 team2_role:"Editor/Drehbuchautor",team2_desc:"Schnitt und Materialanordnung nach Tempo des Regisseurs. Postproduktion von 'The Pain in Korean Bones'.",
@@ -333,14 +339,14 @@ article_title:"JBB FILM",article_sub:"Poulopedia, l'encyclopédie libre du poule
 toc_title:"Sommaire",
 about_title:"À propos",about_text:"JBB FILM est un studio créatif spécialisé dans la narration visuelle immersive, fondé par Anjiu Ovieo. Le studio connecte le public mondial grâce à un langage visuel unique.",
 vision_title:"Vision",vision_text:"Connecter le public mondial grâce au langage cinématographique et aux visuels futuristes.",
-team_title:"Membres de l'équipe",team_subtitle:"L'équipe créative principale de JBB FILM est composée des membres suivants.",team_col_name:"Nom",team_col_role:"Rôle",team_col_desc:"Description",
+team_title:"Membres de l'équipe",team_subtitle:"L'équipe créative principale de JBB FILM est composée des membres suivants.",team_col_photo:"Photo",team_col_name:"Nom",team_col_role:"Rôle",team_col_desc:"Description",
 films_title:"Filmographie",films_sub:"Voici la liste des principales productions de JBB FILM.",
 location_title:"Adresse",location_sub:"Basé à Chongqing, Chine.",location_text:"Le siège de JBB FILM est à Chongqing, Chine.",
 contact_title:"Contact",contact_sub:"Réponse sous 24 à 72 heures.",send_btn:"Envoyer",
 placeholder_name:"Nom",placeholder_email:"Email",placeholder_message:"Message",
 sponsor_title:"Sponsors",sponsor_sub:"Fièrement soutenu par les partenaires suivants.",
 refs_title:"Références",disclaimer:"Cette page est maintenue par les éditeurs de Poulopedia. Contenu disponible sous CC BY-SA.",
-ib_type:"Studio de cinéma",ib_hq:"Chongqing, Chine",
+ib_type:"Studio de cinéma",ib_hq:"Chongqing, Chine",ib_caption:"Logo du studio JBB FILM",
 team0_role:"Réalisateur/Scénariste",team0_desc:"Coordination visuelle et narrative. Participation à 'World War 1' et 'World War 2'. Fondateur de Jibabi Films.",
 team1_role:"Concepteur sonore/Post-musique",team1_desc:"Conception sonore et post-mixage. Participation à 'La Guerre des Mondes 1' et 'La Guerre des Mondes 2'.",
 team2_role:"Monteur/Scénariste",team2_desc:"Montage et arrangement du matériel selon le rythme du réalisateur. Post-production de 'The Pain in Korean Bones'.",
@@ -356,14 +362,14 @@ article_title:"JBB FILM",article_sub:"Куропедия, свободная к�
 toc_title:"Содержание",
 about_title:"О нас",about_text:"JBB FILM — креативная киностудия с акцентом на иммерсивное визуальное повествование, основанная Anjiu Ovieo. Студия объединяет зрителей через уникальный визуальный язык.",
 vision_title:"Видение",vision_text:"Соединяем зрителей через язык кино и футуристические образы, создавая впечатляющие работы.",
-team_title:"Команда",team_subtitle:"Основная творческая команда JBB FILM состоит из следующих участников.",team_col_name:"Имя",team_col_role:"Роль",team_col_desc:"Описание",
+team_title:"Команда",team_subtitle:"Основная творческая команда JBB FILM состоит из следующих участников.",team_col_photo:"Фото",team_col_name:"Имя",team_col_role:"Роль",team_col_desc:"Описание",
 films_title:"Фильмография",films_sub:"Ниже представлен список основных работ JBB FILM.",
 location_title:"Адрес",location_sub:"Штаб-квартира находится в Чунцине, Китай.",location_text:"Штаб-квартира JBB FILM находится в Чунцине, Китай.",
 contact_title:"Контакты",contact_sub:"Ответ в течение 24-72 часов.",send_btn:"Отправить",
 placeholder_name:"Имя",placeholder_email:"Почта",placeholder_message:"Сообщение",
 sponsor_title:"Спонсоры",sponsor_sub:"При поддержке следующих партнёров.",
 refs_title:"Примечания",disclaimer:"Эта страница поддерживается редакторами Куропедии. Материалы доступны по лицензии CC BY-SA.",
-ib_type:"Киностудия",ib_hq:"Чунцин, Китай",
+ib_type:"Киностудия",ib_hq:"Чунцин, Китай",ib_caption:"Логотип JBB FILM",
 team0_role:"Режиссёр/Сценарист",team0_desc:"Общая визуальная и сюжетная координация. Участвовал в производстве «Первая мировая война» и «Вторая мировая война». Основатель Jibabi Films.",
 team1_role:"Звукорежиссёр/Пост-музыка",team1_desc:"Звуковое оформление и пост-микширование. Участвовал в «Войне миров 1» и «Войне миров 2».",
 team2_role:"Редактор/Сценарист",team2_desc:"Монтаж и аранжировка материала. Постпродакшен «Боли в корейских костях».",
@@ -414,6 +420,7 @@ var key=el.dataset.i18nPlaceholder;
 if(d[key]) el.placeholder=d[key];
 });
 document.querySelectorAll('#sidebar a').forEach(function(a){a.classList.remove('active')});
+var langLink=document.querySelector("#sidebar a[onclick=\"setLang('"+lang+"')\"]");if(langLink)langLink.classList.add("active");
 renderTeamTable(lang);
 renderFilmGallery(lang);
 renderSponsors();
@@ -424,7 +431,7 @@ var d=T[lang];
 var tbody=document.querySelector('#teamTable tbody');
 var h='';
 for(var i=0;i<8;i++){
-h+='<tr><td><b>'+teamNames[i]+'</b></td><td>'+d['team'+i+'_role']+'</td><td>'+d['team'+i+'_desc']+'</td></tr>';
+h+='<tr><td style="text-align:center;width:96px"><img src="images/Mate'+i+'.jpg" loading="lazy" decoding="async" style="width:64px;height:64px;object-fit:cover;border-radius:50%;display:block;margin:0 auto 4px" alt=""><b>'+teamNames[i]+'</b></td><td>'+d['team'+i+'_role']+'</td><td>'+d['team'+i+'_desc']+'</td></tr>';
 }
 tbody.innerHTML=h;
 }
