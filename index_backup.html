@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){var s=localStorage.getItem("theme");if(s!="dark")document.documentElement.className="light"})()</script>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>JBB FILM</title>
+<meta name="description" content="JBB FILM — 电影级视觉叙事与沉浸式创意表达的影视工作室。Cinematic creative studio focused on immersive storytelling.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Inter,sans-serif;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+overflow-x:hidden;
+background:
+radial-gradient(circle at 20% 20%, #ff2bd620, transparent 40%),
+radial-gradient(circle at 80% 30%, #00d4ff15, transparent 45%),
+radial-gradient(circle at 50% 80%, #7c3aed15, transparent 50%),
+#050505;
+color:white;
+}
+
+header{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+z-index:999;
+background:rgba(0,0,0,.35);
+backdrop-filter:blur(18px);
+border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.nav-inner{
+max-width:1400px;
+margin:auto;
+padding:22px 30px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+
+.logo{
+font-size:22px;
+font-weight:900;
+letter-spacing:.35em;
+}
+
+nav{
+display:flex;
+gap:26px;
+}
+
+nav a{
+text-decoration:none;
+color:rgba(255,255,255,.7);
+font-size:14px;
+transition:.3s;
+}
+
+nav a:hover{
+color:white;
+}
+
+.lang-box{
+position:relative;
+}
+
+.lang-btn{
+width:46px;
+height:46px;
+border-radius:14px;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.08);
+}
+
+.lang-list{
+position:absolute;
+top:60px;
+right:0;
+width:220px;
+border-radius:20px;
+overflow:hidden;
+background:rgba(0,0,0,.95);
+border:1px solid rgba(255,255,255,.08);
+display:none;
+backdrop-filter:blur(20px);
+}
+
+.lang-list div{
+padding:14px 18px;
+cursor:pointer;
+transition:.3s;
+}
+
+.lang-list div:hover{
+background:rgba(255,255,255,.08);
+}
+
+section{
+padding:120px 24px;
+}
+
+.hero{
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+}
+
+.hero h1{
+font-size:110px;
+font-weight:900;
+}
+
+.hero p{
+margin-top:22px;
+font-size:18px;
+color:rgba(255,255,255,.68);
+}
+
+.title{
+font-size:56px;
+font-weight:900;
+text-align:center;
+}
+
+.sub{
+max-width:1000px;
+margin:24px auto;
+text-align:center;
+line-height:1.9;
+color:rgba(255,255,255,.72);
+}
+
+.card{
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+border-radius:30px;
+backdrop-filter:blur(24px);
+overflow:hidden;
+transition:.45s;
+}
+
+.card:hover{
+transform:translateY(-10px) scale(1.02);
+}
+
+.team-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:28px;
+max-width:1400px;
+margin:70px auto 0;
+}
+
+.team-card{
+display:flex;
+gap:26px;
+padding:28px;
+position:relative;
+min-height:260px;
+}
+
+.team-card img{
+width:180px;
+height:100%;
+object-fit:cover;
+border-radius:24px;
+}
+
+.tooltip{
+display:inline-block;
+margin-top:4px;
+padding:8px 14px;
+font-size:12px;
+border-radius:999px;
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.1);
+}
+
+.member-name{
+font-size:32px;
+font-weight:800;
+}
+
+.member-desc{
+margin-top:18px;
+line-height:1.9;
+color:rgba(255,255,255,.72);
+}
+
+.film-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:26px;
+max-width:1400px;
+margin:70px auto 0;
+}
+
+.film-grid img{
+width:100%;
+height:280px;
+object-fit:cover;
+}
+
+.location-wrap{
+position:relative;
+height:560px;
+overflow:hidden;
+border-radius:34px;
+max-width:1400px;
+margin:70px auto 0;
+}
+
+.location-slide{
+position:absolute;
+inset:0;
+opacity:0;
+transition:opacity 1.8s ease;
+}
+
+.location-slide.active{
+opacity:1;
+}
+
+.location-slide img{
+width:100%;
+height:100%;
+object-fit:cover;
+animation:zoom 7s linear forwards;
+}
+
+@keyframes zoom{
+from{transform:scale(1);}
+to{transform:scale(1.12);}
+}
+
+.location-overlay{
+position:absolute;
+inset:0;
+background:
+linear-gradient(to top, rgba(0,0,0,.72), rgba(0,0,0,.12)),
+linear-gradient(to right, rgba(0,0,0,.5), transparent 60%);
+z-index:2;
+}
+
+.location-info{
+position:absolute;
+left:60px;
+bottom:60px;
+z-index:3;
+max-width:760px;
+}
+
+.location-tag{
+display:inline-block;
+padding:8px 16px;
+border-radius:999px;
+background:rgba(255,255,255,.12);
+border:1px solid rgba(255,255,255,.14);
+margin-bottom:20px;
+font-size:13px;
+letter-spacing:.2em;
+}
+
+.location-info h3{
+font-size:74px;
+font-weight:900;
+line-height:1;
+}
+
+.location-info p{
+margin-top:22px;
+line-height:1.9;
+color:rgba(255,255,255,.72);
+}
+
+.contact-wrap{
+max-width:900px;
+margin:70px auto 0;
+}
+
+.contact-wrap input,
+.contact-wrap textarea{
+width:100%;
+padding:18px;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+border-radius:18px;
+margin-bottom:18px;
+color:white;
+outline:none;
+}
+
+.contact-wrap textarea{
+min-height:180px;
+resize:none;
+}
+
+.contact-wrap button{
+width:100%;
+padding:18px;
+border:none;
+border-radius:18px;
+background:white;
+color:black;
+font-weight:800;
+cursor:pointer;
+transition:.3s;
+}
+
+@media(max-width:900px){
+
+.hero h1{
+font-size:68px;
+}
+
+nav{
+display:none;
+}
+
+.team-grid{
+grid-template-columns:1fr;
+}
+
+.film-grid{
+grid-template-columns:1fr;
+}
+
+.location-info{
+left:30px;
+right:30px;
+bottom:40px;
+}
+
+.location-info h3{
+font-size:42px;
+}
+
+}
+
+/* ── 白天模式 ── */
+body,header,nav a,.card,.sp-card,.lang-btn,.lang-list,.tooltip,input,textarea,button,.title,.sub,.member-desc,.hero p,.location-overlay,.location-tag,.location-info h3,.location-info p{transition:all .5s ease}
+.light body,html.light body{background:#f4f4f5;color:#111}
+html.light header,.light header{background:rgba(255,255,255,.82);border-bottom:1px solid rgba(0,0,0,.06)}
+html.light nav a,.light nav a{color:rgba(0,0,0,.65)}html.light nav a:hover,.light nav a:hover{color:#000}
+html.light .hero p,.light .hero p{color:rgba(0,0,0,.55)}
+html.light .title,.light .title{color:#111}
+html.light .sub,.light .sub{color:rgba(0,0,0,.58)}
+html.light .card,.light .card{background:#fff;border:1px solid rgba(0,0,0,.08)}
+html.light .card:hover,.light .card:hover{box-shadow:0 12px 40px rgba(0,0,0,.08)}
+html.light .lang-btn,.light .lang-btn{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.1);color:#333}
+html.light .lang-list,.light .lang-list{background:rgba(255,255,255,.96);border-color:rgba(0,0,0,.08)}
+html.light .lang-list div:hover,.light .lang-list div:hover{background:rgba(0,0,0,.04)}
+html.light .member-desc,.html.light section p,.light .member-desc,.light section p{color:rgba(0,0,0,.6)}
+html.light .tooltip,.light .tooltip{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.1);color:#333}
+html.light .location-overlay,.light .location-overlay{background:none}
+html.light .location-tag,.light .location-tag{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.1);color:#333}
+html.light .location-info h3,.html.light .location-info p,.light .location-info h3,.light .location-info p{color:#111}
+html.light .sp-card,.light .sp-card{background:#e8e8ea;border-color:rgba(0,0,0,.1)}
+html.light .sp-card:hover,.light .sp-card:hover{background:#ddd}
+html.light input,.html.light textarea,.light input,.light textarea{background:#fff;border:1px solid rgba(0,0,0,.15);color:#111}
+html.light input::placeholder,.html.light textarea::placeholder,.light input::placeholder,.light textarea::placeholder{color:rgba(0,0,0,.35)}
+html.light button[type=submit],.light button[type=submit]{background:#111;color:#fff}
+
+
+/* ── 视频弹窗 ── */
+.video-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:99999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s}
+.video-overlay.active{opacity:1;pointer-events:auto}
+.video-overlay video{max-width:95vw;max-height:90vh;border-radius:12px}
+.video-close{position:absolute;top:28px;right:32px;font-size:36px;color:white;cursor:pointer;z-index:100000;background:none;border:none;opacity:.7;transition:.3s}
+.video-close:hover{opacity:1;transform:scale(1.15)}
+.sp-card{background:#1a1a1a}.sp-card:hover{background:#222}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="nav-inner">
+
+<div class="logo">JBB FILM</div>
+
+<audio id="bgm" loop preload="none">
+  <source src="audio/music.mp3" type="audio/mpeg">
+</audio>
+
+<button id="musicBtn" onclick="toggleMusic()" style="
+position:fixed;
+bottom:20px;
+right:20px;
+z-index:9999;
+padding:12px 16px;
+border-radius:12px;
+background:white;
+color:black;
+font-weight:800;
+border:none;
+cursor:pointer;
+">💿 Music Off</button>
+<nav>
+
+<a href="#home" data-i18n="nav_home"></a>
+<a href="#about" data-i18n="nav_about"></a>
+<a href="#vision" data-i18n="nav_vision"></a>
+<a href="#team" data-i18n="nav_team"></a>
+<a href="#films" data-i18n="nav_films"></a>
+<a href="#location" data-i18n="nav_location"></a>
+<a href="#contact" data-i18n="nav_contact"></a>
+
+</nav>
+
+<div style="display:flex;gap:10px;align-items:center;">
+
+<div class="lang-btn" onclick="toggleTheme()" style="font-size:20px;" title="切换白天/黑夜">☀️</div>
+
+<div class="lang-box">
+
+<div class="lang-btn" onclick="toggleLang()">🌍</div>
+
+<div class="lang-list" id="langList">
+
+<div onclick="setLang('zh')">🇨🇳 简体中文</div>
+<div onclick="setLang('tw')">🇹🇼 繁體中文</div>
+<div onclick="setLang('en')">🇺🇸 English</div>
+<div onclick="setLang('ja')">🇯🇵 日本語</div>
+<div onclick="setLang('de')">🇩🇪 Deutsch</div>
+<div onclick="setLang('fr')">🇫🇷 Français</div>
+<div onclick="setLang('ru')">🇷🇺 Русский</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+<section class="hero" id="home">
+
+<div>
+
+<h1>JBB FILM</h1>
+
+<p data-i18n="hero_sub"></p>
+
+</div>
+
+</section>
+
+<section id="about">
+
+<h2 class="title" data-i18n="about_title"></h2>
+
+<p class="sub" data-i18n="about_text"></p>
+
+</section>
+
+<section id="vision">
+
+<h2 class="title" data-i18n="vision_title"></h2>
+
+<p class="sub" data-i18n="vision_text"></p>
+
+</section>
+
+<section id="team">
+
+<h2 class="title" data-i18n="team_title"></h2>
+
+<div class="team-grid">
+
+<script>
+
+const teamNames=[
+"Anjiu Ovieo",
+"MAKESADE",
+"楠呱",
+"韩·士承",
+"R4nd0m",
+"Xone",
+"AsakuraKaren",
+"mA0rich"
+];
+
+for(let i=0;i<8;i++){
+
+document.write(`
+<div class="card team-card">
+<div style="flex:1">
+<h3 class="member-name">${teamNames[i]}</h3>
+<div class="tooltip" id="team${i}_role"></div>
+<p class="member-desc" id="team${i}_desc"></p>
+</div>
+<img src="images/Mate${i}.jpg" loading="lazy" decoding="async" width="180" height="260">
+</div>
+`);
+
+}
+
+</script>
+
+</div>
+
+</section>
+
+<section id="films">
+
+<h2 class="title" data-i18n="films_title"></h2>
+
+<div class="film-grid">
+
+<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film0.jpg" loading="lazy" decoding="async"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film0_title"></p></div>
+<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film1.jpg" loading="lazy" decoding="async"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film1_title"></p></div>
+<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film2.jpg" loading="lazy" decoding="async"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film2_title"></p></div>
+<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film3.jpg" loading="lazy" decoding="async"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film3_title"></p></div>
+<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film4.jpg" loading="lazy" decoding="async"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film4_title"></p></div>
+<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film5.jpg" loading="lazy" decoding="async"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film5_title"></p></div>
+
+</div>
+
+</section>
+
+<section id="location">
+
+<h2 class="title" data-i18n="location_title"></h2>
+
+<p class="sub" data-i18n="location_sub"></p>
+
+<div class="location-wrap card">
+
+<div class="location-slide active">
+<img src="images/Chongqing.jpg" loading="lazy" decoding="async">
+</div>
+
+<div class="location-slide">
+<img src="images/Chongqing0.jpg" loading="lazy" decoding="async">
+</div>
+
+<div class="location-slide">
+<img src="images/Chongqing1.jpg" loading="lazy" decoding="async">
+</div>
+
+<div class="location-overlay"></div>
+
+<div class="location-info">
+
+<div class="location-tag">
+JBB FILM STUDIO
+</div>
+
+<h3>CHONGQING · CHINA</h3>
+
+<p data-i18n="location_text"></p>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="contact">
+
+<h2 class="title" data-i18n="contact_title"></h2>
+
+<p class="sub" data-i18n="contact_sub"></p>
+
+<div class="contact-wrap">
+
+<input id="contact-name">
+
+<input id="contact-email">
+
+<textarea id="contact-message"></textarea>
+
+<button id="send-btn" onclick="sendMail()" data-i18n="send_btn"></button>
+
+</div>
+
+</section>
+
+<section id="sponsors" style="padding:80px 28px;text-align:center;">
+<h2 style="font-size:56px;font-weight:900;text-transform:uppercase;" data-i18n="sponsor_title"></h2>
+<p style="font-size:18px;opacity:.6;margin-bottom:60px;" data-i18n="sponsor_sub"></p>
+<div id="sponsor-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1200px;margin:0 auto;"></div>
+</section>
+
+<script>
+(function(){
+var g=document.getElementById("sponsor-grid");
+if(!g) return;
+var s=[
+ ["Los Pollos Hermanos","lpollos","png",0,"transform:scale(1.125)"],
+ ["HHM","hhm","png",0,"transform:scale(1.5)"],
+ ["JMM","jmm","png",0,"transform:scale(1.5)"],
+ ["Vought International","vought","png",0,"transform:scale(1.5)"],
+ ["Los Santos Customs","lsc","webp",0,""],
+ ["Black Mesa","blackmesa","svg",1,""],
+ ["Aperture Science","aperture","webp",0,""],
+ ["Arasaka Corporation","arasaka","webp",0,"transform:scale(1.75)"],
+ ["Stark Industries","stark","png",1,""],
+ ["Merryweather Security","merryweather","webp",0,""],
+ ["LSPD","lspd","webp",0,""],
+ ["NERV","nerv","png",0,""],
+ ["HAVVK","havvk","webp",1,"transform:scale(1.5)"],
+ ["Kiroshi Optics","kiroshi","png",0,""],
+ ["Trauma Team","trauma","png",0,"margin-left:-5px"],
+ ["Militech","militech","webp",1,""],
+ ["Hammond Robotics","hammond","webp",1,"margin-left:95px;transform:scale(1.3125)"],
+ ["ATLAS","atlas","webp",0,""],
+ ["Vault-Tec","vaulttec","png",1,""],
+ ["Umbrella Corp","umbrella","webp",0,""]
+];
+var h="";
+for(var i=0;i<s.length;i++){
+  var name=s[i][0], src="images/sponsors/"+s[i][1]+"."+s[i][2], dark=s[i][3];
+  var filt=dark?"brightness(0) invert(1)":"";
+  h+='<div class="sp-card" style="border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:28px 16px;display:flex;align-items:center;justify-content:center;height:120px;transition:all .25s;position:relative;overflow:hidden;">';
+  h+='<img src="'+src+'" alt="'+name+'" loading="lazy" decoding="async" style="max-width:85%;max-height:75px;filter:'+filt+';object-fit:contain;'+s[i][4]+'" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'block\'">';
+  h+='<span style="display:none;position:absolute;opacity:.4;font-size:13px;font-weight:700;color:#fff;text-align:center">'+name+'</span>';
+  h+='</div>';
+}
+g.innerHTML=h;
+var cards=document.querySelectorAll('.sp-card');
+for(var j=0;j<cards.length;j++){
+  cards[j].onmouseenter=function(){this.style.transform='translateY(-3px)';this.style.borderColor='rgba(255,255,255,.2)'};
+  cards[j].onmouseleave=function(){this.style.transform='';this.style.borderColor='rgba(255,255,255,.08)'};
+}
+})();
+</script>
+
+<script>
+
+emailjs.init("mZol6Oi89wUCLMtkw");
+
+let currentLang='zh';
+
+const translations={
+
+zh:{
+nav_home:"首页",
+nav_about:"关于",
+nav_vision:"愿景",
+nav_team:"团队",
+nav_films:"代表作品",
+nav_location:"位置",
+nav_contact:"联系",
+hero_sub:"基霸比影业 · 电影级体验",
+about_title:"关于我们",
+about_text:"JBB FILM 是一家专注于电影级视觉叙事与沉浸式创意表达的影视工作室。",
+vision_title:"愿景",
+vision_text:"通过电影语言与未来视觉连接全球观众。",
+team_title:"团队",
+films_title:"代表作品",
+location_title:"公司地址",
+location_sub:"总部位于中国重庆市",
+location_text:"JBB FILM 总部位于中国重庆市，专注于电影级视觉叙事与未来感影像表达。",
+contact_title:"联系",
+contact_sub:"我们通常会在24-99999小时内回复。",
+send_btn:"发送",
+placeholder_name:"姓名",
+placeholder_email:"邮箱",
+placeholder_message:"留言内容",
+sponsor_title:"赞助商",
+sponsor_sub:"特别鸣谢以下合作伙伴",
+film0_title:"鸡皮书",
+film1_title:"阿鸡蒸转",
+film2_title:"绝命财神",
+film3_title:"教禽",
+film4_title:"奥本海富",
+film5_title:"点击输入文本",
+
+team0_role:"导演 / 编剧",
+team0_desc:"负责整体视觉与故事统筹，参与《世界大战1》《世界大战2》制作，基霸比影业创始人。",
+team1_role:"声音设计师 / 后期音乐",
+team1_desc:"声音设计与后期混音，按导演要求完成音频处理，参与《世界大战1》《世界大战2》，参加说唱节目有相关经历。",
+team2_role:"剪辑师 / 编剧",
+team2_desc:"负责按导演节奏完成剪辑与素材整理，参与《韩骨的痛》后期制作，目前参与新项目剧本筹备。",
+team3_role:"编剧 / 主演",
+team3_desc:"负责配合剧本执行与拍摄工作，也参与《韩骨的痛》主演，客串《世界大战2》，在相关作品中有出演经历。",
+team4_role:"视觉概念",
+team4_desc:"负责视觉概念设计与素材整理，按导演要求提供画面参考，曾参与肥腻莫属节目相关制作。",
+team5_role:"艺术指导",
+team5_desc:"负责现场美术设计与场景搭建，按整体方案完成布置，参与日本相关项目执行工作。",
+team6_role:"制片人",
+team6_desc:"负责项目流程统筹、现场协调及物资管理，按导演安排推进制作，在假人慢打节目中参与现场工作。",
+team7_role:"摄影指导 / 剪辑指导",
+team7_desc:"负责摄影与后期剪辑基础工作，按导演要求完成镜头执行与素材整理，参与相关影视与节目制作。"},
+
+tw:{
+nav_home:"家",
+nav_about:"關於",
+nav_vision:"願望",
+nav_team:"團隊主力成員",
+nav_films:"代表作",
+nav_location:"企業地點",
+nav_contact:"聯絡我們",
+hero_sub:"雞巴逼影業 · 一泡尿360度的體驗",
+about_title:"關於我們",
+about_text:"JBB FILM 是一家專注於成人級視覺敘事的影片工作室。",
+vision_title:"願望",
+vision_text:"用影片語言連結全地球觀眾。",
+team_title:"團隊主力成員",
+films_title:"代表作",
+location_title:"企業地點",
+location_sub:"總統府位於大陸重慶市",
+location_text:"JBB FILM 總統府位於大陸重慶市。",
+contact_title:"聯絡我們",
+contact_sub:"通常都會回復個雞巴，回復了就燒高香吧。",
+send_btn:"發送訊息",
+placeholder_name:"身份證",
+placeholder_email:"郵箱地址",
+placeholder_message:"訊息文本",
+sponsor_title:"贊助商",
+sponsor_sub:"特別鳴謝以下合作夥伴",
+film0_title:"雞皮書",
+film1_title:"阿雞蒸傳",
+film2_title:"絕命財神",
+film3_title:"教禽",
+film4_title:"奧本海富",
+film5_title:"点击输入文本",
+
+team0_role:"導演 / 編劇",
+team0_desc:"擅長營造視覺衝擊與情感張力，因《世界戰爭1》《世界戰爭2》而聞名，雞巴逼影業創始人，中國大陸最佳導演獎項。",
+team1_role:"聲音設計師 / 後期音樂",
+team1_desc:"不知名聲音設計與混音師，說唱界黑老大，曾客串《世界戰爭1》《世界戰爭2》，參加摸來摸去說唱節目屢屢獲獎。",
+team2_role:"剪輯師 / 編劇",
+team2_desc:"擁有超強的節奏掌控力，曾主力《韓骨舊事》後期處理，正在醞釀新的拍攝腳本，榮獲第91屆最佳剪刀手獎項。",
+team3_role:"編劇 / 主演",
+team3_desc:"以創意敘事風格聞名，也曾主演《韓骨舊事》，客串《世界戰爭2》，從而一炮而紅，拿下第67屆雞斯卡最佳男主角。",
+team4_role:"視覺概念",
+team4_desc:"精通電影視覺概念設計，以張力為根本，曾在肥膩莫屬節目上閃瞎近500名觀眾而獲得閃的就是你獎項。",
+team5_role:"藝術指導",
+team5_desc:"打造震撼沉浸式場景，曾在日本榮獲最會搞顏色亞洲區冠軍獎項，一百趴的不是色盲，不然藝術指導個雞巴。",
+team6_role:"製片人",
+team6_desc:"負責整個專案的流程統籌，片場盒飯和道具採購，帶動成員氣氛，在假人慢打節目把評委快打成真人而聞名世界。",
+team7_role:"攝影指導/剪輯指導",
+team7_desc:"全地球最富有，精通各式攝像，喜劇拍攝必不可缺的笑點解析，第78屆搞笑諾貝爾獎，第91屆最佳剪刀手獎獲得者。"},
+
+en:{
+nav_home:"Home",
+nav_about:"About",
+nav_vision:"Vision",
+nav_team:"Team",
+nav_films:"Films",
+nav_location:"Location",
+nav_contact:"Contact",
+hero_sub:"JBB FILM · Cinematic Experience",
+about_title:"About",
+about_text:"JBB FILM is a cinematic creative studio focused on immersive storytelling.",
+vision_title:"Vision",
+vision_text:"Connecting global audiences through cinematic storytelling.",
+team_title:"Team",
+films_title:"Films",
+location_title:"Location",
+location_sub:"Headquartered in Chongqing, China",
+location_text:"JBB FILM is headquartered in Chongqing, China.",
+contact_title:"Contact",
+contact_sub:"We usually reply within 24–72 hours.",
+send_btn:"Send",
+placeholder_name:"Name",
+placeholder_email:"Email",
+placeholder_message:"Message",
+sponsor_title:"SPONSORS",
+sponsor_sub:"Proudly supported by",
+film0_title:"The Chicken Book",
+film1_title:"Forrest Cluck",
+film2_title:"Riching Bad",
+film3_title:"The Godchicken",
+film4_title:"Oppen Ricch",
+film5_title:"Coming Soon",
+
+team0_role:"Director/Screenwriter",
+team0_desc:"Responsible for the overall visual and story coordination, participated in the production of 'World War 1' and 'World War 2', and is the founder of Jibabi Films.",
+team1_role:"Sound Designer/Post Music",
+team1_desc:"Sound design and post-mixing, complete audio processing according to the director's requirements, participated in 'War of the Worlds 1' and 'War of the Worlds 2', and has relevant experience in participating in rap shows.",
+team2_role:"Editor/Screenwriter",
+team2_desc:"Responsible for completing editing and material arrangement according to the director's pace, participating in the post-production of 'The Pain in Korean Bones', and currently participating in script preparation for new projects.",
+team3_role:"Screenwriter / Starring",
+team3_desc:"Responsible for cooperating with script execution and filming. He also participated in the starring role in 'Korean Pain' and guest appearance in 'War of the Worlds 2'. He has experience in related works.",
+team4_role:"visual concept",
+team4_desc:"Responsible for visual concept design and material arrangement, providing screen references according to the director's requirements, and has participated in the production of Fatty.",
+team5_role:"art direction",
+team5_desc:"Responsible for on-site art design and scene construction, completing the layout according to the overall plan, and participating in the execution of related projects in Japan.",
+team6_role:"producer",
+team6_desc:"Responsible for project process planning, on-site coordination and material management, promoting production according to the director's arrangements, and participating in on-site work during the dummy slow-play program.",
+team7_role:"Director of Photography/Editor",
+team7_desc:"Responsible for the basic work of photography and post-editing, complete the shot execution and material arrangement according to the director's requirements, and participate in related film and television and program production."
+},
+
+ja:{
+nav_home:"ホーム",
+nav_about:"概要",
+nav_vision:"ビジョン",
+nav_team:"チーム",
+nav_films:"作品",
+nav_location:"所在地",
+nav_contact:"連絡",
+hero_sub:"JBB FILM · 映画級体験",
+about_title:"私たちについて",
+about_text:"映画級映像表現を追求するスタジオ。",
+vision_title:"ビジョン",
+vision_text:"映像で世界中の観客をつなげます。",
+team_title:"チーム",
+films_title:"作品",
+location_title:"所在地",
+location_sub:"中国・重慶市に本社を構えています",
+location_text:"JBB FILM 本社は中国重慶市。",
+contact_title:"連絡",
+contact_sub:"24〜72時間以内に返信します。",
+send_btn:"送信",
+placeholder_name:"名前",
+placeholder_email:"メール",
+placeholder_message:"メッセージ",
+sponsor_title:"スポンサー",
+sponsor_sub:"以下のパートナーに感謝",
+film0_title:"鶏皮の書",
+film1_title:"フォレスト・コッコ",
+film2_title:"ブレイキング・リッチ",
+film3_title:"ゴッドチキン",
+film4_title:"オッペンリッチ",
+film5_title:"近日公開",
+
+team0_role:"監督・脚本家",
+team0_desc:"ビジュアルとストーリーの総合コーディネートを担当し、『ワールド・ウォー1』『ワールド・ウォー2』の製作に参加、ジバビ・フィルムズの創設者。",
+team1_role:"サウンドデザイナー/ポストミュージック",
+team1_desc:"ディレクターの要求に応じたサウンドデザインとポストミキシング、完全なオーディオ処理を担当し、「宇宙戦争 1」と「宇宙戦争 2」に参加し、ラップショーに参加した経験もあります。",
+team2_role:"編集者/脚本家",
+team2_desc:"監督のペースに合わせて編集と素材の手配を担当し、「朝鮮骨の痛み」のポストプロダクションに参加し、現在は新作の脚本準備に参加している。",
+team3_role:"脚本・主演",
+team3_desc:"脚本制作・撮影協力を担当。 『Korean Pain』では主演を務め、『宇宙戦争2』にもゲスト出演した。関連業務の経験あり。",
+team4_role:"ビジュアルコンセプト",
+team4_desc:"ビジュアルコンセプトデザインとマテリアルアレンジを担当し、ディレクターの要望に応じて画面リファレンスを提供し、『Fatty』の制作にも参加。",
+team5_role:"アートディレクション",
+team5_desc:"現場でのアートデザインとシーン構築を担当し、全体計画に従ってレイアウトを完成させ、日本での関連プロジェクトの実行に参加します。",
+team6_role:"プロデューサー",
+team6_desc:"プロジェクトの工程計画、現場調整、資材管理を担当し、監督の段取りに従って制作を進め、ダミースロープレイプログラムでは現場作業にも参加します。",
+team7_role:"撮影監督/編集者",
+team7_desc:"撮影とポスト編集の基本的な作業を担当し、監督の要望に応じてショットの実行と素材の手配を完了し、関連する映画やテレビ、番組の制作に参加します。"
+},
+
+de:{
+nav_home:"Startseite",
+nav_about:"Über uns",
+nav_vision:"Vision",
+nav_team:"Team",
+nav_films:"Filme",
+nav_location:"Standort",
+nav_contact:"Kontakt",
+hero_sub:"JBB FILM · Kinoerlebnis",
+about_title:"Über uns",
+about_text:"Kreatives Filmstudio für immersives Storytelling.",
+vision_title:"Vision",
+vision_text:"Globale Zuschauer durch Filmkunst verbinden.",
+team_title:"Team",
+films_title:"Filme",
+location_title:"Standort",
+location_sub:"Hauptsitz in Chongqing, China",
+location_text:"JBB FILM hat seinen Hauptsitz in Chongqing.",
+contact_title:"Kontakt",
+contact_sub:"Antwort innerhalb von 24–72 Stunden.",
+send_btn:"Senden",
+placeholder_name:"Name",
+placeholder_email:"E-Mail",
+placeholder_message:"Nachricht",
+sponsor_title:"SPONSOREN",
+sponsor_sub:"Mit Stolz unterstützt von",
+film0_title:"Das Gockelbuch",
+film1_title:"Forrest Gockel",
+film2_title:"Breaking Cash",
+film3_title:"Der Geflügelpate",
+film4_title:"Oppenreicher",
+film5_title:"Demnächst",
+
+team0_role:"Regisseur/Drehbuchautor",
+team0_desc:"Verantwortlich für die gesamte visuelle und Story-Koordination, war an der Produktion von „World War 1“ und „World War 2“ beteiligt und ist Gründer von Jibabi Films.",
+team1_role:"Sounddesigner/Postmusik",
+team1_desc:"Sounddesign und Postmixing, komplette Audiobearbeitung nach Vorgaben des Regisseurs, Mitwirkung bei „War of the Worlds 1“ und „War of the Worlds 2“ und einschlägige Erfahrung in der Teilnahme an Rap-Shows.",
+team2_role:"Herausgeber/Drehbuchautor",
+team2_desc:"Verantwortlich für die Fertigstellung des Schnitts und die Materialanordnung entsprechend dem Tempo des Regisseurs, Mitarbeit bei der Postproduktion von „The Pain in Korean Bones“ und derzeit Mitarbeit bei der Drehbuchvorbereitung für neue Projekte.",
+team3_role:"Drehbuchautor/Hauptdarsteller",
+team3_desc:"Verantwortlich für die Mitarbeit bei der Drehbuchausführung und den Dreharbeiten. Außerdem wirkte er in der Hauptrolle in „Korean Pain“ und einem Gastauftritt in „War of the Worlds 2“ mit. Er verfügt über Erfahrung in verwandten Arbeiten.",
+team4_role:"Visuelles Konzept",
+team4_desc:"Verantwortlich für die Gestaltung des visuellen Konzepts und der Materialanordnung, Bereitstellung von Filmreferenzen entsprechend den Anforderungen des Regisseurs und Mitwirkung an der Produktion von Fatty.",
+team5_role:"künstlerische Leitung",
+team5_desc:"Verantwortlich für das Kunstdesign und den Szenenaufbau vor Ort, die Fertigstellung des Layouts gemäß dem Gesamtplan und die Teilnahme an der Ausführung damit verbundener Projekte in Japan.",
+team6_role:"Produzent",
+team6_desc:"Verantwortlich für die Projektablaufplanung, die Koordination vor Ort und das Materialmanagement, die Förderung der Produktion gemäß den Vereinbarungen des Regisseurs und die Teilnahme an der Arbeit vor Ort während des Dummy-Slow-Play-Programms.",
+team7_role:"Kameramann/Redakteur",
+team7_desc:"Verantwortlich für die grundlegende Arbeit der Fotografie und Nachbearbeitung, Vervollständigung der Aufnahmeausführung und Materialanordnung gemäß den Anforderungen des Regisseurs und Mitwirkung an der damit verbundenen Film-, Fernseh- und Programmproduktion."
+},
+
+fr:{
+nav_home:"Accueil",
+nav_about:"À propos",
+nav_vision:"Vision",
+nav_team:"Équipe",
+nav_films:"Films",
+nav_location:"Adresse",
+nav_contact:"Contact",
+hero_sub:"JBB FILM · Expérience cinématographique",
+about_title:"À propos",
+about_text:"Studio créatif spécialisé dans la narration immersive.",
+vision_title:"Vision",
+vision_text:"Connecter le public mondial grâce au cinéma.",
+team_title:"Équipe",
+films_title:"Films",
+location_title:"Adresse",
+location_sub:"Basé à Chongqing, Chine",
+location_text:"Le siège de JBB FILM est à Chongqing.",
+contact_title:"Contact",
+contact_sub:"Réponse sous 24 à 72 heures.",
+send_btn:"Envoyer",
+placeholder_name:"Nom",
+placeholder_email:"Email",
+placeholder_message:"Message",
+sponsor_title:"SPONSORS",
+sponsor_sub:"Fièrement soutenu par",
+film0_title:"Le Livre Poulet",
+film1_title:"Forrest Glousse",
+film2_title:"Breaking Fric",
+film3_title:"Le Poussin",
+film4_title:"Oppenriche",
+film5_title:"À venir",
+
+team0_role:"Réalisateur/Scénariste",
+team0_desc:"Responsable de la coordination globale des visuels et de l'histoire, a participé à la production de 'World War 1' et 'World War 2' et est le fondateur de Jibabi Films.",
+team1_role:"Concepteur sonore/post-musique",
+team1_desc:"Conception sonore et post-mixage, traitement audio complet selon les exigences du réalisateur, participation à 'La Guerre des Mondes 1' et 'La Guerre des Mondes 2', et possède une expérience pertinente dans la participation à des émissions de rap.",
+team2_role:"Monteur/Scénariste",
+team2_desc:"Responsable de terminer le montage et l'arrangement du matériel selon le rythme du réalisateur, de participer à la post-production de 'The Pain in Korean Bones' et de participer actuellement à la préparation du scénario de nouveaux projets.",
+team3_role:"Scénariste / Acteur vedette",
+team3_desc:"Responsable de la coopération avec l'exécution du scénario et le tournage. Il a également participé au rôle principal dans 'Korean Pain' et à une apparition dans 'War of the Worlds 2'. Il a de l'expérience dans des travaux connexes.",
+team4_role:"concept visuel",
+team4_desc:"Responsable de la conception du concept visuel et de la disposition des matériaux, fournissant des références d'écran selon les exigences du réalisateur, et a participé à la production de Fatty.",
+team5_role:"direction artistique",
+team5_desc:"Responsable de la conception artistique sur place et de la construction de la scène, en complétant l'aménagement selon le plan global et en participant à l'exécution de projets connexes au Japon.",
+team6_role:"producteur",
+team6_desc:"Responsable de la planification du processus de projet, de la coordination sur site et de la gestion du matériel, de la promotion de la production selon les arrangements du réalisateur et de la participation au travail sur site pendant le programme de jeu lent factice.",
+team7_role:"Directeur de la photographie/monteur",
+team7_desc:"Responsable du travail de base de la photographie et du post-montage, compléter l'exécution du plan et la disposition du matériel selon les exigences du réalisateur, et participer à la production cinématographique, télévisuelle et de programmes connexes."
+},
+
+ru:{
+nav_home:"Главная",
+nav_about:"О нас",
+nav_vision:"Видение",
+nav_team:"Команда",
+nav_films:"Работы",
+nav_location:"Адрес",
+nav_contact:"Контакты",
+hero_sub:"JBB FILM · Кинематографический опыт",
+about_title:"О нас",
+about_text:"Креативная киностудия с акцентом на визуальное повествование.",
+vision_title:"Видение",
+vision_text:"Соединяем зрителей через язык кино.",
+team_title:"Команда",
+films_title:"Работы",
+location_title:"Адрес",
+location_sub:"Штаб-квартира находится в Чунцине, Китай",
+location_text:"Штаб-квартира JBB FILM находится в Чунцине.",
+contact_title:"Контакты",
+contact_sub:"Ответ в течение 24–72 часов.",
+send_btn:"Отправить",
+placeholder_name:"Имя",
+placeholder_email:"Почта",
+placeholder_message:"Сообщение",
+sponsor_title:"СПОНСОРЫ",
+sponsor_sub:"При поддержке",
+film0_title:"Куриная книга",
+film1_title:"Форрест Кудах",
+film2_title:"Во все богатые",
+film3_title:"Крёстный птенец",
+film4_title:"Оппенрич",
+film5_title:"Скоро",
+
+team0_role:"Режиссер/Сценарист",
+team0_desc:"Отвечал за общую визуальную и сюжетную координацию, участвовал в производстве фильмов «Первая мировая война» и «Вторая мировая война», а также является основателем Jibabi Films.",
+team1_role:"Звукорежиссер/Пост-музыка",
+team1_desc:"Звуковое оформление и пост-микширование, полная обработка звука согласно требованиям режиссёра, участвовал в «Войне миров 1» и «Войне миров 2», имеет соответствующий опыт участия в рэп-шоу.",
+team2_role:"Редактор/Сценарист",
+team2_desc:"Отвечает за монтаж и аранжировку материала в соответствии с режиссерским темпом, участвует в постпродакшене «Боли в корейских костях», а в настоящее время участвует в подготовке сценариев для новых проектов.",
+team3_role:"Сценарист / В главных ролях",
+team3_desc:"Отвечает за участие в написании сценария и съемках. Он также участвовал в главной роли в «Корейской боли» и в качестве гостя в «Войне миров 2». Имеет опыт сопутствующих работ.",
+team4_role:"визуальная концепция",
+team4_desc:"Отвечал за дизайн визуальной концепции и расположение материалов, предоставление референсов экрана в соответствии с требованиями режиссера, а также участвовал в производстве «Фатти».",
+team5_role:"художественное направление",
+team5_desc:"Отвечает за художественное проектирование и построение сцен на месте, выполнение планировки в соответствии с общим планом и участие в реализации сопутствующих проектов в Японии.",
+team6_role:"продюсер",
+team6_desc:"Отвечает за планирование процесса проекта, координацию на месте и управление материалами, продвижение производства в соответствии с договоренностями директора, а также участие в работе на месте во время фиктивной программы замедленной игры.",
+team7_role:"Оператор-постановщик/редактор",
+team7_desc:"Отвечает за основную работу по фотосъемке и постмонтажу, завершает съемку кадра и компоновку материала в соответствии с требованиями режиссера, участвует в производстве сопутствующих фильмов, телепрограмм и программ."
+}
+
+};
+
+function toggleLang(){
+
+const list=document.getElementById('langList');
+
+list.style.display=
+list.style.display==='block'
+?'none'
+:'block';
+
+}
+
+function setLang(lang){
+
+currentLang=lang;
+
+document.querySelectorAll('[data-i18n]').forEach(el=>{
+
+const key=el.dataset.i18n;
+
+if(translations[lang][key]){
+el.innerText=translations[lang][key];
+}
+
+});
+
+for(let i=0;i<8;i++){
+
+document.getElementById(`team${i}_role`).innerText=
+translations[lang][`team${i}_role`];
+
+document.getElementById(`team${i}_desc`).innerText=
+translations[lang][`team${i}_desc`];
+
+}
+
+document.getElementById('contact-name').placeholder=
+translations[lang].placeholder_name;
+
+document.getElementById('contact-email').placeholder=
+translations[lang].placeholder_email;
+
+document.getElementById('contact-message').placeholder=
+translations[lang].placeholder_message;
+
+document.getElementById('langList').style.display='none';
+
+}
+
+setLang('zh');
+
+const slides=document.querySelectorAll('.location-slide');
+
+let current=0;
+
+setInterval(()=>{
+
+slides[current].classList.remove('active');
+
+current++;
+
+if(current>=slides.length){
+current=0;
+}
+
+slides[current].classList.add('active');
+
+},3500);
+
+function sendMail(){
+
+const name=document.getElementById('contact-name').value.trim();
+
+const email=document.getElementById('contact-email').value.trim();
+
+const message=document.getElementById('contact-message').value.trim();
+
+if(!name || !email || !message){
+
+alert(currentLang==='en'
+?'Please complete all fields'
+:'请完整填写信息');
+
+return;
+
+}
+
+const btn=document.getElementById('send-btn');
+
+btn.disabled=true;
+
+btn.innerText=
+currentLang==='en'
+?'Sending...'
+:'发送中...';
+
+emailjs.send(
+"service_79qkr6j",
+"template_ye0l6au",
+{
+from_name:name,
+from_email:email,
+message:message
+}
+)
+
+.then(()=>{
+
+alert(currentLang==='en'
+?'Message sent successfully'
+:'邮件发送成功');
+
+document.getElementById('contact-name').value='';
+document.getElementById('contact-email').value='';
+document.getElementById('contact-message').value='';
+
+})
+
+.catch(()=>{
+
+alert(currentLang==='en'
+?'Failed to send message'
+:'发送失败');
+
+})
+
+.finally(()=>{
+
+btn.disabled=false;
+
+btn.innerText=
+translations[currentLang].send_btn;
+
+});
+
+}
+
+
+
+// 白天/黑夜切换
+function toggleTheme(){var h=document.documentElement;h.classList.toggle("light");var b=document.querySelector('[onclick="toggleTheme()"]');var isLight=h.classList.contains("light");b.textContent=isLight?"🌙":"☀️";localStorage.setItem("theme",isLight?"light":"dark");updateLogoFilters(isLight)}
+function updateLogoFilters(l){var imgs=document.querySelectorAll("#sponsor-grid img");for(var i=0;i<imgs.length;i++){var s=imgs[i].src;if(s.indexOf("stark")>-1||s.indexOf("hammond")>-1||s.indexOf("vaulttec")>-1||s.indexOf("militech")>-1||s.indexOf("blackmesa")>-1||s.indexOf("havvk")>-1||s.indexOf("umbrella")>-1){imgs[i].style.filter=l?"brightness(0)":"brightness(0) invert(1)"}}} 
+(function(){var saved=localStorage.getItem("theme");var isLight=saved!=="dark";if(isLight){document.documentElement.classList.add("light");document.querySelector('[onclick="toggleTheme()"]').textContent="🌙";updateLogoFilters(true)}})()
+
+</script>
+
+
+<!-- 视频弹窗 -->
+<div class="video-overlay" id="videoOverlay" onclick="closeVideo()">
+<button class="video-close" onclick="closeVideo()">✕</button>
+<video id="modalVideo" controls onclick="event.stopPropagation()" onended="onVideoEnd()"></video>
+</div>
+
+<script>
+// ── 音乐控制 ──
+let musicOn = false;
+const bgm = document.getElementById("bgm");
+const btn = document.getElementById("musicBtn");
+function toggleMusic(){
+  if(!musicOn){ bgm.play(); btn.innerText = "💿 Music On"; musicOn = true; }
+  else{ bgm.pause(); btn.innerText = "💿 Music Off"; musicOn = false; }
+}
+// 音乐淡入/淡出
+function fadeOutMusic(){ if(!musicOn||!bgm)return; var v=bgm.volume,s=setInterval(function(){v-=.05;if(v<=0){bgm.pause();bgm.volume=0;clearInterval(s)}else{bgm.volume=v}},50) }
+function fadeInMusic(){ if(!musicOn||!bgm)return; bgm.currentTime=bgm.currentTime||0;bgm.volume=0;bgm.play();var v=0,s=setInterval(function(){v+=.05;if(v>=1){bgm.volume=1;clearInterval(s)}else{bgm.volume=v}},50) }
+
+// ── 视频弹窗 ──
+function openVideo(src){
+  var ov=document.getElementById("videoOverlay");
+  var v=document.getElementById("modalVideo");
+  v.src=src;
+  fadeOutMusic();  // 开始淡出,不等待
+  setTimeout(function(){ov.classList.add("active");v.play()},500);  // 0.5s后弹视频
+}
+function closeVideo(){
+  var ov=document.getElementById("videoOverlay");
+  var v=document.getElementById("modalVideo");
+  ov.classList.remove("active");
+  v.pause(); v.src="";
+  fadeInMusic();
+}
+function onVideoEnd(){
+  var ov=document.getElementById("videoOverlay");
+  ov.classList.remove("active");
+  fadeInMusic();
+}
+</script>
+
+</body>
+</html>
