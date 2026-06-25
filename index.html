@@ -362,13 +362,6 @@ bottom:40px;
 .location-info h3{
 font-size:42px;
 
-	#musicBtn{
-	bottom:12px;
-	right:12px;
-	padding:8px 10px;
-	font-size:11px;
-	border-radius:8px;
-	}
 }
 
 }
@@ -421,19 +414,6 @@ html.light button[type=submit],.light button[type=submit]{background:#111;color:
   <source src="audio/music.mp3" type="audio/mpeg">
 </audio>
 
-<button id="musicBtn" onclick="toggleMusic()" style="
-position:fixed;
-bottom:20px;
-right:20px;
-z-index:500;
-padding:12px 16px;
-border-radius:12px;
-background:white;
-color:black;
-font-weight:800;
-border:none;
-cursor:pointer;
-">💿 Music Off</button>
 <nav>
 
 <a href="#home" data-i18n="nav_home"></a>
@@ -468,7 +448,7 @@ cursor:pointer;
 
 </div>
 
-</div>
+<div class="lang-btn" onclick="toggleMusic()" id="musicBtn" style="font-size:18px;" title="音乐开关">💿</div>
 
 </div>
 
@@ -1190,8 +1170,8 @@ let musicOn = false;
 const bgm = document.getElementById("bgm");
 const btn = document.getElementById("musicBtn");
 function toggleMusic(){
-  if(!musicOn){ bgm.play(); btn.innerText = "💿 Music On"; musicOn = true; }
-  else{ bgm.pause(); btn.innerText = "💿 Music Off"; musicOn = false; }
+  if(!musicOn){ bgm.play(); btn.innerText = "🎵"; musicOn = true; }
+  else{ bgm.pause(); btn.innerText = "💿"; musicOn = false; }
 }
 // 音乐淡入/淡出
 function fadeOutMusic(){ if(!musicOn||!bgm)return; var v=bgm.volume,s=setInterval(function(){v-=.05;if(v<=0){bgm.pause();bgm.volume=0;clearInterval(s)}else{bgm.volume=v}},50) }
