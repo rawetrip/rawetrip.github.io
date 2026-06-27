@@ -87,6 +87,15 @@ p{margin:8px 0}
 .video-overlay video{max-width:95vw;max-height:90vh;border-radius:4px}
 .video-close{position:absolute;top:28px;right:32px;font-size:36px;color:#fff;cursor:pointer;z-index:100000;background:none;border:none;opacity:.7;transition:.3s}
 .video-close:hover{opacity:1;transform:scale(1.15)}
+
+.mwe-popups{position:fixed;z-index:99999;background:var(--paper);border:1px solid var(--border);border-radius:4px;box-shadow:0 4px 20px rgba(0,0,0,.2);max-width:340px;font-size:13px;line-height:1.5;opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s}
+.mwe-popups.show{opacity:1;transform:translateY(0)}
+.mwe-popups img{width:100%;max-height:160px;object-fit:cover;border-radius:4px 4px 0 0;display:block}
+.mwe-popups .popups-text{padding:10px 14px;color:var(--text)}
+.mwe-popups .popups-title{font-weight:700;font-size:14px;margin-bottom:2px}
+.mwe-popups .popups-desc{font-size:12px;color:var(--text2)}
+sup a{color:var(--link)!important;font-weight:700}
+sup a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -549,6 +558,36 @@ document.getElementById('cmsg').value='';
 
 applyLang('zh');
 renderSponsors();
+
+
+(function(){
+var popup=document.createElement('div');
+popup.className='mwe-popups';
+popup.innerHTML='<div class="mwe-popups-container"></div>';
+document.body.appendChild(popup);
+var timer=null;
+var pages={
+  'anjiu-ovieo.html':{title:'Anjiu Ovieo',img:'images/Mate0.jpg',desc:'安九·奥维奥，原名蔡洪浩，重庆市本地人，微电影导演，铸币聚集地第一唐人。'},
+  'google.html':{title:'Google',img:'',desc:'Google 是一家美国跨国科技企业，业务涵盖互联网搜索、云计算、人工智能等领域。由拉里·佩奇和谢尔盖·布林于1998年创立。'}
+};
+function showPopup(e, href){
+  var p=pages[href];
+  if(!p) return;
+  var c=popup.querySelector('.mwe-popups-container');
+  c.innerHTML=(p.img?'<a href="'+href+'"><img src="'+p.img+'"></a>':'')+'<div class="popups-text"><a class="popups-title" href="'+href+'">'+p.title+'</a><div class="popups-desc">'+p.desc+'</div></div>';
+  popup.classList.add('show');
+  var x=e.clientX+15, y=e.clientY+10;
+  if(x+340>window.innerWidth) x=e.clientX-355;
+  if(y+200>window.innerHeight) y=e.clientY-210;
+  popup.style.left=x+'px';
+  popup.style.top=y+'px';
+}
+function hidePopup(){popup.classList.remove('show');}
+document.querySelectorAll('a[href="anjiu-ovieo.html"],a[href="google.html"]').forEach(function(a){
+  a.addEventListener('mouseenter',function(e){clearTimeout(timer);timer=setTimeout(function(){showPopup(e,a.getAttribute('href'));},250);});
+  a.addEventListener('mouseleave',function(){clearTimeout(timer);hidePopup();});
+});
+})();
 
 </script>
 
