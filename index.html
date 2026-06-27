@@ -12,9 +12,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 
 <style>
 
@@ -229,6 +229,19 @@ height:280px;
 object-fit:cover;
 }
 
+.film-play-overlay{
+position:absolute;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(0,0,0,.4);
+opacity:0;
+transition:.3s;
+font-size:40px;
+color:white;
+}
+
 .location-wrap{
 position:relative;
 height:560px;
@@ -428,7 +441,7 @@ html.light button[type=submit],.light button[type=submit]{background:#111;color:
 
 <div style="display:flex;gap:10px;align-items:center;">
 
-<div class="lang-btn" onclick="toggleTheme()" style="font-size:20px;" title="切换白天/黑夜">☀️</div>
+<div class="lang-btn" id="themeBtn" onclick="toggleTheme()" style="font-size:20px;" title="切换白天/黑夜">☀️</div>
 
 <div class="lang-box">
 
@@ -448,7 +461,7 @@ html.light button[type=submit],.light button[type=submit]{background:#111;color:
 
 </div>
 
-<div class="lang-btn" onclick="toggleMusic()" id="musicBtn" style="font-size:18px;" title="音乐开关">💿</div>
+<div class="lang-btn" onclick="toggleMusic()" id="musicBtn" style="font-size:18px;" title="音乐开关" role="switch" aria-checked="false" aria-label="音乐开关">💿</div>
 
 </div>
 
@@ -486,58 +499,55 @@ html.light button[type=submit],.light button[type=submit]{background:#111;color:
 
 <h2 class="title" data-i18n="team_title"></h2>
 
-<div class="team-grid">
+<div class="team-grid" id="teamGrid">
 
-<script>
+	<script>
+	(function(){
+	var names=["Anjiu Ovieo","MAKESADE","楠呱","韩·士承","R4nd0m","Xone","AsakuraKaren","mA0rich"];
+	var h='';
+	for(var i=0;i<8;i++){
+	h+='<div class="card team-card">';
+	h+='<div style="flex:1">';
+	h+='<h3 class="member-name">'+names[i]+'</h3>';
+	h+='<div class="tooltip" id="team'+i+'_role"></div>';
+	h+='<p class="member-desc" id="team'+i+'_desc"></p>';
+	h+='</div>';
+	h+='<img src="images/team'+i+'.jpg" loading="lazy" decoding="async" width="180" height="260" alt="'+names[i]+'">';
+	h+='</div>';
+	}
+	document.getElementById('teamGrid').innerHTML=h;
+	})();
+	</script>
 
-const teamNames=[
-"Anjiu Ovieo",
-"MAKESADE",
-"楠呱",
-"韩·士承",
-"R4nd0m",
-"Xone",
-"AsakuraKaren",
-"mA0rich"
-];
 
-for(let i=0;i<8;i++){
+	</div>
 
-document.write(`
-<div class="card team-card">
-<div style="flex:1">
-<h3 class="member-name">${teamNames[i]}</h3>
-<div class="tooltip" id="team${i}_role"></div>
-<p class="member-desc" id="team${i}_desc"></p>
-</div>
-<img src="images/team${i}.jpg" loading="lazy" decoding="async" width="180" height="260">
-</div>
-`);
-
-}
-
-</script>
-
-</div>
-
-</section>
+	</section>
 
 <section id="films">
 
 <h2 class="title" data-i18n="films_title"></h2>
 
-<div class="film-grid">
+<div class="film-grid" id="filmGrid"></div>
+	<script>
+	(function(){
+	var g=document.getElementById('filmGrid');
+	var h='';
+	for(var i=0;i<6;i++){
+	h+='<div>';
+	h+='<div class="card" onclick="openVideo(\'videos/work1.mp4\')" style="cursor:pointer;position:relative;overflow:hidden">';
+	h+='<img src="images/film'+i+'.jpg" loading="lazy" decoding="async" width="400" height="280" alt="" style="width:100%;height:280px;object-fit:cover">';
+	h+='<div class="film-play-overlay" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div>';
+	h+='</div>';
+	h+='<p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film'+i+'_title"></p>';
+	h+='</div>';
+	}
+	g.innerHTML=h;
+	})();
+	</script>
 
-<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film0.jpg" loading="lazy" decoding="async"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film0_title"></p></div>
-<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film1.jpg" loading="lazy" decoding="async"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film1_title"></p></div>
-<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film2.jpg" loading="lazy" decoding="async"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film2_title"></p></div>
-<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film3.jpg" loading="lazy" decoding="async"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film3_title"></p></div>
-<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film4.jpg" loading="lazy" decoding="async"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film4_title"></p></div>
-<div><div class="card" onclick="openVideo('videos/work1.mp4')" style="cursor:pointer"><img src="images/film5.jpg" loading="lazy" decoding="async"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:.3s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">▶</div></div><p style="text-align:left;margin-top:8px;font-size:15px;font-weight:500;" data-i18n="film5_title"></p></div>
 
-</div>
-
-</section>
+	</section>
 
 <section id="location">
 
@@ -585,10 +595,13 @@ JBB FILM STUDIO
 
 <div class="contact-wrap">
 
+	<label for="contact-name" style="display:block;margin-bottom:6px;font-size:14px;font-weight:600;" data-i18n="placeholder_name"></label>
 <input id="contact-name">
 
+	<label for="contact-email" style="display:block;margin-bottom:6px;font-size:14px;font-weight:600;" data-i18n="placeholder_email"></label>
 <input id="contact-email">
 
+	<label for="contact-message" style="display:block;margin-bottom:6px;font-size:14px;font-weight:600;" data-i18n="placeholder_message"></label>
 <textarea id="contact-message"></textarea>
 
 <button id="send-btn" onclick="sendMail()" data-i18n="send_btn"></button>
@@ -634,7 +647,7 @@ for(var i=0;i<s.length;i++){
   var name=s[i][0], src="images/sponsors/"+s[i][1]+"."+s[i][2], dark=s[i][3];
   var filt=dark?"brightness(0) invert(1)":"";
   h+='<div class="sp-card" style="border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:28px 16px;display:flex;align-items:center;justify-content:center;height:120px;transition:all .25s;position:relative;overflow:hidden;">';
-  h+='<img src="'+src+'" alt="'+name+'" loading="lazy" decoding="async" style="max-width:85%;max-height:75px;filter:'+filt+';object-fit:contain;'+s[i][4]+'" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'block\'">';
+  h+='<img src="'+src+'" alt="'+name+'" loading="lazy" decoding="async" data-dark="'+dark+'" style="max-width:85%;max-height:75px;filter:'+filt+';object-fit:contain;'+s[i][4]+'" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'block\'">';
   h+='<span style="display:none;position:absolute;opacity:.4;font-size:13px;font-weight:700;color:#fff;text-align:center">'+name+'</span>';
   h+='</div>';
 }
@@ -1026,6 +1039,7 @@ list.style.display==='block'
 function setLang(lang){
 
 currentLang=lang;
+	document.documentElement.lang=lang;
 
 document.querySelectorAll('[data-i18n]').forEach(el=>{
 
@@ -1151,9 +1165,9 @@ translations[currentLang].send_btn;
 
 
 // 白天/黑夜切换
-function toggleTheme(){var h=document.documentElement;h.classList.toggle("light");var b=document.querySelector('[onclick="toggleTheme()"]');var isLight=h.classList.contains("light");b.textContent=isLight?"🌙":"☀️";localStorage.setItem("theme",isLight?"light":"dark");updateLogoFilters(isLight)}
-function updateLogoFilters(l){var imgs=document.querySelectorAll("#sponsor-grid img");for(var i=0;i<imgs.length;i++){var s=imgs[i].src;if(s.indexOf("stark")>-1||s.indexOf("hammond")>-1||s.indexOf("vaulttec")>-1||s.indexOf("militech")>-1||s.indexOf("blackmesa")>-1||s.indexOf("havvk")>-1||s.indexOf("umbrella")>-1){imgs[i].style.filter=l?"brightness(0)":"brightness(0) invert(1)"}}} 
-(function(){var saved=localStorage.getItem("theme");var isLight=saved!=="dark";if(isLight){document.documentElement.classList.add("light");document.querySelector('[onclick="toggleTheme()"]').textContent="🌙";updateLogoFilters(true)}})()
+function toggleTheme(){var h=document.documentElement;h.classList.toggle("light");var b=document.getElementById('themeBtn');var isLight=h.classList.contains("light");b.textContent=isLight?"🌙":"☀️";localStorage.setItem("theme",isLight?"light":"dark");updateLogoFilters(isLight)}
+function updateLogoFilters(l){var imgs=document.querySelectorAll("#sponsor-grid img");for(var i=0;i<imgs.length;i++){if(imgs[i].dataset.dark=="1"){imgs[i].style.filter=l?"brightness(0)":"brightness(0) invert(1)"}}}
+(function(){var saved=localStorage.getItem("theme");var isLight=saved!=="dark";if(isLight){document.documentElement.classList.add("light");document.getElementById('themeBtn').textContent="🌙";updateLogoFilters(true)}})()
 
 </script>
 
@@ -1166,16 +1180,16 @@ function updateLogoFilters(l){var imgs=document.querySelectorAll("#sponsor-grid 
 
 <script>
 // ── 音乐控制 ──
-let musicOn = false;
+let musicOn = false, _fadeTimer = null;
 const bgm = document.getElementById("bgm");
 const btn = document.getElementById("musicBtn");
 function toggleMusic(){
-  if(!musicOn){ bgm.play(); btn.innerText = "🎵"; musicOn = true; }
-  else{ bgm.pause(); btn.innerText = "💿"; musicOn = false; }
+  if(!musicOn){ bgm.play(); btn.innerText = "🎵"; btn.setAttribute("aria-checked","true"); musicOn = true; }
+  else{ bgm.pause(); btn.innerText = "💿"; btn.setAttribute("aria-checked","false"); musicOn = false; }
 }
 // 音乐淡入/淡出
-function fadeOutMusic(){ if(!musicOn||!bgm)return; var v=bgm.volume,s=setInterval(function(){v-=.05;if(v<=0){bgm.pause();bgm.volume=0;clearInterval(s)}else{bgm.volume=v}},50) }
-function fadeInMusic(){ if(!musicOn||!bgm)return; bgm.currentTime=bgm.currentTime||0;bgm.volume=0;bgm.play();var v=0,s=setInterval(function(){v+=.05;if(v>=1){bgm.volume=1;clearInterval(s)}else{bgm.volume=v}},50) }
+function fadeOutMusic(){ if(!musicOn||!bgm)return; if(_fadeTimer){clearInterval(_fadeTimer)} var v=bgm.volume;_fadeTimer=setInterval(function(){v-=.05;if(v<=0){bgm.pause();bgm.volume=0;clearInterval(_fadeTimer);_fadeTimer=null}else{bgm.volume=v}},50) }
+function fadeInMusic(){ if(!musicOn||!bgm)return; if(_fadeTimer){clearInterval(_fadeTimer)} bgm.currentTime=bgm.currentTime||0;bgm.volume=0;bgm.play();var v=0;_fadeTimer=setInterval(function(){v+=.05;if(v>=1){bgm.volume=1;clearInterval(_fadeTimer);_fadeTimer=null}else{bgm.volume=v}},50) }
 
 // ── 视频弹窗 ──
 function openVideo(src){
@@ -1183,8 +1197,9 @@ function openVideo(src){
   var v=document.getElementById("modalVideo");
   v.src=src;
   fadeOutMusic();  // 开始淡出,不等待
-  setTimeout(function(){ov.classList.add("active");v.play()},500);  // 0.5s后弹视频
+  setTimeout(function(){ov.classList.add("active");v.play()},500);
 }
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeVideo()});
 function closeVideo(){
   var ov=document.getElementById("videoOverlay");
   var v=document.getElementById("modalVideo");
