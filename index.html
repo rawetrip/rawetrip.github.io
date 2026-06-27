@@ -12,16 +12,16 @@
 <meta property="og:image" content="https://jbbfilm.xyz/images/Team.png">
 <meta property="og:url" content="https://jbbfilm.xyz">
 <meta property="og:type" content="website">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Noto+Sans+SC:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Medium.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Bold.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Heavy.min.css" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#f6f6f6;--paper:#fff;--text:#202122;--text2:#54595d;--link:#0645ad;--link-hover:#447ff5;--border:#a2a9b1;--border-light:#eaecf0;--sidebar-bg:#f8f9fa;--header-bg:#fff;--infobox-bg:#f8f9fa;--infobox-header:#eaecf0;--toc-bg:#f8f9fa;--toc-border:#a2a9b1;--btn-bg:#f8f9fa}
 .dark{--bg:#101418;--paper:#1b1d21;--text:#d8d9da;--text2:#a2a4a6;--link:#6da3f5;--link-hover:#8cb8ff;--border:#54595d;--border-light:#2a2d31;--sidebar-bg:#1b1d21;--header-bg:#1b1d21;--infobox-bg:#1b1d21;--infobox-header:#2a2d31;--toc-bg:#1b1d21;--toc-border:#54595d;--btn-bg:#2a2d31}
-body{background:var(--bg);color:var(--text);font-family:"Noto Sans SC",sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
+body{background:var(--bg);color:var(--text);font-family:"MiSans Medium","MiSans",sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
 html{scroll-behavior:smooth}
 a{color:var(--link);text-decoration:none}a:hover{color:var(--link-hover);text-decoration:underline}a:visited{color:#795cb2}.dark a:visited{color:#a78bdb}
 #topbar{position:sticky;top:0;z-index:999;background:var(--header-bg);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:8px 20px;gap:16px}
@@ -39,7 +39,7 @@ a{color:var(--link);text-decoration:none}a:hover{color:var(--link-hover);text-de
 #sidebar a{display:block;padding:5px 12px;color:var(--link)}
 #sidebar a:hover{background:var(--infobox-header);text-decoration:none}
 #main{flex:1;min-width:0;padding:24px 32px 48px}#content{max-width:960px}
-.article-title{font-family:"Noto Serif",Georgia,serif;font-size:28px;font-weight:400;border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:12px}
+.article-title{font-family:"MiSans Heavy","MiSans",sans-serif;font-size:28px;font-weight:400;border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:12px}
 .article-sub{font-size:13px;color:var(--text2);margin-bottom:20px}
 .infobox{float:right;width:270px;margin:0 0 20px 24px;border:1px solid var(--border);background:var(--infobox-bg);font-size:12px;line-height:1.6}
 .infobox-header{background:var(--infobox-header);padding:8px 12px;font-weight:700;text-align:center;font-size:14px}
@@ -48,7 +48,7 @@ a{color:var(--link);text-decoration:none}a:hover{color:var(--link-hover);text-de
 .infobox-row{display:flex;border-top:1px solid var(--border-light)}
 .infobox-label{width:90px;min-width:90px;padding:6px 8px;font-weight:700;color:var(--text2)}
 .infobox-value{padding:6px 8px;flex:1}
-.mw-heading{font-family:"Noto Serif",Georgia,serif;font-weight:400;border-bottom:1px solid var(--border-light);margin:24px 0 8px;padding-bottom:4px}
+.mw-heading{font-family:"MiSans Heavy","MiSans",sans-serif;font-weight:400;border-bottom:1px solid var(--border-light);margin:24px 0 8px;padding-bottom:4px}
 .mw-heading.h2{font-size:21px}
 .mw-heading .edit-link{font-size:12px;margin-left:8px;font-weight:400}
 .toc{border:1px solid var(--toc-border);background:var(--toc-bg);padding:12px 16px;margin:16px 0;display:inline-block;min-width:260px;font-size:13px}
@@ -99,7 +99,7 @@ p{margin:8px 0}
 </div>
 <div class="search-box"><input placeholder="搜索维鸡百科"></div>
 <div class="top-actions">
-<a href="#" onclick="toggleMusic()" id="musicBtn">💿</a>
+<a href="#" onclick="toggleMusic()" id="musicBtn" role="switch" aria-checked="false" aria-label="音乐开关">💿</a>
 <a href="#" onclick="toggleTheme()" id="themeToggle">🌙 深色</a>
 <a href="#contact">💬 讨论</a>
 </div>
@@ -409,10 +409,11 @@ var currentLang='zh';
 
 function applyLang(lang){
 currentLang=lang;
+document.documentElement.lang=lang;
 var d=T[lang];
 document.querySelectorAll('[data-i18n]').forEach(function(el){
 var key=el.dataset.i18n;
-if(d[key]) el.innerText=d[key];
+if(d[key]) el.textContent=d[key];
 });
 document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
 var key=el.dataset.i18nPlaceholder;
@@ -476,14 +477,14 @@ function toggleTheme(){
 var h=document.documentElement;
 h.classList.toggle('dark');
 var isDark=h.classList.contains('dark');
-document.getElementById('themeToggle').innerHTML=isDark?'☀️ 浅色':'🌙 深色';
+document.getElementById('themeToggle').textContent=isDark?'☀️ 浅色':'🌙 深色';
 localStorage.setItem('theme',isDark?'dark':'light');
 renderSponsors();
 }
 (function(){
 var s=localStorage.getItem('theme');
 var isDark=(s=='dark');
-if(isDark){document.getElementById('themeToggle').innerHTML='☀️ 浅色';}
+if(isDark){document.getElementById('themeToggle').textContent='☀️ 浅色';}
 })();
 
 (function(){
@@ -498,14 +499,14 @@ slides[cur].classList.add('active');
 }
 })();
 
-var musicOn=false;
+var musicOn=false,_fadeTimer=null;
 var bgm=document.getElementById('bgm');
 function toggleMusic(){
-if(!musicOn){bgm.play();document.getElementById('musicBtn').innerHTML='🎵';musicOn=true}
-else{bgm.pause();document.getElementById('musicBtn').innerHTML='💿';musicOn=false}
+if(!musicOn){bgm.play();document.getElementById('musicBtn').textContent='🎵';musicOn=true;document.getElementById('musicBtn').setAttribute('aria-checked','true')}
+else{bgm.pause();document.getElementById('musicBtn').textContent='💿';musicOn=false;document.getElementById('musicBtn').setAttribute('aria-checked','false')}
 }
-function fadeOutMusic(){if(!musicOn||!bgm)return;var v=bgm.volume,s=setInterval(function(){v-=.05;if(v<=0){bgm.pause();bgm.volume=0;clearInterval(s)}else{bgm.volume=v}},50)}
-function fadeInMusic(){if(!musicOn||!bgm)return;bgm.currentTime=bgm.currentTime||0;bgm.volume=0;bgm.play();var v=0,s=setInterval(function(){v+=.05;if(v>=1){bgm.volume=1;clearInterval(s)}else{bgm.volume=v}},50)}
+function fadeOutMusic(){if(!musicOn||!bgm)return;if(_fadeTimer){clearInterval(_fadeTimer)}var v=bgm.volume;_fadeTimer=setInterval(function(){v-=.05;if(v<=0){bgm.pause();bgm.volume=0;clearInterval(_fadeTimer);_fadeTimer=null}else{bgm.volume=v}},50)}
+function fadeInMusic(){if(!musicOn||!bgm)return;if(_fadeTimer){clearInterval(_fadeTimer)}bgm.currentTime=bgm.currentTime||0;bgm.volume=0;bgm.play();var v=0;_fadeTimer=setInterval(function(){v+=.05;if(v>=1){bgm.volume=1;clearInterval(_fadeTimer);_fadeTimer=null}else{bgm.volume=v}},50)}
 
 function openVideo(src){
 var ov=document.getElementById('videoOverlay');
@@ -514,6 +515,7 @@ v.src=src;
 fadeOutMusic();
 setTimeout(function(){ov.classList.add('active');v.play()},500);
 }
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeVideo()});
 function closeVideo(){
 var ov=document.getElementById('videoOverlay');
 var v=document.getElementById('modalVideo');
@@ -530,8 +532,8 @@ var message=document.getElementById('cmsg').value.trim();
 if(!name||!email||!message){alert(currentLang=='en'?'Please complete all fields':'请完整填写信息');return}
 var btn=document.querySelector('.contact-form button');
 btn.disabled=true;
-var orig=btn.innerText;
-btn.innerText=currentLang=='en'?'Sending...':'发送中...';
+var orig=btn.textContent;
+btn.textContent=currentLang=='en'?'Sending...':'发送中...';
 emailjs.send("service_79qkr6j","template_ye0l6au",{from_name:name,from_email:email,message:message})
 .then(function(){
 alert(currentLang=='en'?'Message sent successfully':'邮件发送成功');
@@ -540,7 +542,7 @@ document.getElementById('cemail').value='';
 document.getElementById('cmsg').value='';
 })
 .catch(function(){alert(currentLang=='en'?'Failed to send message':'发送失败')})
-.finally(function(){btn.disabled=false;btn.innerText=orig});
+.finally(function(){btn.disabled=false;btn.textContent=orig});
 }
 
 applyLang('zh');
