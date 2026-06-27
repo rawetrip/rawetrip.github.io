@@ -97,7 +97,7 @@ p{margin:8px 0}
 <span class="site-name">喂鸡百科</span>
 <span class="site-tag">自由的鸡百科</span>
 </div>
-<div class="search-box"><input placeholder="搜索喂鸡百科"></div>
+<div class="search-box"><input id="searchInput" placeholder="搜索喂鸡百科" onkeydown="if(event.key==='Enter')doSearch()"></div>
 <div class="top-actions">
 <a href="#" onclick="toggleMusic()" id="musicBtn" role="switch" aria-checked="false" aria-label="音乐开关">💿</a>
 <a href="#" onclick="toggleTheme()" id="themeToggle">🌙 深色</a>
@@ -500,6 +500,7 @@ slides[cur].classList.add('active');
 }
 })();
 
+function doSearch(){var q=document.getElementById('searchInput').value.trim().toLowerCase();var k=['安九','安九奥维奥','安九ovo','鸡','臭鸡','筹集','牢九','老九','爱丽丝','哈基丝','蔡洪浩','anjiu','anjiuovo','anjiu·ovieo','胡桃','无辜的胡桃','彩虹好','安霍鸡尾酒','安奥鸡尾酒'];for(var i=0;i<k.length;i++){if(q===k[i].toLowerCase()){location.href='anjiu-ovieo.html';return}}}
 var musicOn=false,_fadeTimer=null;
 var bgm=document.getElementById('bgm');
 function toggleMusic(){
