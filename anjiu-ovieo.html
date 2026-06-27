@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){var s=localStorage.getItem("theme");if(s=="dark")document.documentElement.className="dark"})()</script>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Anjiu Ovieo — 喂鸡百科</title>
+<meta name="description" content="安九·奥维奥 · 喂鸡百科，自由的鸡百科">
+<meta property="og:title" content="Anjiu Ovieo — 喂鸡百科">
+<meta property="og:description" content="安九·奥维奥 · 自由的鸡百科">
+<meta property="og:image" content="https://jbbfilm.xyz/images/Mate0.jpg">
+<meta property="og:url" content="https://jbbfilm.xyz">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Medium.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Bold.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Heavy.min.css" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f6f6f6;--paper:#fff;--text:#202122;--text2:#54595d;--link:#0645ad;--link-hover:#447ff5;--border:#a2a9b1;--border-light:#eaecf0;--sidebar-bg:#f8f9fa;--header-bg:#fff;--infobox-bg:#f8f9fa;--infobox-header:#eaecf0;--toc-bg:#f8f9fa;--toc-border:#a2a9b1;--btn-bg:#f8f9fa}
+.dark{--bg:#101418;--paper:#1b1d21;--text:#d8d9da;--text2:#a2a4a6;--link:#6da3f5;--link-hover:#8cb8ff;--border:#54595d;--border-light:#2a2d31;--sidebar-bg:#1b1d21;--header-bg:#1b1d21;--infobox-bg:#1b1d21;--infobox-header:#2a2d31;--toc-bg:#1b1d21;--toc-border:#54595d;--btn-bg:#2a2d31}
+body{background:var(--bg);color:var(--text);font-family:"MiSans Medium","MiSans",sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
+html{scroll-behavior:smooth}
+a{color:var(--link);text-decoration:none}a:hover{color:var(--link-hover);text-decoration:underline}a:visited{color:#795cb2}.dark a:visited{color:#a78bdb}
+#topbar{position:sticky;top:0;z-index:999;background:var(--header-bg);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:8px 20px;gap:16px}
+#topbar .logo-area{display:flex;align-items:center;gap:8px;white-space:nowrap}
+#topbar .wiki-logo{width:40px;height:40px;border-radius:50%}
+#topbar .site-name{font-size:18px;font-weight:700;color:var(--text)}
+#topbar .site-tag{font-size:11px;color:var(--text2)}
+#topbar .search-box{flex:1;max-width:500px}
+#topbar .search-box input{width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:2px;background:var(--paper);color:var(--text);font-size:13px;outline:none}
+#topbar .top-actions{display:flex;gap:12px;align-items:center;font-size:12px}
+#layout{display:flex;max-width:1400px;margin:0 auto}
+#sidebar{width:176px;min-width:176px;background:var(--sidebar-bg);border-right:1px solid var(--border);padding:16px 0;font-size:13px}
+#sidebar .sb-section{margin-bottom:8px}
+#sidebar .sb-title{padding:6px 12px;font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.05em}
+#sidebar a{display:block;padding:5px 12px;color:var(--link)}
+#sidebar a:hover{background:var(--infobox-header);text-decoration:none}
+#main{flex:1;min-width:0;padding:24px 32px 48px}#content{max-width:960px}
+.article-title{font-family:"MiSans Heavy","MiSans",sans-serif;font-size:28px;font-weight:400;border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:12px}
+.article-sub{font-size:13px;color:var(--text2);margin-bottom:20px}
+.infobox{float:right;width:270px;margin:0 0 20px 24px;border:1px solid var(--border);background:var(--infobox-bg);font-size:12px;line-height:1.6}
+.infobox-header{background:var(--infobox-header);padding:8px 12px;font-weight:700;text-align:center;font-size:14px}
+.infobox-image{padding:6px;text-align:center}.infobox-image img{max-width:100%;height:auto}
+.infobox-image .caption{font-size:11px;color:var(--text2);margin-top:4px}
+.infobox-row{display:flex;border-top:1px solid var(--border-light)}
+.infobox-label{width:90px;min-width:90px;padding:6px 8px;font-weight:700;color:var(--text2)}
+.infobox-value{padding:6px 8px;flex:1}
+.mw-heading{font-family:"MiSans Heavy","MiSans",sans-serif;font-weight:400;border-bottom:1px solid var(--border-light);margin:24px 0 8px;padding-bottom:4px}
+.mw-heading.h2{font-size:21px}
+.mw-heading .edit-link{font-size:12px;margin-left:8px;font-weight:400}
+.toc{border:1px solid var(--toc-border);background:var(--toc-bg);padding:12px 16px;margin:16px 0;display:inline-block;min-width:260px;font-size:13px}
+.toc-title{font-weight:700;margin-bottom:8px}
+.toc ul{list-style:none;padding-left:0}.toc li{margin:4px 0}
+p{margin:8px 0}
+.wikitable{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+.wikitable th,.wikitable td{border:1px solid var(--border-light);padding:8px 10px;text-align:left}
+.wikitable th{background:var(--infobox-header);font-weight:700}
+.wikitable tr:hover{background:var(--infobox-header)}
+.film-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:12px 0}
+.film-card{border:1px solid var(--border-light);background:var(--paper);overflow:hidden;cursor:pointer;transition:.2s}
+.film-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.1);transform:translateY(-2px)}
+.dark .film-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.4)}
+.film-card img{width:100%;height:180px;object-fit:cover}
+.film-card .film-label{padding:8px 10px;font-size:13px;font-weight:500}
+.sponsor-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.sponsor-item{border:1px solid var(--border-light);background:var(--paper);padding:20px 12px;display:flex;align-items:center;justify-content:center;height:80px;transition:.2s}
+.sponsor-item:hover{background:var(--infobox-header)}
+.sponsor-item img{max-width:85%;max-height:60px;object-fit:contain}
+.contact-form{max-width:600px;margin:12px 0}
+.contact-form input,.contact-form textarea{width:100%;padding:10px;margin-bottom:10px;border:1px solid var(--border);border-radius:2px;background:var(--paper);color:var(--text);font-family:inherit;font-size:13px;outline:none}
+.contact-form textarea{min-height:140px;resize:vertical}
+.contact-form button{padding:10px 24px;border:1px solid var(--border);border-radius:2px;cursor:pointer;background:var(--btn-bg);color:var(--text);font-family:inherit;font-size:13px;font-weight:700}
+.contact-form button:hover{background:var(--infobox-header)}
+.reflist{margin:16px 0;font-size:11px;color:var(--text2)}.reflist ol{margin-left:20px}.reflist li{margin:4px 0}
+.location-box{position:relative;height:400px;overflow:hidden;margin:12px 0;border:1px solid var(--border-light)}
+.location-slide{position:absolute;inset:0;opacity:0;transition:opacity 2s}
+.location-slide.active{opacity:1}.location-slide img{width:100%;height:100%;object-fit:cover}
+.location-caption{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.7);color:#fff;padding:12px 16px;font-size:13px;z-index:2}
+.breadcrumb{font-size:12px;color:var(--text2);margin-bottom:8px}
+.disclaimer{font-size:11px;color:var(--text2);border-top:1px solid var(--border-light);margin-top:32px;padding-top:8px;text-align:center}
+@media(max-width:768px){#layout{flex-direction:column}#sidebar{width:100%;min-width:100%;border-right:none;border-bottom:1px solid var(--border);padding:8px 12px}#sidebar .sb-title{display:none}#sidebar a{display:inline-block;padding:4px 8px}#main{padding:16px}.infobox{float:none;width:100%;margin:0 0 20px}.film-gallery{grid-template-columns:repeat(2,1fr)}.sponsor-grid{grid-template-columns:repeat(3,1fr)}}
+.video-overlay{position:fixed;inset:0;background:rgba(0,0,0,.94);z-index:99999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s}
+.video-overlay.active{opacity:1;pointer-events:auto}
+.video-overlay video{max-width:95vw;max-height:90vh;border-radius:4px}
+.video-close{position:absolute;top:28px;right:32px;font-size:36px;color:#fff;cursor:pointer;z-index:100000;background:none;border:none;opacity:.7;transition:.3s}
+.video-close:hover{opacity:1;transform:scale(1.15)}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+<div class="logo-area">
+<svg class="wiki-logo" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="#ddd"/><text x="20" y="26" text-anchor="middle" font-size="20">🐔</text></svg>
+<span class="site-name">喂鸡百科</span>
+<span class="site-tag">自由的鸡百科</span>
+</div>
+<div class="search-box"><input placeholder="搜索喂鸡百科"></div>
+<div class="top-actions">
+<a href="#" onclick="toggleMusic()" id="musicBtn" role="switch" aria-checked="false" aria-label="音乐开关">💿</a>
+<a href="#" onclick="toggleTheme()" id="themeToggle">🌙 深色</a>
+
+</div>
+</div>
+
+<div id="layout">
+<nav id="sidebar">
+<div class="sb-section"><div class="sb-title">导航</div>
+<a href="#" class="active">🐔 首页</a>
+<a href="#about">📖 关于</a>
+<a href="#vision">🔭 愿景</a>
+</div>
+<div class="sb-section"><div class="sb-title">内容</div>
+<a href="#early">🌱 早年经历</a>
+<a href="#events">📋 主要事迹</a>
+<a href="#notes">📝 注释</a>
+<a href="#refs">📚 参考文献</a>
+</div>
+<div class="sb-section"><div class="sb-title">相关条目</div>
+<a href="index.html">🏢 JBB FILM</a>
+<a href="google.html">🌐 Google</a>
+</div>
+</nav>
+
+<div id="main"><div id="content">
+
+<div class="breadcrumb"><a href="#" data-i18n="href="index.html">🐔 首页</a> › <span>条目</span> › <span>Anjiu Ovieo</span></div>
+<h1 class="article-title" >Anjiu Ovieo</h1>
+<div class="article-sub">喂鸡百科，自由的鸡百科</div>
+
+<div class="infobox">
+<div class="infobox-header">Anjiu Ovieo</div>
+<div class="infobox-image"><img src="images/Mate0.jpg" loading="lazy" decoding="async" alt="Anjiu Ovieo"><div class="caption">安九·奥维奥</div></div>
+<div class="infobox-row"><div class="infobox-label">本名</div><div class="infobox-value">蔡洪浩</div></div>
+<div class="infobox-row"><div class="infobox-label">别名</div><div class="infobox-value">安九 · 安九OVO</div></div>
+<div class="infobox-row"><div class="infobox-label">出生</div><div class="infobox-value">2010年4月1日<br>中国 重庆</div></div>
+<div class="infobox-row"><div class="infobox-label">国籍</div><div class="infobox-value">中国</div></div>
+<div class="infobox-row"><div class="infobox-label">职业</div><div class="infobox-value">微电影导演</div></div>
+<div class="infobox-row"><div class="infobox-label">活跃时期</div><div class="infobox-value">2025年–至今</div></div>
+<div class="infobox-row"><div class="infobox-label">知名于</div><div class="infobox-value">铸币聚集地第一唐人 · 各种槽点</div></div>
+<div class="infobox-row"><div class="infobox-label">形象</div><div class="infobox-value">天童爱丽丝 · 鸡</div></div>
+</div>
+
+<div class="toc"><div class="toc-title">目录</div><ul>
+<li><a href="#early">1 早年经历</a></li>
+<li><a href="#events">2 主要事迹</a></li>
+<li><a href="#notes">3 注释</a></li>
+<li><a href="#refs">4 参考文献</a></li>
+</ul></div>
+
+<p style="font-size:15px;line-height:1.8;margin-bottom:16px"><b>安九·奥维奥</b>（英语：<b>Anjiu Ovieo</b>），原名<b>蔡洪浩</b>（2010年4月1日 — 至今），重庆市本地人，老吃家，微电影导演，铸币聚集地第一唐人，他以各种槽点而著名。</p>
+
+<h2 class="mw-heading h2" id="early">早年经历<span class="edit-link"><a href="#">[编辑]</a></span></h2>
+<p>经王招笑引荐加入"铸币聚集地"。原人设为《蔚蓝档案》中才羽桃井的形象，后因与王招笑的才羽桃井形象雷同导致其他人难以区分，后改为同属《蔚蓝档案》中的天童爱丽丝。结识：南瓜，makesade，后藤等人之后这个形象便固定下来。</p>
+<p>2025年中旬公开承认了网名：安九OVO（安九奥维奥）。2025年中下旬因网名与CS:GO职业退役选手梁卓(advent)别称"259"中的"9"相似，被冠以与advent一样的家禽—鸡形象，本人后续也承认小鸡的形象，此后常活跃于"铸币聚集地"语音频道当中。</p>
+
+<h2 class="mw-heading h2" id="events">主要事迹<span class="edit-link"><a href="#">[编辑]</a></span></h2>
+
+<h3 class="mw-heading">标记炸弹安放点B<span class="edit-link"><a href="#">[编辑]</a></span></h3>
+<p>2025年7月游玩《反恐精英2》（Counter-Strike:2）时，王招笑看到地图阿努比斯（de_anubis）中CT方出生点海报的炸弹安放点B时，突发奇想并询问安九："爱丽丝...你...你有这个* 标记炸弹安放点B *吗。"，由于此行为极具幽默感，被收录进了亿只屑南瓜视频频道里的《一个非常好的CS2™》中。</p>
+
+<h3 class="mw-heading">一生的好兄弟<span class="edit-link"><a href="#">[编辑]</a></span></h3>
+<p>2025年7月于"铸币聚集地"语音频道中游玩《三角洲行动》，因情绪太过激动便做出抽象行为，在游玩时队友makesade出现技术性失误时对其进行质问，并力挺后藤，为表达兄弟情深使用了Google翻译中的默认英文人声播放了语句"A lifelong good brother"与默认中文人声的语句"一生的好兄弟"，由于此行为极具幽默感和落差感，被收录进了亿只屑南瓜视频频道里的《新 硬 警 故 事》中，事后并没有兑现兄弟情深而去"趴窝"数十天引起热议。</p>
+
+<h3 class="mw-heading">手机砸蛋<span class="edit-link"><a href="#">[编辑]</a></span></h3>
+<p>2025年年末于"铸币聚集地"语音频道中因个人原因在床上"趴窝"时，但幼年痴呆，导致手机脱手砸到睾丸引发疼痛，说出了惊世骇俗的一句："哦~我手机砸蛋上了"。</p>
+
+<h3 class="mw-heading">磕到Jio<span class="edit-link"><a href="#">[编辑]</a></span></h3>
+<p>2026年年初于"铸币聚集地"语音频道中游玩《侠盗猎车手V》，因外界因素需要暂时离开座位，但用力过猛，导致脚部与硬物发生碰撞引发疼痛，便发出哀嚎："哦~我磕到Jio了"。</p>
+
+<h3 class="mw-heading">来！<span class="edit-link"><a href="#">[编辑]</a></span></h3>
+<p>2026年5月在床上"趴窝"时，接到来自韩堡戈（Hanburger）的电话，邀请游玩《守望先锋®》（《OverWatch®》），实际上却是韩堡戈为了诱骗其上线游玩《反恐精英2》而做出的行为，而安九奥维奥却毫不犹豫地答应了韩堡戈的邀请，并说出了一声浑浊又坚定的："来！"，这一反应逗笑了在场的所有人并成为一个人尽皆知的内部梗。</p>
+
+<h3 class="mw-heading">谁给我麦闭了！<span class="edit-link"><a href="#">[编辑]</a></span></h3>
+<p>2026年5月初于"铸币聚集地"语音频道中因幼年痴呆导致没有发现自己的麦克风是关闭状态，错使频道内其余人认为正在和<b>雷霆大汗脚</b>通话，并调侃他的行为，经神秘人的提醒发现自己在说单口相声，并大喊："谁给我麦闭了！"。</p>
+
+<div style="text-align:center;margin:16px 0;padding:12px;background:var(--infobox-bg);border:1px solid var(--border-light);border-radius:4px;font-size:13px">
+📢 渝中区反诈中心 提醒您：谨防电信诈骗
+</div>
+
+<h2 class="mw-heading h2" id="notes">注释<span class="edit-link"><a href="#">[编辑]</a></span></h2>
+<div class="notelist" style="margin:16px 0;font-size:12px;color:var(--text2)"><ol>
+<li><b>铸币聚集地</b> — 南瓜的KOOK频道</li>
+<li><b>雷霆大汗脚</b> — 安九·奥维奥的女性朋友</li>
+<li><b>蛋</b> — 安九的睾丸</li>
+</ol></div>
+
+<h2 class="mw-heading h2" id="refs">参考文献<span class="edit-link"><a href="#">[编辑]</a></span></h2>
+<div class="reflist"><ol>
+<li><a href="https://zh.wikipedia.org/wiki/%E9%B8%A1">鸡</a> — 维基百科</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%8F%8D%E6%81%90%E7%B2%BE%E8%8B%B12">反恐精英2</a> — 维基百科</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E9%AC%A5%E9%99%A3%E7%89%B9%E6%94%BB">守望先锋</a> — 维基百科</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E4%BF%A0%E7%9B%9C%E7%8D%B5%E8%BB%8A%E6%89%8BV">侠盗猎车手V</a> — 维基百科</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E4%B8%89%E8%A7%92%E6%B4%B2%E8%A1%8C%E5%8A%A8">三角洲行动</a> — 维基百科</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E8%94%9A%E8%97%8D%E6%AA%94%E6%A1%88">蔚蓝档案</a> — 维基百科</li>
+<li><a href="https://www.hltv.org/player/8600/advent">梁卓 (advent)</a> — HLTV</li>
+<li><a href="https://www.bilibili.com/video/BV1t4AKe8EAA">《一个非常好的CS2》</a> — 亿只屑南瓜 · bilibili</li>
+<li><a href="https://www.bilibili.com/video/BV1bR8wzEEao">《新 硬 警 故 事》</a> — 亿只屑南瓜 · bilibili</li>
+<li><a href="https://www.toutiao.com/zixun/7536734777149196329/">趴窝</a> — 头条百科</li>
+</ol></div>
+
+<div class="disclaimer" data-i18n="disclaimer"></div>
+
+</div></div></div>
+
+<audio id="bgm" loop preload="none"><source src="audio/music.mp3" type="audio/mpeg"></audio>
+
+<div class="video-overlay" id="videoOverlay" onclick="closeVideo()">
+<button class="video-close" onclick="closeVideo()">✕</button>
+<video id="modalVideo" controls onclick="event.stopPropagation()" onended="closeVideo()"></video>
+</div>
+
+<script>
+var musicOn=false,_fadeTimer=null;
+var bgm=document.getElementById('bgm');
+function toggleMusic(){
+if(!musicOn){bgm.play();document.getElementById('musicBtn').textContent='🎵';musicOn=true;document.getElementById('musicBtn').setAttribute('aria-checked','true')}
+else{bgm.pause();document.getElementById('musicBtn').textContent='💿';musicOn=false;document.getElementById('musicBtn').setAttribute('aria-checked','false')}
+}
+function fadeOutMusic(){if(!musicOn||!bgm)return;if(_fadeTimer){clearInterval(_fadeTimer)}var v=bgm.volume;_fadeTimer=setInterval(function(){v-=.05;if(v<=0){bgm.pause();bgm.volume=0;clearInterval(_fadeTimer);_fadeTimer=null}else{bgm.volume=v}},50)}
+function fadeInMusic(){if(!musicOn||!bgm)return;if(_fadeTimer){clearInterval(_fadeTimer)}bgm.currentTime=bgm.currentTime||0;bgm.volume=0;bgm.play();var v=0;_fadeTimer=setInterval(function(){v+=.05;if(v>=1){bgm.volume=1;clearInterval(_fadeTimer);_fadeTimer=null}else{bgm.volume=v}},50)}
+function toggleTheme(){
+var h=document.documentElement;
+h.classList.toggle('dark');
+var isDark=h.classList.contains('dark');
+document.getElementById('themeToggle').textContent=isDark?'☀️ 浅色':'🌙 深色';
+localStorage.setItem('theme',isDark?'dark':'light');
+}
+(function(){
+var s=localStorage.getItem('theme');
+var isDark=(s=='dark');
+if(isDark){document.getElementById('themeToggle').textContent='☀️ 浅色';}
+})();
+</script>
+
+</body>
+</html>
