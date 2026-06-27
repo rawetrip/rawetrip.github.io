@@ -22,7 +22,7 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Inter,sans-serif;
+font-family:Inter,"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
 }
 
 html{
@@ -1046,17 +1046,17 @@ document.querySelectorAll('[data-i18n]').forEach(el=>{
 const key=el.dataset.i18n;
 
 if(translations[lang][key]){
-el.innerText=translations[lang][key];
+el.textContent=translations[lang][key];
 }
 
 });
 
 for(let i=0;i<8;i++){
 
-document.getElementById(`team${i}_role`).innerText=
+document.getElementById(`team${i}_role`).textContent=
 translations[lang][`team${i}_role`];
 
-document.getElementById(`team${i}_desc`).innerText=
+document.getElementById(`team${i}_desc`).textContent=
 translations[lang][`team${i}_desc`];
 
 }
@@ -1116,7 +1116,7 @@ const btn=document.getElementById('send-btn');
 
 btn.disabled=true;
 
-btn.innerText=
+btn.textContent=
 currentLang==='en'
 ?'Sending...'
 :'发送中...';
@@ -1155,7 +1155,7 @@ alert(currentLang==='en'
 
 btn.disabled=false;
 
-btn.innerText=
+btn.textContent=
 translations[currentLang].send_btn;
 
 });
@@ -1184,8 +1184,8 @@ let musicOn = false, _fadeTimer = null;
 const bgm = document.getElementById("bgm");
 const btn = document.getElementById("musicBtn");
 function toggleMusic(){
-  if(!musicOn){ bgm.play(); btn.innerText = "🎵"; btn.setAttribute("aria-checked","true"); musicOn = true; }
-  else{ bgm.pause(); btn.innerText = "💿"; btn.setAttribute("aria-checked","false"); musicOn = false; }
+  if(!musicOn){ bgm.play(); btn.textContent = "🎵"; btn.setAttribute("aria-checked","true"); musicOn = true; }
+  else{ bgm.pause(); btn.textContent = "💿"; btn.setAttribute("aria-checked","false"); musicOn = false; }
 }
 // 音乐淡入/淡出
 function fadeOutMusic(){ if(!musicOn||!bgm)return; if(_fadeTimer){clearInterval(_fadeTimer)} var v=bgm.volume;_fadeTimer=setInterval(function(){v-=.05;if(v<=0){bgm.pause();bgm.volume=0;clearInterval(_fadeTimer);_fadeTimer=null}else{bgm.volume=v}},50) }
