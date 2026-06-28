@@ -438,7 +438,7 @@ var d=T[lang];
 var tbody=document.querySelector('#teamTable tbody');
 var h='';
 for(var i=0;i<8;i++){
-var nameHtml=i==0?'<a href="anjiu-ovieo.html"><b>'+teamNames[i]+'</b></a>':'<b>'+teamNames[i]+'</b>';
+var links={0:'anjiu-ovieo.html',1:'Makesade.html'};var nameHtml=links[i]?'<a href="'+links[i]+'"><b>'+teamNames[i]+'</b></a>':'<b>'+teamNames[i]+'</b>';
 h+='<tr><td style="text-align:center;width:96px"><img src="images/Mate'+i+'.jpg" loading="lazy" decoding="async" style="width:64px;height:64px;object-fit:cover;border-radius:50%;display:block;margin:0 auto 4px" alt="">'+nameHtml+'</td><td>'+d['team'+i+'_role']+'</td><td>'+d['team'+i+'_desc']+'</td></tr>';
 }
 tbody.innerHTML=h;
