@@ -223,11 +223,11 @@ sup a:hover{text-decoration:underline}
 var musicOn=false,_fadeTimer=null;
 var bgm=document.getElementById('bgm');
 function toggleMusic(){
-if(!musicOn){bgm.play();document.getElementById('musicBtn').textContent='🎵';musicOn=true;document.getElementById('musicBtn').setAttribute('aria-checked','true')}
+if(!musicOn){bgm.play().catch(function(){});document.getElementById('musicBtn').textContent='🎵';musicOn=true;document.getElementById('musicBtn').setAttribute('aria-checked','true')}
 else{bgm.pause();document.getElementById('musicBtn').textContent='💿';musicOn=false;document.getElementById('musicBtn').setAttribute('aria-checked','false')}
 }
 function fadeOutMusic(){if(!musicOn||!bgm)return;if(_fadeTimer){clearInterval(_fadeTimer)}var v=bgm.volume;_fadeTimer=setInterval(function(){v-=.05;if(v<=0){bgm.pause();bgm.volume=0;clearInterval(_fadeTimer);_fadeTimer=null}else{bgm.volume=v}},50)}
-function fadeInMusic(){if(!musicOn||!bgm)return;if(_fadeTimer){clearInterval(_fadeTimer)}bgm.currentTime=bgm.currentTime||0;bgm.volume=0;bgm.play();var v=0;_fadeTimer=setInterval(function(){v+=.05;if(v>=1){bgm.volume=1;clearInterval(_fadeTimer);_fadeTimer=null}else{bgm.volume=v}},50)}
+function fadeInMusic(){if(!musicOn||!bgm)return;if(_fadeTimer){clearInterval(_fadeTimer)}bgm.currentTime=bgm.currentTime||0;bgm.volume=0;bgm.play().catch(function(){});var v=0;_fadeTimer=setInterval(function(){v+=.05;if(v>=1){bgm.volume=1;clearInterval(_fadeTimer);_fadeTimer=null}else{bgm.volume=v}},50)}
 
 function openVideo(src){
 var ov=document.getElementById('videoOverlay');
@@ -260,7 +260,7 @@ var isDark=(s=='dark');
 if(isDark){document.getElementById('themeToggle').textContent='☀️ 浅色';}
 })();
 
-function doSearch(){var q=document.getElementById('searchInput').value.trim().toLowerCase();var k=['安九','安九奥维奥','安九ovo','鸡','臭鸡','筹集','牢九','老九','爱丽丝','哈基丝','蔡洪浩','anjiu','anjiuovo','anjiu·ovieo','胡桃','无辜的胡桃','彩虹好','安霍鸡尾酒','安奥鸡尾酒'];for(var i=0;i<k.length;i++){if(q===k[i].toLowerCase()){location.href='anjiu-ovieo.html';return}}}
+function doSearch(){var q=document.getElementById('searchInput').value.trim().toLowerCase();var k=['安九','安九奥维奥','安九ovo','鸡','臭鸡','筹集','牢九','老九','爱丽丝','哈基丝','蔡洪浩','anjiu','anjiuovo','anjiu·ovieo','胡桃','无辜的胡桃','彩虹好','安霍鸡尾酒','安奥鸡尾酒'];for(var i=0;i<k.length;i++){if(q===k[i].toLowerCase()){location.href='anjiu-ovieo.html';return}}var mk=['马可赛德','makesade','马克萨德','吗的谁卡','制作悲伤','马德赛可','御坂','俊人13'];for(var i=0;i<mk.length;i++){if(q===mk[i].toLowerCase()){location.href='Makesade.html';return}}}
 
 // Page preview popup on hover
 (function(){
