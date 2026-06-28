@@ -13,7 +13,6 @@
 <meta property="og:url" content="https://jbbfilm.xyz">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Medium.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Bold.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Heavy.min.css" rel="stylesheet">
@@ -106,7 +105,7 @@ sup a:hover{text-decoration:underline}
 <span class="site-name">喂鸡百科</span>
 <span class="site-tag">自由的鸡百科</span>
 </div>
-<div class="search-box"><input placeholder="搜索喂鸡百科"></div>
+<div class="search-box"><input id="searchInput" placeholder="搜索喂鸡百科" onkeydown="if(event.key==='Enter')doSearch()"></div>
 <div class="top-actions">
 <a href="#" onclick="toggleMusic()" id="musicBtn" role="switch" aria-checked="false" aria-label="音乐开关">💿</a>
 <a href="#" onclick="toggleTheme()" id="themeToggle">🌙 深色</a>
@@ -129,6 +128,7 @@ sup a:hover{text-decoration:underline}
 </div>
 <div class="sb-section"><div class="sb-title">相关条目</div>
 <a href="index.html">🏢 喂鸡百科</a>
+<a href="anjiu-ovieo.html">🐔 Anjiu Ovieo</a>
 </div>
 </nav>
 
@@ -206,7 +206,7 @@ sup a:hover{text-decoration:underline}
 <li id="ref9"><a href="https://music.163.com/song?id=4875127">《美丽的神话》</a> — 网易云音乐</li>
 </ol></div>
 
-<div class="disclaimer"></div>
+<div class="disclaimer">本页面由喂鸡百科编辑者维护。内容遵循 CC BY-SA 协议。</div>
 
 </div></div></div>
 
@@ -226,6 +226,23 @@ else{bgm.pause();document.getElementById('musicBtn').textContent='💿';musicOn=
 }
 function fadeOutMusic(){if(!musicOn||!bgm)return;if(_fadeTimer){clearInterval(_fadeTimer)}var v=bgm.volume;_fadeTimer=setInterval(function(){v-=.05;if(v<=0){bgm.pause();bgm.volume=0;clearInterval(_fadeTimer);_fadeTimer=null}else{bgm.volume=v}},50)}
 function fadeInMusic(){if(!musicOn||!bgm)return;if(_fadeTimer){clearInterval(_fadeTimer)}bgm.currentTime=bgm.currentTime||0;bgm.volume=0;bgm.play();var v=0;_fadeTimer=setInterval(function(){v+=.05;if(v>=1){bgm.volume=1;clearInterval(_fadeTimer);_fadeTimer=null}else{bgm.volume=v}},50)}
+
+function openVideo(src){
+var ov=document.getElementById('videoOverlay');
+var v=document.getElementById('modalVideo');
+v.src=src;
+fadeOutMusic();
+setTimeout(function(){ov.classList.add('active');v.play()},500);
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeVideo()});
+function closeVideo(){
+var ov=document.getElementById('videoOverlay');
+var v=document.getElementById('modalVideo');
+ov.classList.remove('active');
+v.pause();v.src='';
+fadeInMusic();
+}
+
 function toggleTheme(){
 var h=document.documentElement;
 h.classList.toggle('dark');
@@ -238,6 +255,8 @@ var s=localStorage.getItem('theme');
 var isDark=(s=='dark');
 if(isDark){document.getElementById('themeToggle').textContent='☀️ 浅色';}
 })();
+
+function doSearch(){var q=document.getElementById('searchInput').value.trim().toLowerCase();var k=['安九','安九奥维奥','安九ovo','鸡','臭鸡','筹集','牢九','老九','爱丽丝','哈基丝','蔡洪浩','anjiu','anjiuovo','anjiu·ovieo','胡桃','无辜的胡桃','彩虹好','安霍鸡尾酒','安奥鸡尾酒'];for(var i=0;i<k.length;i++){if(q===k[i].toLowerCase()){location.href='anjiu-ovieo.html';return}}}
 
 // Page preview popup on hover
 (function(){
@@ -265,7 +284,7 @@ function showPopup(e, href){
 function hidePopup(){popup.classList.remove('show');}
 document.querySelectorAll('a[href$=".html"]').forEach(function(a){
   if(pages[a.getAttribute('href')]){
-    a.addEventListener('mouseenter',function(e){clearTimeout(timer);timer=setTimeout(function(){showPopup(e,a.getAttribute('href'));},300);});
+    a.addEventListener('mouseenter',function(e){clearTimeout(timer);timer=setTimeout(function(){showPopup(e,a.getAttribute('href'));},250);});
     a.addEventListener('mouseleave',function(){clearTimeout(timer);hidePopup();});
   }
 });

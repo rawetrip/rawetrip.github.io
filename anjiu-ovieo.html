@@ -212,7 +212,6 @@ sup a:hover{text-decoration:underline}
 <li id="ref8"><a href="https://www.toutiao.com/zixun/7536734777149196329/">趴窝</a> — 头条百科</li>
 <li id="ref9"><a href="https://zh.wikipedia.org/wiki/%E4%BF%A0%E7%9B%9C%E7%8D%B5%E8%BB%8A%E6%89%8BV">侠盗猎车手V</a> — 维基百科</li>
 <li id="ref10"><a href="https://zh.wikipedia.org/wiki/%E9%AC%A5%E9%99%A3%E7%89%B9%E6%94%BB">守望先锋</a> — 维基百科</li>
-<li id="ref11"><a href="https://en.wikipedia.org/wiki/Peak_(video_game)">《PEAK》</a> — 维基百科</li>
 </ol></div>
 
 <div class="disclaimer" data-i18n="disclaimer"></div>
@@ -274,7 +273,7 @@ function showPopup(e, href){
 function hidePopup(){popup.classList.remove('show');}
 document.querySelectorAll('a[href$=".html"]').forEach(function(a){
   if(pages[a.getAttribute('href')]){
-    a.addEventListener('mouseenter',function(e){clearTimeout(timer);timer=setTimeout(function(){showPopup(e,a.getAttribute('href'));},300);});
+    a.addEventListener('mouseenter',function(e){clearTimeout(timer);timer=setTimeout(function(){showPopup(e,a.getAttribute('href'));},250);});
     a.addEventListener('mouseleave',function(){clearTimeout(timer);hidePopup();});
   }
 });
