@@ -235,7 +235,8 @@ sup a:hover{text-decoration:underline}
 
 <div class="video-overlay" id="videoOverlay" onclick="closeVideo()">
 <button class="video-close" onclick="closeVideo()">✕</button>
-<video id="modalVideo" controls onclick="event.stopPropagation()" onended="closeVideo()"></video>
+<div class="video-spinner" id="videoSpinner" style="color:#fff;font-size:16px">⏳ 加载中...</div>
+<video id="modalVideo" controls onclick="event.stopPropagation()" onended="closeVideo()" style="display:none" oncanplay="document.getElementById('videoSpinner').style.display='none';this.style.display='block';this.play()"></video>
 </div>
 
 <script>
@@ -251,9 +252,11 @@ function fadeInMusic(){if(!musicOn||!bgm)return;if(_fadeTimer){clearInterval(_fa
 function openVideo(src){
 var ov=document.getElementById('videoOverlay');
 var v=document.getElementById('modalVideo');
+document.getElementById('videoSpinner').style.display='block';
+v.style.display='none';
 v.src=src;
+ov.classList.add('active');
 fadeOutMusic();
-setTimeout(function(){ov.classList.add('active');v.play()},500);
 }
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeVideo()});
 function closeVideo(){
