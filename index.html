@@ -220,7 +220,7 @@ sup a:hover{text-decoration:underline}
 <div class="video-overlay" id="videoOverlay" onclick="closeVideo()">
 <button class="video-close" onclick="closeVideo()">✕</button>
 <div class="video-spinner" id="videoSpinner" style="color:#fff;font-size:16px">⏳ 加载中...</div>
-<video id="modalVideo" controls onclick="event.stopPropagation()" onended="closeVideo()" style="display:none" oncanplay="document.getElementById('videoSpinner').style.display='none';this.style.display='block';this.play()"></video>
+<video id="modalVideo" controls playsinline preload="auto" onclick="event.stopPropagation()" onended="closeVideo()" style="display:none" oncanplay="document.getElementById('videoSpinner').style.display='none';this.style.display='block';this.play()" onprogress="var p=this.buffered;if(p.length){var pct=Math.round(p.end(p.length-1)/this.duration*100);var s=document.getElementById('videoSpinner');s.textContent='⏳ 加载中... '+pct+'%'}"></video>
 </div>
 
 <script>
