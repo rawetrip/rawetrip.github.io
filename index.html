@@ -9,14 +9,13 @@
 <meta name="description" content="喂鸡百科 影视工作室 · 喂鸡百科，自由的鸡百科">
 <meta property="og:title" content="喂鸡百科 — 喂鸡百科">
 <meta property="og:description" content="喂鸡百科 影视工作室 · 自由的鸡百科">
-<meta property="og:image" content="https://jbbfilm.xyz/images/Team.png">
+<meta property="og:image" content="https://jbbfilm.xyz/images/Team.webp">
 <meta property="og:url" content="https://jbbfilm.xyz">
 <meta property="og:type" content="website">
-<link rel="preconnect" href="https://cdn.jsdelivr.net">
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Medium.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Bold.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Heavy.min.css" rel="stylesheet">
+<script src="js/email.min.js"></script>
+<link href="fonts/MiSans-Medium.min.css" rel="stylesheet">
+<link href="fonts/MiSans-Bold.min.css" rel="stylesheet">
+<link href="fonts/MiSans-Heavy.min.css" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#f6f6f6;--paper:#fff;--text:#202122;--text2:#54595d;--link:#0645ad;--link-hover:#447ff5;--border:#a2a9b1;--border-light:#eaecf0;--sidebar-bg:#f8f9fa;--header-bg:#fff;--infobox-bg:#f8f9fa;--infobox-header:#eaecf0;--toc-bg:#f8f9fa;--toc-border:#a2a9b1;--btn-bg:#f8f9fa}
@@ -150,7 +149,7 @@ sup a:hover{text-decoration:underline}
 
 <div class="infobox">
 <div class="infobox-header">喂鸡百科</div>
-<div class="infobox-image"><img src="images/Team.png" loading="lazy" decoding="async" alt="喂鸡百科"><div class="caption" data-i18n="ib_caption"></div></div>
+<div class="infobox-image"><img src="images/Team.webp" loading="lazy" decoding="async" alt="喂鸡百科"><div class="caption" data-i18n="ib_caption"></div></div>
 <div class="infobox-row"><div class="infobox-label" data-i18n="ib_label_hq">总部</div><div class="infobox-value" data-i18n="ib_hq"></div></div>
 <div class="infobox-row"><div class="infobox-label" data-i18n="ib_label_est">成立</div><div class="infobox-value">2020</div></div>
 <div class="infobox-row"><div class="infobox-label" data-i18n="ib_label_web">官网</div><div class="infobox-value"><a href="https://jbbfilm.xyz">jbbfilm.xyz</a></div></div>
@@ -220,7 +219,7 @@ sup a:hover{text-decoration:underline}
 <div class="video-overlay" id="videoOverlay" onclick="closeVideo()">
 <button class="video-close" onclick="closeVideo()">✕</button>
 <div class="video-spinner" id="videoSpinner" style="color:#fff;font-size:16px">⏳ 加载中...</div>
-<video id="modalVideo" controls playsinline preload="auto"onclick="event.stopPropagation()" onended="closeVideo()" style="display:none" oncanplay="document.getElementById('videoSpinner').style.display='none';this.style.display='block';this.play()"></video>
+<video id="modalVideo" controls playsinline preload="none"onclick="event.stopPropagation()" onended="closeVideo()" style="display:none" oncanplay="document.getElementById('videoSpinner').style.display='none';this.style.display='block';this.play()"></video>
 </div>
 
 <script>

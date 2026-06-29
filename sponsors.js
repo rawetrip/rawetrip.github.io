@@ -2,25 +2,25 @@
 var g=document.getElementById("sponsor-grid");
 if(!g) return;
 var s=[
- ["Los Pollos Hermanos","lpollos","png",0,"transform:scale(1.125)"],
- ["HHM","hhm","png",0,"transform:scale(1.5)"],
- ["JMM","jmm","png",0,"transform:scale(1.5)"],
- ["Vought International","vought","png",0,"transform:scale(1.5)"],
+ ["Los Pollos Hermanos","lpollos","webp",0,"transform:scale(1.125)"],
+ ["HHM","hhm","webp",0,"transform:scale(1.5)"],
+ ["JMM","jmm","webp",0,"transform:scale(1.5)"],
+ ["Vought International","vought","webp",0,"transform:scale(1.5)"],
  ["Los Santos Customs","lsc","webp",0,""],
  ["Black Mesa","blackmesa","svg",1,""],
  ["Aperture Science","aperture","webp",0,""],
  ["Arasaka Corporation","arasaka","webp",0,"transform:scale(1.75)"],
- ["Stark Industries","stark","png",1,""],
+ ["Stark Industries","stark","webp",1,""],
  ["Merryweather Security","merryweather","webp",0,""],
  ["LSPD","lspd","webp",0,""],
- ["NERV","nerv","png",1,""],
+ ["NERV","nerv","webp",1,""],
  ["HAVVK","havvk","webp",1,"transform:scale(1.5)"],
- ["Kiroshi Optics","kiroshi","png",0,""],
- ["Trauma Team","trauma","png",0,"margin-left:-5px"],
+ ["Kiroshi Optics","kiroshi","webp",0,""],
+ ["Trauma Team","trauma","webp",0,"margin-left:-5px"],
  ["Militech","militech","webp",1,""],
  ["Hammond Robotics","hammond","webp",1,"margin-left:95px;transform:scale(1.3125)"],
  ["ATLAS","atlas","webp",0,""],
- ["Vault-Tec","vaulttec","png",1,""],
+ ["Vault-Tec","vaulttec","webp",1,""],
  ["Umbrella Corp","umbrella","webp",0,"transform:scale(2)"]
 ];
 var h="";
