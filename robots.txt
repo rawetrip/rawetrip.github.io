@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /videos/
+Disallow: /audio/
+Disallow: /fonts/
+Disallow: /js/
+Allow: /
