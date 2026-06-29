@@ -164,7 +164,7 @@
 <div class="video-overlay" id="videoOverlay" onclick="closeVideo()">
 <button class="video-close" onclick="closeVideo()">✕</button>
 <div class="video-spinner" id="videoSpinner" style="color:#fff;font-size:16px">⏳ 加载中...</div>
-<video id="modalVideo" controls playsinline preload="none"onclick="event.stopPropagation()" onended="closeVideo()" style="display:none" oncanplay="document.getElementById('videoSpinner').style.display='none';this.style.display='block';this.play()"></video>
+<video id="modalVideo" controls playsinline preload="none"onclick="event.stopPropagation()" onended="closeVideo()" style="display:none" oncanplay="document.getElementById('videoSpinner').style.display='none';this.style.opacity='1';this.style.display='block';this.play()"></video>
 </div>
 
 <script>
