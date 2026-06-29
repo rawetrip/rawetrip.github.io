@@ -52,8 +52,7 @@ function openVideo(src) {
   var sp = document.getElementById('videoSpinner');
   if (!ov || !v || !sp) return;
   sp.style.display = 'block';
-  v.style.opacity = '0';
-  v.style.display = 'block';
+  v.style.display = 'none';
   v.src = src;
   ov.classList.add('active');
   fadeOutMusic();
