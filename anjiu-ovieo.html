@@ -315,6 +315,14 @@ document.querySelectorAll('a[href$=".html"]').forEach(function(a){
 });
 })();
 
+/* 编辑按钮 -> Rick Roll */
+document.querySelectorAll('.edit-link a').forEach(function(el){
+  el.addEventListener('click',function(e){
+    e.preventDefault();
+    window.open('https://www.bilibili.com/video/BV1GJ411x7h7','_blank');
+  });
+});
+
 </script>
 
 </body>
