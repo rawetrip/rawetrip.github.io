@@ -387,3 +387,68 @@ document.querySelectorAll('.edit-link a').forEach(function (el) {
   var sub = document.querySelector('.article-sub');
   if (sub) sub.appendChild(badge);
 })();
+
+// ── 图片懒加载模糊占位 ──
+(function () {
+  // Find all lazy images and add blur-up behavior
+  var imgs = document.querySelectorAll('img[loading="lazy"], img.lazy-blur');
+  var shimmerTargets = document.querySelectorAll('.film-card img, .mp-card-img, .infobox-image img');
+
+  // Add shimmer placeholder to card images
+  shimmerTargets.forEach(function (img) {
+    var parent = img.parentElement;
+    if (parent && !parent.classList.contains('lazy-placeholder')) {
+      parent.classList.add('lazy-placeholder');
+    }
+  });
+
+  function onImgLoaded(img) {
+    img.classList.add('loaded');
+    // Remove shimmer from parent
+    var parent = img.parentElement;
+    if (parent) parent.classList.remove('lazy-placeholder');
+  }
+
+  imgs.forEach(function (img) {
+    // Already loaded (cached)
+    if (img.complete && img.naturalWidth > 0) {
+      onImgLoaded(img);
+      return;
+    }
+    // Add blur class if not already present
+    if (!img.classList.contains('lazy-blur') && !img.classList.contains('no-blur')) {
+      img.classList.add('lazy-blur');
+    }
+    img.addEventListener('load', function () { onImgLoaded(this); });
+    img.addEventListener('error', function () {
+      // On error, still remove blur but keep a fallback
+      this.classList.add('loaded');
+      var p = this.parentElement;
+      if (p) p.classList.remove('lazy-placeholder');
+    });
+  });
+
+  // Observe dynamically added images (for SPA-like behavior)
+  if (window.MutationObserver) {
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (m) {
+        m.addedNodes.forEach(function (node) {
+          if (node.nodeName === 'IMG') {
+            if (node.loading === 'lazy' || node.classList.contains('lazy-blur')) {
+              node.classList.add('lazy-blur');
+              node.addEventListener('load', function () { onImgLoaded(this); });
+            }
+          }
+          if (node.querySelectorAll) {
+            var nested = node.querySelectorAll('img[loading="lazy"], img.lazy-blur');
+            nested.forEach(function (n) {
+              n.classList.add('lazy-blur');
+              n.addEventListener('load', function () { onImgLoaded(this); });
+            });
+          }
+        });
+      });
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+})();

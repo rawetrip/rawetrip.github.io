@@ -69,6 +69,17 @@ p{margin:8px 0}
 .video-overlay video{max-width:95vw;max-height:90vh;border-radius:4px}
 .video-close{position:absolute;top:28px;right:32px;font-size:36px;color:#fff;cursor:pointer;z-index:100000;background:none;border:none;opacity:.7;transition:.3s}
 .video-close:hover{opacity:1;transform:scale(1.15)}
+/* ── Lazy Load Blur-Up ── */
+.lazy-blur{filter:blur(12px);opacity:.35;transform:scale(1.08);transition:filter .6s ease-out,opacity .5s ease-out,transform .6s ease-out}
+.lazy-blur.loaded{filter:blur(0);opacity:1;transform:scale(1)}
+/* Only blur larger content images, skip small icons */
+.film-card img.lazy-blur,.mp-card-img.lazy-blur,.infobox-image img.lazy-blur,.location-slide img.lazy-blur,.mp-highlight-image img.lazy-blur{filter:blur(15px);opacity:.2;transform:scale(1.1)}
+.film-card img.lazy-blur.loaded,.mp-card-img.lazy-blur.loaded,.infobox-image img.lazy-blur.loaded,.location-slide img.lazy-blur.loaded,.mp-highlight-image img.lazy-blur.loaded{filter:blur(0);opacity:1;transform:scale(1)}
+/* Placeholder shimmer for card images */
+.lazy-placeholder{background:#e8e8e8;overflow:hidden;position:relative}
+.dark .lazy-placeholder{background:#2a2d31}
+.lazy-placeholder::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 30%,rgba(255,255,255,.3) 50%,transparent 70%);animation:shimmer 1.6s infinite}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
 /* ── Search Dropdown ── */
 .search-box{position:relative}
 .search-dropdown{position:absolute;top:100%;left:0;right:0;background:var(--paper);border:1px solid var(--border);border-top:none;border-radius:0 0 4px 4px;box-shadow:0 4px 16px rgba(0,0,0,.12);z-index:1000;max-height:360px;overflow-y:auto;display:none}
