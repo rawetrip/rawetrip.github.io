@@ -452,3 +452,20 @@ document.querySelectorAll('.edit-link a').forEach(function (el) {
     observer.observe(document.body, { childList: true, subtree: true });
   }
 })();
+
+// ── 页脚更新日期 ──
+(function () {
+  var el = document.getElementById('pageFooter');
+  if (!el) return;
+  var d;
+  // Try to get last modified from HTTP header
+  if (document.lastModified && document.lastModified !== '') {
+    d = new Date(document.lastModified);
+  } else {
+    d = new Date();
+  }
+  var y = d.getFullYear();
+  var m = String(d.getMonth() + 1).padStart(2, '0');
+  var day = String(d.getDate()).padStart(2, '0');
+  el.textContent = '📅 最后更新于 ' + y + '-' + m + '-' + day;
+})();
