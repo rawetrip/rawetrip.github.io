@@ -140,3 +140,39 @@ document.querySelectorAll('.edit-link a').forEach(function (el) {
     location.href = 'https://www.bilibili.com/video/BV1GJ411x7h7';
   });
 });
+
+// ── 回到顶部 ──
+(function () {
+  var btn = document.createElement('button');
+  btn.id = 'backTop';
+  btn.innerHTML = '⬆';
+  btn.title = '回到顶部';
+  btn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  document.body.appendChild(btn);
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      requestAnimationFrame(function () {
+        btn.classList.toggle('visible', window.scrollY > 400);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+})();
+
+// ── 预计阅读时间 ──
+(function () {
+  var el = document.querySelector('#content');
+  if (!el) return;
+  var text = el.textContent || el.innerText;
+  var cnChars = (text.match(/[一-鿿]/g) || []).length;
+  // 中文 ~400字/分钟，英文 ~200词/分钟
+  var enWords = (text.match(/[a-zA-Z]+/g) || []).length;
+  var minutes = Math.max(1, Math.round(cnChars / 400 + enWords / 200));
+  var badge = document.createElement('span');
+  badge.className = 'reading-time';
+  badge.textContent = '⏱ 预计阅读 ' + minutes + ' 分钟';
+  var sub = document.querySelector('.article-sub');
+  if (sub) sub.appendChild(badge);
+})();
