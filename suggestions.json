@@ -38,5 +38,15 @@
     "status": "open",
     "author": "guest",
     "date": "2026-06-30"
+  },
+  {
+    "id": 5,
+    "type": "体验优化",
+    "title": "示例文本",
+    "desc": "点击输入文本",
+    "priority": "🟠 急需",
+    "status": "open",
+    "author": "R4nd0m",
+    "date": "2026-06-30"
   }
 ]
