@@ -38,6 +38,7 @@
 <a href="#" onclick="toggleMusic()" id="musicBtn" role="switch" aria-checked="false" aria-label="音乐开关">💿</a>
 <a href="#" onclick="toggleTheme()" id="themeToggle">🌙 深色</a>
 <a href="#contact">💬 讨论</a>
+<a href="#feedback">📋 反馈</a>
 </div>
 </div>
 
@@ -130,6 +131,27 @@
 <input id="cemail" data-i18n-placeholder="placeholder_email">
 <textarea id="cmsg" data-i18n-placeholder="placeholder_message"></textarea>
 <button onclick="sendMail()" data-i18n="send_btn"></button>
+</div>
+
+<h2 class="mw-heading h2" id="feedback">📋 意见反馈<span class="edit-link"><a href="#">[编辑]</a></span></h2>
+<p>欢迎提出新功能建议或 Bug 反馈，选择类型后填写即可。</p>
+<div class="contact-form">
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+<label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer;padding:8px 14px;border:1px solid var(--border);border-radius:4px;background:var(--btn-bg)"><input type="radio" name="ftype" value="功能建议" checked onchange="document.getElementById('ftype').value=this.value"> 🆕 功能</label>
+<label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer;padding:8px 14px;border:1px solid var(--border);border-radius:4px;background:var(--btn-bg)"><input type="radio" name="ftype" value="Bug 反馈" onchange="document.getElementById('ftype').value=this.value"> 🐛 Bug</label>
+<label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer;padding:8px 14px;border:1px solid var(--border);border-radius:4px;background:var(--btn-bg)"><input type="radio" name="ftype" value="体验优化" onchange="document.getElementById('ftype').value=this.value"> 🎨 体验</label>
+<label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer;padding:8px 14px;border:1px solid var(--border);border-radius:4px;background:var(--btn-bg)"><input type="radio" name="ftype" value="其他" onchange="document.getElementById('ftype').value=this.value"> 💬 其他</label>
+</div>
+<input type="hidden" id="ftype" value="功能建议">
+<input id="ftitle" placeholder="一句话概括（必填）">
+<textarea id="fdesc" placeholder="详细描述（可选）"></textarea>
+<div style="display:flex;gap:8px;align-items:center;margin-bottom:10px">
+<span style="font-size:13px;color:var(--text2)">优先级：</span>
+<label style="display:flex;align-items:center;gap:3px;font-size:13px;cursor:pointer"><input type="radio" name="fpri" value="🟢 想要" checked> 🟢</label>
+<label style="display:flex;align-items:center;gap:3px;font-size:13px;cursor:pointer"><input type="radio" name="fpri" value="🟡 建议"> 🟡</label>
+<label style="display:flex;align-items:center;gap:3px;font-size:13px;cursor:pointer"><input type="radio" name="fpri" value="🟠 急需"> 🟠</label>
+</div>
+<button id="feedbackBtn" onclick="sendFeedback()">提交反馈</button>
 </div>
 
 <h2 class="mw-heading h2" id="refs"><span data-i18n="refs_title"></span><span class="edit-link"><a href="#">[编辑]</a></span></h2>
@@ -435,7 +457,7 @@ var name=document.getElementById('cname').value.trim();
 var email=document.getElementById('cemail').value.trim();
 var message=document.getElementById('cmsg').value.trim();
 if(!name||!email||!message){toast(currentLang=='en'?'Please complete all fields':'请完整填写信息','warn');return}
-var btn=document.querySelector('.contact-form button');
+var btn=document.querySelector('#contact + p + .contact-form button');
 btn.disabled=true;
 var orig=btn.textContent;
 btn.textContent=currentLang=='en'?'Sending...':'发送中...';
@@ -447,6 +469,29 @@ document.getElementById('cemail').value='';
 document.getElementById('cmsg').value='';
 })
 .catch(function(){toast(currentLang=='en'?'Failed to send message':'发送失败','error')})
+.finally(function(){btn.disabled=false;btn.textContent=orig});
+}
+
+function sendFeedback(){
+var type=document.getElementById('ftype').value;
+var title=document.getElementById('ftitle').value.trim();
+var desc=document.getElementById('fdesc').value.trim();
+if(!title){toast('请填写一句话概括','warn');return}
+var pri='🟢 想要';
+var pris=document.getElementsByName('fpri');
+for(var i=0;i<pris.length;i++){if(pris[i].checked){pri=pris[i].value;break}}
+var msg='【'+type+'】'+pri+'\n'+title+'\n'+(desc||'(无详细描述)');
+var btn=document.getElementById('feedbackBtn');
+btn.disabled=true;
+var orig=btn.textContent;
+btn.textContent='发送中...';
+emailjs.send("service_79qkr6j","template_ye0l6au",{from_name:'意见反馈',from_email:'feedback@jbbfilm.xyz',message:msg})
+.then(function(){
+toast('反馈已提交，感谢！','success');
+document.getElementById('ftitle').value='';
+document.getElementById('fdesc').value='';
+})
+.catch(function(){toast('发送失败','error')})
 .finally(function(){btn.disabled=false;btn.textContent=orig});
 }
 
