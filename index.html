@@ -480,12 +480,13 @@ if(!title){toast('请填写一句话概括','warn');return}
 var pri='🟢 想要';
 var pris=document.getElementsByName('fpri');
 for(var i=0;i<pris.length;i++){if(pris[i].checked){pri=pris[i].value;break}}
-var msg='【'+type+'】'+pri+'\n'+title+'\n'+(desc||'(无详细描述)');
+var now=new Date();
+var timeStr=now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate()+' '+now.getHours()+':'+String(now.getMinutes()).padStart(2,'0');
 var btn=document.getElementById('feedbackBtn');
 btn.disabled=true;
 var orig=btn.textContent;
 btn.textContent='发送中...';
-emailjs.send("service_79qkr6j","template_ye0l6au",{from_name:'意见反馈',from_email:'feedback@jbbfilm.xyz',message:msg})
+emailjs.send("service_fhsc15k","template_ghwgnns",{name:'【'+type+'】'+pri,message:title+'\n\n'+(desc||''),time:timeStr},"rERx8QqEhumlvobw7")
 .then(function(){
 toast('反馈已提交，感谢！','success');
 document.getElementById('ftitle').value='';
