@@ -94,6 +94,17 @@ p{margin:8px 0}
 .toast.warn{border-left:4px solid #e6a817}
 @keyframes toastIn{0%{opacity:0;transform:translateX(120%)}100%{opacity:1;transform:translateX(0)}}
 @keyframes toastOut{0%{opacity:1;transform:translateX(0)}100%{opacity:0;transform:translateX(120%)}}
+/* ── Issue / Suggestions ── */
+.issue-item:hover{border-color:var(--border)!important;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.dark .issue-item:hover{box-shadow:0 1px 6px rgba(0,0,0,.3)}
+.issue-item.expanded .issue-desc{display:block!important}
+.issue-status.open{background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-weight:700;white-space:nowrap}
+.issue-status.planned{background:#e3f2fd;color:#1565c0;padding:2px 8px;border-radius:10px;font-weight:700;white-space:nowrap}
+.issue-status.done{background:#f3e5f5;color:#7b1fa2;padding:2px 8px;border-radius:10px;font-weight:700;white-space:nowrap}
+.dark .issue-status.open{background:#1a3820;color:#66bb6a}
+.dark .issue-status.planned{background:#1a3050;color:#64b5f6}
+.dark .issue-status.done{background:#2a1a38;color:#b388ff}
+.issue-filter.active{background:var(--link)!important;color:#fff!important;border-color:var(--link)!important}
 /* ── Search Dropdown ── */
 .search-box{position:relative}
 .search-dropdown{position:absolute;top:100%;left:0;right:0;background:var(--paper);border:1px solid var(--border);border-top:none;border-radius:0 0 4px 4px;box-shadow:0 4px 16px rgba(0,0,0,.12);z-index:1000;max-height:360px;overflow-y:auto;display:none}

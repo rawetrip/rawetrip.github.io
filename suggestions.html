@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){var s=localStorage.getItem("theme");if(s=="dark")document.documentElement.className="dark"})()</script>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>意见追踪 — 喂鸡百科</title>
+<meta name="description" content="喂鸡百科意见追踪 — 功能建议、Bug 反馈、体验优化">
+<meta property="og:title" content="意见追踪 — 喂鸡百科">
+<meta property="og:description" content="查看所有已提交的建议和反馈，一起让百科变得更好。">
+<meta property="og:image" content="https://jbbfilm.xyz/images/Team.webp">
+<meta property="og:url" content="https://jbbfilm.xyz">
+<meta property="og:type" content="website">
+<script src="js/email.min.js"></script>
+<link href="fonts/MiSans-Medium.min.css" rel="stylesheet">
+<link href="fonts/MiSans-Bold.min.css" rel="stylesheet">
+<link href="fonts/MiSans-Heavy.min.css" rel="stylesheet">
+<link rel="preload" href="fonts/MiSans-Medium.5.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/MiSans-Medium.6.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/MiSans-Bold.5.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/MiSans-Bold.6.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/MiSans-Heavy.5.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/MiSans-Heavy.6.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="css/common.css" as="style">
+<link href="css/common.css" rel="stylesheet">
+</head>
+<body>
+
+<div id="topbar">
+<div class="logo-area">
+<svg class="wiki-logo" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="#ddd"/><text x="20" y="26" text-anchor="middle" font-size="20">🐔</text></svg>
+<span class="site-name">喂鸡百科</span>
+<span class="site-tag">自由的鸡百科</span>
+</div>
+<div class="search-box"><input id="searchInput" placeholder="搜索喂鸡百科" onkeydown="if(event.key==='Enter')doSearch()"></div>
+<div class="top-actions">
+<a href="#" onclick="toggleMusic()" id="musicBtn" role="switch" aria-checked="false" aria-label="音乐开关">💿</a>
+<a href="#" onclick="toggleTheme()" id="themeToggle">🌙 深色</a>
+<a href="#contact">💬 讨论</a>
+<a href="#feedback">📋 反馈</a>
+</div>
+</div>
+
+<div class="mp-wrapper" style="max-width:900px;margin:0 auto;padding:24px 16px 40px">
+
+<div class="breadcrumb"><a href="index.html">🐔 首页</a> › <a href="#feedback">📋 反馈</a> › <span>意见追踪</span></div>
+<h1 class="article-title">意见追踪</h1>
+<div class="article-sub">所有功能建议、Bug 反馈和体验优化记录</div>
+
+<div style="display:flex;gap:8px;align-items:center;margin-bottom:20px;flex-wrap:wrap">
+  <span style="font-size:13px;color:var(--text2)">状态筛选：</span>
+  <button class="issue-filter active" onclick="filterIssues('all')" style="padding:5px 12px;border:1px solid var(--border);border-radius:14px;background:var(--btn-bg);color:var(--text);cursor:pointer;font-size:12px">全部</button>
+  <button class="issue-filter" onclick="filterIssues('open')" style="padding:5px 12px;border:1px solid var(--border);border-radius:14px;background:var(--btn-bg);color:var(--text);cursor:pointer;font-size:12px">🟢 开放</button>
+  <button class="issue-filter" onclick="filterIssues('planned')" style="padding:5px 12px;border:1px solid var(--border);border-radius:14px;background:var(--btn-bg);color:var(--text);cursor:pointer;font-size:12px">🔵 计划中</button>
+  <button class="issue-filter" onclick="filterIssues('done')" style="padding:5px 12px;border:1px solid var(--border);border-radius:14px;background:var(--btn-bg);color:var(--text);cursor:pointer;font-size:12px">🟣 已完成</button>
+  <a href="index.html#feedback" style="margin-left:auto;font-size:13px;color:var(--link);white-space:nowrap">+ 提交新建议</a>
+</div>
+
+<div id="issueList"></div>
+
+</div>
+
+<audio id="bgm" loop preload="none"><source src="audio/music_opus.ogg" type="audio/ogg"></audio>
+
+<div class="video-overlay" id="videoOverlay" onclick="closeVideo()">
+<button class="video-close" onclick="closeVideo()">✕</button>
+<div class="video-spinner" id="videoSpinner" style="color:#fff;font-size:16px">⏳ 加载中...</div>
+<video id="modalVideo" controls playsinline preload="none" onclick="event.stopPropagation()" onended="closeVideo()" style="display:none" oncanplay="document.getElementById('videoSpinner').style.display='none';this.style.display='block';this.play()"></video>
+</div>
+
+<script>
+var _issues=[];
+var _filter='all';
+
+function statusBadge(s){
+  var map={open:'🟢 开放',planned:'🔵 计划中',done:'🟣 已完成'};
+  return '<span class="issue-status '+s+'">'+(map[s]||s)+'</span>';
+}
+function typeIcon(t){
+  var map={'功能建议':'🆕','Bug 反馈':'🐛','体验优化':'🎨','其他':'💬'};
+  return map[t]||'💬';
+}
+
+function renderIssues(){
+  var list=_issues;
+  if(_filter!=='all') list=_issues.filter(function(i){return i.status===_filter});
+  var h='';
+  if(list.length===0){
+    h='<div style="text-align:center;padding:40px;color:var(--text2)">暂无匹配的建议</div>';
+  }
+  for(var i=0;i<list.length;i++){
+    var item=list[i];
+    var id='#'+item.id;
+    h+='<div class="issue-item" style="border:1px solid var(--border-light);border-radius:6px;padding:16px 20px;margin-bottom:8px;background:var(--paper);cursor:pointer;transition:.15s" onclick="this.classList.toggle(\'expanded\')">';
+    h+='<div style="display:flex;align-items:center;gap:10px">';
+    h+='<span style="font-size:20px;flex-shrink:0">'+typeIcon(item.type)+'</span>';
+    h+='<div style="flex:1;min-width:0"><div style="font-weight:700;font-size:14px;color:var(--text)">'+item.title+'</div>';
+    h+='<div style="display:flex;gap:10px;align-items:center;margin-top:4px;font-size:11px;color:var(--text2)">';
+    h+=statusBadge(item.status);
+    h+='<span>'+item.type+'</span>';
+    h+='<span>'+item.priority+'</span>';
+    h+='<span>'+item.author+' · '+item.date+'</span>';
+    h+='</div></div>';
+    h+='<span style="font-size:11px;color:var(--text2);flex-shrink:0">'+id+'</span>';
+    h+='</div>';
+    if(item.desc){
+      h+='<div class="issue-desc" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-light);font-size:13px;color:var(--text);line-height:1.6">'+item.desc+'</div>';
+    }
+    h+='</div>';
+  }
+  document.getElementById('issueList').innerHTML=h;
+}
+
+function filterIssues(f){
+  _filter=f;
+  document.querySelectorAll('.issue-filter').forEach(function(b){b.classList.remove('active')});
+  event.target.classList.add('active');
+  renderIssues();
+}
+
+// Load suggestions.json
+fetch('suggestions.json')
+.then(function(r){return r.json()})
+.then(function(d){_issues=d;renderIssues()})
+.catch(function(){document.getElementById('issueList').innerHTML='<div style="text-align:center;padding:40px;color:var(--text2)">加载失败，请刷新重试</div>'});
+</script>
+<script src="js/common.js"></script>
+</body>
+</html>

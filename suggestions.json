@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "type": "功能建议",
+    "title": "搜索加拼音匹配",
+    "desc": "希望和手机输入法一样打首字母就能搜到人，不用输入完整汉字",
+    "priority": "🟡 建议",
+    "status": "done",
+    "author": "R4nd0m",
+    "date": "2026-06-28"
+  },
+  {
+    "id": 2,
+    "type": "Bug 反馈",
+    "title": "赞助商图片暗色模式不显示",
+    "desc": "深色模式下部分赞助商 Logo 消失，应该是 filter 的问题",
+    "priority": "🟠 急需",
+    "status": "done",
+    "author": "R4nd0m",
+    "date": "2026-06-29"
+  },
+  {
+    "id": 3,
+    "type": "功能建议",
+    "title": "加个评论区",
+    "desc": "每篇文章下面能不能加个评论区，让大家讨论",
+    "priority": "🟢 想要",
+    "status": "planned",
+    "author": "Anjiu",
+    "date": "2026-06-29"
+  },
+  {
+    "id": 4,
+    "type": "体验优化",
+    "title": "视频弹窗加进度条",
+    "desc": "现在视频弹窗用原生 controls，能不能做个好看的进度条",
+    "priority": "🟢 想要",
+    "status": "open",
+    "author": "guest",
+    "date": "2026-06-30"
+  }
+]
