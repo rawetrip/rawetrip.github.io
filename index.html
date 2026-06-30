@@ -480,19 +480,31 @@ if(!title){toast('请填写一句话概括','warn');return}
 var pri='🟢 想要';
 var pris=document.getElementsByName('fpri');
 for(var i=0;i<pris.length;i++){if(pris[i].checked){pri=pris[i].value;break}}
-var now=new Date();
-var timeStr=now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate()+' '+now.getHours()+':'+String(now.getMinutes()).padStart(2,'0');
 var btn=document.getElementById('feedbackBtn');
 btn.disabled=true;
 var orig=btn.textContent;
-btn.textContent='发送中...';
-emailjs.send("service_fhsc15k","template_ghwgnns",{name:'【'+type+'】'+pri,message:title+'\n\n'+(desc||''),time:timeStr},"rERx8QqEhumlvobw7")
-.then(function(){
-toast('反馈已提交，感谢！','success');
-document.getElementById('ftitle').value='';
-document.getElementById('fdesc').value='';
+btn.textContent='提交中...';
+var body=desc||'(无详细描述)';
+var labels=['suggestion',type,pri];
+fetch('https://feedback.jbbfilm.workers.dev',{
+  method:'POST',
+  headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({title:title,body:body,labels:labels})
 })
-.catch(function(){toast('发送失败','error')})
+.then(function(r){if(!r.ok)throw new Error('GH API error');return r.json()})
+.then(function(data){
+  toast('反馈已提交，感谢！','success');
+  document.getElementById('ftitle').value='';
+  document.getElementById('fdesc').value='';
+})
+.catch(function(err){
+  // Fallback to EmailJS
+  var now=new Date();
+  var timeStr=now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate()+' '+now.getHours()+':'+String(now.getMinutes()).padStart(2,'0');
+  emailjs.send("service_fhsc15k","template_ghwgnns",{name:'【'+type+'】'+pri,message:title+'\n\n'+(desc||''),time:timeStr},"rERx8QqEhumlvobw7")
+  .then(function(){toast('已通过邮件提交','success')})
+  .catch(function(){toast('提交失败，请重试','error')});
+})
 .finally(function(){btn.disabled=false;btn.textContent=orig});
 }
 
