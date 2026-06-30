@@ -74,7 +74,7 @@ var _issues=[];
 var _filter='all';
 
 function statusBadge(s){
-  var map={open:'🟢 开放',planned:'🔵 计划中',done:'🟣 已完成'};
+  var map={open:'🟢 开放',planned:'🔵 计划中',done:'🟣 已完成',closed:'🟣 已完成'};
   return '<span class="issue-status '+s+'">'+(map[s]||s)+'</span>';
 }
 function typeIcon(t){
@@ -119,11 +119,51 @@ function filterIssues(f){
   renderIssues();
 }
 
-// Load suggestions.json
-fetch('suggestions.json')
-.then(function(r){return r.json()})
-.then(function(d){_issues=d;renderIssues()})
-.catch(function(){document.getElementById('issueList').innerHTML='<div style="text-align:center;padding:40px;color:var(--text2)">加载失败，请刷新重试</div>'});
+// ── GitHub Issues API ──
+function parseGHIssue(issue){
+  var labels=issue.labels.map(function(l){return l.name});
+  var type='其他';
+  var types=['功能建议','Bug 反馈','体验优化','其他'];
+  for(var i=0;i<types.length;i++){if(labels.indexOf(types[i])>=0){type=types[i];break}}
+  var priority='🟢 想要';
+  var pris=['🟠 急需','🟡 建议','🟢 想要'];
+  for(var i=0;i<pris.length;i++){if(labels.indexOf(pris[i])>=0){priority=pris[i];break}}
+  var status='open';
+  if(issue.state==='closed')status='done';
+  else if(labels.indexOf('planned')>=0)status='planned';
+  return {
+    id:issue.number,
+    type:type,
+    title:issue.title,
+    desc:(issue.body||'').replace(/\n/g,'<br>'),
+    priority:priority,
+    status:status,
+    author:issue.user?issue.user.login:'',
+    date:issue.created_at?issue.created_at.substring(0,10):''
+  };
+}
+
+function loadIssues(){
+  document.getElementById('issueList').innerHTML='<div style="text-align:center;padding:40px;color:var(--text2)">加载中...</div>';
+  fetch('https://api.github.com/repos/rawetrip/rawetrip.github.io/issues?state=all&labels=suggestion&per_page=50')
+  .then(function(r){return r.json()})
+  .then(function(data){
+    _issues=[];
+    for(var i=0;i<data.length;i++){
+      if(!data[i].pull_request) _issues.push(parseGHIssue(data[i]));
+    }
+    renderIssues();
+  })
+  .catch(function(){
+    // Fallback to local JSON
+    fetch('suggestions.json')
+    .then(function(r){return r.json()})
+    .then(function(d){_issues=d;renderIssues()})
+    .catch(function(){document.getElementById('issueList').innerHTML='<div style="text-align:center;padding:40px;color:var(--text2)">加载失败，请刷新重试</div>'});
+  });
+}
+
+loadIssues();
 </script>
 <script src="js/common.js"></script>
 </body>
