@@ -434,19 +434,19 @@ function sendMail(){
 var name=document.getElementById('cname').value.trim();
 var email=document.getElementById('cemail').value.trim();
 var message=document.getElementById('cmsg').value.trim();
-if(!name||!email||!message){alert(currentLang=='en'?'Please complete all fields':'请完整填写信息');return}
+if(!name||!email||!message){toast(currentLang=='en'?'Please complete all fields':'请完整填写信息','warn');return}
 var btn=document.querySelector('.contact-form button');
 btn.disabled=true;
 var orig=btn.textContent;
 btn.textContent=currentLang=='en'?'Sending...':'发送中...';
 emailjs.send("service_79qkr6j","template_ye0l6au",{from_name:name,from_email:email,message:message})
 .then(function(){
-alert(currentLang=='en'?'Message sent successfully':'邮件发送成功');
+toast(currentLang=='en'?'Message sent successfully':'邮件发送成功','success');
 document.getElementById('cname').value='';
 document.getElementById('cemail').value='';
 document.getElementById('cmsg').value='';
 })
-.catch(function(){alert(currentLang=='en'?'Failed to send message':'发送失败')})
+.catch(function(){toast(currentLang=='en'?'Failed to send message':'发送失败','error')})
 .finally(function(){btn.disabled=false;btn.textContent=orig});
 }
 

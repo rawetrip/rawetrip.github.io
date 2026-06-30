@@ -88,6 +88,35 @@ function toggleTheme() {
   }
 })();
 
+// ── Toast ──
+function toast(msg, type){
+  type = type || '';
+  var container = document.getElementById('toastContainer');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toastContainer';
+    container.className = 'toast-container';
+    document.body.appendChild(container);
+  }
+  var icons = {success:'✅', error:'❌', warn:'⚠️'};
+  var el = document.createElement('div');
+  el.className = 'toast ' + type;
+  el.innerHTML = '<span class="toast-icon">' + (icons[type] || '💬') + '</span><span class="toast-msg">' + msg + '</span>';
+  container.appendChild(el);
+  // Trigger animation
+  requestAnimationFrame(function(){ el.classList.add('show'); });
+  // Auto remove after 3s
+  setTimeout(function(){
+    el.classList.add('hide');
+    el.addEventListener('animationend', function(){ el.remove(); });
+  }, 3000);
+  // Click to dismiss
+  el.addEventListener('click', function(){
+    el.classList.add('hide');
+    el.addEventListener('animationend', function(){ el.remove(); });
+  });
+}
+
 // ═══════════════════ Search Engine ═══════════════════
 var _searchIndex = [
   // ── 人物 ──
