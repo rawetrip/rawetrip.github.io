@@ -12,14 +12,21 @@ export default {
       });
     }
 
-    // GET: 获取 issues 列表 (用于 suggestions.html)
+    // GET: 获取 issues 或 commits
     if (request.method === 'GET') {
       const url = new URL(request.url);
-      const state = url.searchParams.get('state') || 'all';
+      const type = url.searchParams.get('type') || 'issues';
       const per_page = url.searchParams.get('per_page') || '30';
       const page = url.searchParams.get('page') || '1';
 
-      let apiUrl = `https://api.github.com/repos/rawetrip/rawetrip.github.io/issues?labels=suggestion&state=${state}&per_page=${per_page}&page=${page}`;
+      let apiUrl;
+      if (type === 'commits') {
+        const sha = url.searchParams.get('sha') || 'main';
+        apiUrl = `https://api.github.com/repos/rawetrip/rawetrip.github.io/commits?sha=${sha}&per_page=${per_page}&page=${page}`;
+      } else {
+        const state = url.searchParams.get('state') || 'all';
+        apiUrl = `https://api.github.com/repos/rawetrip/rawetrip.github.io/issues?labels=suggestion&state=${state}&per_page=${per_page}&page=${page}`;
+      }
 
       const res = await fetch(apiUrl, {
         headers: {

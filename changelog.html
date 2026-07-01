@@ -136,13 +136,10 @@ function parseCommits(commits){
   return Object.keys(days).sort().reverse().map(function(d){return days[d]});
 }
 
-function fetchPage(link,cb){
-  var url=link||'https://api.github.com/repos/rawetrip/rawetrip.github.io/commits?sha=main&per_page=100';
-  fetch(url).then(function(r){
-    var next=null;
-    var lh=r.headers.get('Link');
-    if(lh){var m=lh.match(/<([^>]+)>;\s*rel="next"/);if(m)next=m[1];}
-    return r.json().then(function(data){cb(data,next)});
+function fetchPage(pg,cb){
+  var url='https://feedback.jbbfilm.workers.dev?type=commits&per_page=100&page='+(pg||1);
+  fetch(url).then(function(r){return r.json()}).then(function(data){
+    cb(data,data.length===100?pg+1:null);
   }).catch(function(){
     document.getElementById('clList').innerHTML='<div class="cl-empty">⚠ 加载失败，请刷新重试</div>';
   });
@@ -151,12 +148,12 @@ function fetchPage(link,cb){
 function loadAll(){
   document.getElementById('clSub').textContent='加载中...';
   var all=[];
-  function collect(data,next){
+  function collect(data,nextPg){
     all=all.concat(data);
-    if(next&&all.length<500)fetchPage(next,collect);
+    if(nextPg&&all.length<500)fetchPage(nextPg,collect);
     else{_all=parseCommits(all);document.title='更新日志 · '+all.length+' commits — 喂鸡百科';render()}
   }
-  fetchPage(null,collect);
+  fetchPage(1,collect);
 }
 
 function render(){
