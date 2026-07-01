@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){var s=localStorage.getItem("theme");if(s=="dark")document.documentElement.className="dark"})()</script>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<title>更新日志 · 129 commits — 喂鸡百科</title>
+<title>更新日志 — 喂鸡百科</title>
 <meta name="description" content="喂鸡百科更新日志 — 129 次提交的完整历史记录">
 <meta property="og:title" content="更新日志 — 喂鸡百科">
 <meta property="og:description" content="查看喂鸡百科的提交历史，了解最新的功能和改进。">
@@ -111,6 +111,54 @@
 var _all=[], _filter='all', _page=1, _perPage=5;
 var _badgeMap={'feature':['feat','🆕功能'],'fix':['fix','🐛修复'],'improvement':['perf','🔧改进'],'chore':['chore','📦杂项'],'docs':['docs','📄文档'],'style':['style','🎨样式']};
 
+function tagCommit(msg){
+  var t=msg.includes(':')?msg.split(':')[0].toLowerCase():'';
+  if(/^(feat|add |create|redesign)/i.test(t))return'feature';
+  if(/^(fix|revert|remove)/i.test(t))return'fix';
+  if(/^(perf|refactor|improve|optimize|tweak|switch|replace|rename|rewrite|reorder|compress|sort|update|make|user edits|link|restore)/i.test(t))return'improvement';
+  if(/^docs/i.test(t))return'docs';
+  if(/^style/i.test(t))return'style';
+  if(/^merge/i.test(msg))return'chore';
+  return'chore';
+}
+
+function parseCommits(commits){
+  var days={};
+  for(var i=0;i<commits.length;i++){
+    var c=commits[i];
+    var date=c.commit.author.date.substring(0,10);
+    var h=c.sha.substring(0,7);
+    var m=c.commit.message.split('\n')[0];
+    if(!days[date])days[date]={date:date,count:0,commits:[]};
+    days[date].commits.push({h:h,m:m,t:tagCommit(m)});
+    days[date].count++;
+  }
+  return Object.keys(days).sort().reverse().map(function(d){return days[d]});
+}
+
+function fetchPage(link,cb){
+  var url=link||'https://api.github.com/repos/rawetrip/rawetrip.github.io/commits?sha=main&per_page=100';
+  fetch(url).then(function(r){
+    var next=null;
+    var lh=r.headers.get('Link');
+    if(lh){var m=lh.match(/<([^>]+)>;\s*rel="next"/);if(m)next=m[1];}
+    return r.json().then(function(data){cb(data,next)});
+  }).catch(function(){
+    document.getElementById('clList').innerHTML='<div class="cl-empty">⚠ 加载失败，请刷新重试</div>';
+  });
+}
+
+function loadAll(){
+  document.getElementById('clSub').textContent='加载中...';
+  var all=[];
+  function collect(data,next){
+    all=all.concat(data);
+    if(next&&all.length<500)fetchPage(next,collect);
+    else{_all=parseCommits(all);document.title='更新日志 · '+all.length+' commits — 喂鸡百科';render()}
+  }
+  fetchPage(null,collect);
+}
+
 function render(){
   var days=_all;
   if(_filter!=='all'){
@@ -161,7 +209,7 @@ function render(){
 function goPage(p){_page=p;render()}
 function filterCL(t){_filter=t;_page=1;document.querySelectorAll('.cl-filter').forEach(function(b){b.classList.toggle('active',b.dataset.type===t)});render()}
 
-fetch('changelog.json').then(function(r){return r.json()}).then(function(d){_all=d;render()}).catch(function(){document.getElementById('clList').innerHTML='<div class="cl-empty">⚠ 加载失败，请刷新重试</div>'});
+loadAll();
 
 (function(){
   var d=new Date(document.lastModified);
