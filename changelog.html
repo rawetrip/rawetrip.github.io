@@ -89,6 +89,7 @@
 <button class="cl-filter" data-type="improvement">🔧 改进</button>
 <button class="cl-filter" data-type="chore">📦 杂项</button>
 <div style="flex:1"></div>
+<a href="#" onclick="loadAll(true)" style="font-size:12px;color:var(--link);white-space:nowrap">🔄 刷新</a>
 <a href="https://github.com/rawetrip/rawetrip.github.io/commits/main" target="_blank" rel="noopener" style="font-size:12px;color:var(--link);white-space:nowrap">GitHub →</a>
 </div>
 <div id="clList"></div>
@@ -145,13 +146,38 @@ function fetchPage(pg,cb){
   });
 }
 
-function loadAll(){
+function loadAll(force){
+  // 检查缓存 (20分钟有效)
+  if(!force){
+    try{
+      var raw=localStorage.getItem('cl_cache');
+      if(raw){
+        var cache=JSON.parse(raw);
+        if(Date.now()-cache.ts<1200000){
+          _all=cache.data;
+          var total=_all.reduce(function(s,d){return s+d.count},0);
+          document.title='更新日志 · '+total+' commits — 喂鸡百科';
+          var ago=Math.floor((Date.now()-cache.ts)/60000);
+          document.getElementById('clSub').textContent=total+' commits · '+_all.length+' 天 · 缓存于 '+ago+' 分钟前';
+          render();return;
+        }
+      }
+    }catch(e){}
+  }
   document.getElementById('clSub').textContent='加载中...';
   var all=[];
   function collect(data,nextPg){
     all=all.concat(data);
     if(nextPg&&all.length<500)fetchPage(nextPg,collect);
-    else{_all=parseCommits(all);document.title='更新日志 · '+all.length+' commits — 喂鸡百科';render()}
+    else{
+      _all=parseCommits(all);
+      var total=_all.reduce(function(s,d){return s+d.count},0);
+      document.title='更新日志 · '+total+' commits — 喂鸡百科';
+      document.getElementById('clSub').textContent=total+' commits · '+_all.length+' 天 · 刚刚更新';
+      // 写入缓存
+      try{localStorage.setItem('cl_cache',JSON.stringify({ts:Date.now(),data:_all}))}catch(e){}
+      render();
+    }
   }
   fetchPage(1,collect);
 }
