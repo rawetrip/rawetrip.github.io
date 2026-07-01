@@ -19,7 +19,7 @@ export default {
       const per_page = url.searchParams.get('per_page') || '30';
       const page = url.searchParams.get('page') || '1';
 
-      let apiUrl = `https://api.github.com/repos/rawetrip/rawetrip.github.io/issues?labels=suggestion&state=${state}&per_page=${per_page}&page=${page}`;
+      let apiUrl = `https://api.github.com/repos/rawetrip/rawetrip.github.io/issues?state=${state}&per_page=${per_page}&page=${page}`;
 
       const res = await fetch(apiUrl, {
         headers: {
