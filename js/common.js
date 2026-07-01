@@ -389,14 +389,28 @@ var _previewPages = window._previewPages || {};
     var el = document.getElementById(m[1]);
     if (!el) return (_refCache[href] = null);
     var link = el.querySelector('a[href^="http"]');
-    if (!link) return (_refCache[href] = null);
-    return (_refCache[href] = { url: link.href, text: link.textContent.trim(), liText: el.textContent.trim() });
+    if (link) return (_refCache[href] = { url: link.href, text: link.textContent.trim(), liText: el.textContent.trim() });
+    // 无外部链接的注释（如 cite_note）
+    if (el.textContent.trim()) return (_refCache[href] = { url: null, text: el.textContent.trim(), liText: el.textContent.trim() });
+    return (_refCache[href] = null);
   }
 
   function showRefPopup(e, a) {
     var info = getRefInfo(a.getAttribute('href'));
     if (!info) return;
     var url = info.url, text = info.text;
+    // 纯文本注释（无外部链接）
+    if (!url) {
+      var ctx = info.liText||text;
+      if (ctx.length > 300) ctx = ctx.substring(0,300)+'...';
+      c.innerHTML = '<div class="popups-text"><span style="font-size:11px;color:var(--text2)">📝 注释</span><div class="popups-desc" style="margin-top:6px;line-height:1.5">'+ctx+'</div></div>';
+      popup.classList.add('show');
+      var x = e.clientX + 15, y = e.clientY + 10;
+      if (x + 280 > window.innerWidth) x = e.clientX - 295;
+      if (y + 100 > window.innerHeight) y = e.clientY - 110;
+      popup.style.left = x + 'px'; popup.style.top = y + 'px';
+      return;
+    }
     var host = '';
     try { host = new URL(url).hostname.replace('www.',''); } catch(ex) {}
     var c = popup.querySelector('.mwe-popups-container');
@@ -457,7 +471,7 @@ var _previewPages = window._previewPages || {};
       });
   }
 
-  document.querySelectorAll('sup a[href^="#ref"], sup a[href^="#cite"]').forEach(function (a) {
+  document.querySelectorAll('sup a[href^="#ref"], sup a[href^="#cite"], a[href^="#cite_note"]').forEach(function (a) {
     a.addEventListener('mouseenter', function (e) {
       if (!getRefInfo(a.getAttribute('href'))) return;
       clearTimeout(timer);
