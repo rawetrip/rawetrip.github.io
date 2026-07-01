@@ -128,11 +128,22 @@ p{margin:8px 0;word-break:break-word}p a{word-break:break-all}
   .issue-filter{padding:4px 8px;font-size:11px}
   .cl-filter{padding:4px 10px;font-size:11px}
 }
-.video-overlay{position:fixed;inset:0;background:rgba(0,0,0,.94);z-index:99999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s}
+.video-overlay{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.55);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);opacity:0;pointer-events:none;transition:opacity .5s}
 .video-overlay.active{opacity:1;pointer-events:auto}
-.video-overlay video{max-width:95vw;max-height:90vh;border-radius:4px}
-.video-close{position:absolute;top:28px;right:32px;font-size:36px;color:#fff;cursor:pointer;z-index:100000;background:none;border:none;opacity:.7;transition:.3s}
+.video-overlay video{position:absolute;top:5vh;right:5vw;width:72vw;max-width:1350px;height:auto;max-height:68vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 0 2px rgba(255,255,255,.08);object-fit:contain;background:#000;transition:transform .5s cubic-bezier(.22,.61,.36,1),opacity .4s;transform:translateY(20px) scale(.95);opacity:0}
+.video-overlay.active video{transform:translateY(0) scale(1);opacity:1;transition-delay:.1s}
+.video-close{position:absolute;top:28px;right:32px;font-size:36px;color:rgba(255,255,255,.8);cursor:pointer;z-index:100000;background:none;border:none;opacity:.7;transition:.3s;text-shadow:0 0 20px rgba(0,0,0,.5)}
 .video-close:hover{opacity:1;transform:scale(1.15)}
+.video-text{position:absolute;bottom:8vh;left:8vw;max-width:40vw;color:#fff;opacity:0;transform:translateY(20px);transition:opacity .5s .15s,transform .5s .15s cubic-bezier(.22,.61,.36,1)}
+.video-overlay.active .video-text{opacity:1;transform:translateY(0)}
+.video-text .vt-title{font-family:"MiSans Heavy","MiSans",sans-serif;font-size:clamp(1.8rem,4vw,3.5rem);line-height:1.1;margin-bottom:12px;text-shadow:0 2px 20px rgba(0,0,0,.5)}
+.video-text .vt-desc{font-size:clamp(.9rem,2vw,1.2rem);opacity:.65;line-height:1.5;max-width:90%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 10px rgba(0,0,0,.4)}
+@media(max-width:768px){
+  .video-overlay video{top:auto;bottom:6vh;right:0;left:0;width:90vw;max-width:none;margin:0 auto;max-height:40vh}
+  .video-text{bottom:auto;top:8vh;left:5vw;max-width:85vw}
+  .video-text .vt-title{font-size:1.5rem}
+  .video-text .vt-desc{font-size:.9rem}
+}
 /* ── Lazy Load Blur-Up ── */
 .lazy-blur{filter:blur(12px);opacity:.35;transform:scale(1.08);transition:filter .6s ease-out,opacity .5s ease-out,transform .6s ease-out}
 .lazy-blur.loaded{filter:blur(0);opacity:1;transform:scale(1)}
