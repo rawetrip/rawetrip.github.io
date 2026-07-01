@@ -420,7 +420,7 @@ var _previewPages = window._previewPages || {};
       }
     }
 
-    // 其他链接: 显示基本信息
+    // 其他链接: 显示参考文献完整信息
     var label = '';
     if (/bilibili/.test(host)) label = '🎬 Bilibili';
     else if (/hltv/.test(host)) label = '🎮 HLTV';
@@ -428,11 +428,13 @@ var _previewPages = window._previewPages || {};
     else if (/toutiao/.test(host)) label = '📰 头条百科';
     else if (/github/.test(host)) label = '💻 GitHub';
     else label = '🔗 ' + host;
-    c.innerHTML = '<div class="popups-text"><span style="font-size:11px;color:var(--text2)">' + label + '</span><div class="popups-title" style="font-size:13px;margin-top:4px">' + text + '</div><div class="popups-desc" style="font-size:11px;word-break:break-all">' + url + '</div></div>';
+    var context = info.liText || text;
+    if (context.length > 250) context = context.substring(0, 250) + '...';
+    c.innerHTML = '<div class="popups-text"><span style="font-size:11px;color:var(--text2)">' + label + '</span><div class="popups-title" style="font-size:14px;font-weight:700;margin-top:4px">' + text + '</div><div class="popups-desc" style="margin-top:6px;line-height:1.5">' + context + '</div></div>';
     popup.classList.add('show');
     var x = e.clientX + 15, y = e.clientY + 10;
-    if (x + 300 > window.innerWidth) x = e.clientX - 315;
-    if (y + 120 > window.innerHeight) y = e.clientY - 130;
+    if (x + 320 > window.innerWidth) x = e.clientX - 335;
+    if (y + 160 > window.innerHeight) y = e.clientY - 170;
     popup.style.left = x + 'px';
     popup.style.top = y + 'px';
   }
