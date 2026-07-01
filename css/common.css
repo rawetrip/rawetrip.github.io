@@ -23,7 +23,7 @@ a{color:var(--link);text-decoration:none}a:hover{color:var(--link-hover);text-de
 .article-sub{font-size:13px;color:var(--text2);margin-bottom:20px}
 .infobox{float:right;width:270px;margin:0 0 20px 24px;border:1px solid var(--border);background:var(--infobox-bg);font-size:12px;line-height:1.6}
 .infobox-header{background:var(--infobox-header);padding:8px 12px;font-weight:700;text-align:center;font-size:14px}
-.infobox-image{padding:6px;text-align:center}.infobox-image img{max-width:100%;height:auto}
+.infobox-image{padding:6px;text-align:center}.infobox-image img{max-width:100%;height:auto;aspect-ratio:auto}
 .infobox-image .caption{font-size:11px;color:var(--text2);margin-top:4px}
 .infobox-row{display:flex;border-top:1px solid var(--border-light)}
 .infobox-label{width:90px;min-width:90px;padding:6px 8px;font-weight:700;color:var(--text2)}
