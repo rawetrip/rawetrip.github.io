@@ -344,20 +344,20 @@ var sponsors=[
 ["Vought International","vought","webp","","transform:scale(1.5)"],
 ["Los Santos Customs","lsc","webp","",""],
 ["Black Mesa","blackmesa","svg","dark",""],
-["Aperture Science","aperture","webp","",""],
-["Arasaka Corporation","arasaka","webp","","transform:scale(1.75)"],
+["Aperture Science","aperture","webp","dark",""],
+["Arasaka Corporation","arasaka","webp","","transform:scale(1.25)"],
 ["Stark Industries","stark","webp","dark",""],
 ["Merryweather Security","merryweather","webp","",""],
 ["LSPD","lspd","webp","",""],
 ["NERV","nerv","webp","dark",""],
-["HAVVK","havvk","webp","dark","transform:scale(1.5)"],
-["Kiroshi Optics","kiroshi","webp","",""],
-["Trauma Team","trauma","webp","","margin-left:-5px"],
+["HAVVK","havvk","webp","dark",""],
+["Kiroshi Optics","kiroshi","webp","dark",""],
+["Trauma Team","trauma","webp","","transform:scale(1.4)"],
 ["Militech","militech","webp","dark",""],
-["Hammond Robotics","hammond","webp","dark","margin-left:95px;transform:scale(1.3125)"],
+["Hammond Robotics","hammond","webp","dark",""],
 ["ATLAS","atlas","webp","",""],
 ["Vault-Tec","vaulttec","webp","dark",""],
-["Umbrella Corp","umbrella","webp","","transform:scale(2)"]
+["Umbrella Corp","umbrella","webp","","transform:scale(1.25)"]
 ];
 
 var currentLang='zh';
@@ -419,7 +419,7 @@ var h='';
 for(var i=0;i<sponsors.length;i++){
 var name=sponsors[i][0], src="images/sponsors/"+sponsors[i][1]+"."+sponsors[i][2], mode=sponsors[i][3];
 var filt='';
-if(mode=='dark'){filt=isDark?'':'brightness(0) invert(1)';}
+if(mode=='dark'){filt=isDark?'':'invert(1)';}
 h+='<div class="sponsor-item">';
 h+='<img src="'+src+'" alt="'+name+'" loading="lazy" decoding="async" class="no-blur" style="max-width:85%;max-height:60px;object-fit:contain;filter:'+filt+';'+sponsors[i][4]+'">';
 h+='</div>';
