@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>人物页编辑器</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"MiSans",sans-serif;background:#f6f6f6;color:#202122;display:flex;min-height:100vh}
+#form{width:420px;min-width:420px;background:#fff;border-right:1px solid #ddd;padding:20px;overflow-y:auto;max-height:100vh}
+#form h2{font-size:18px;margin-bottom:16px;color:#0645ad}
+#form label{display:block;font-size:12px;font-weight:700;color:#54595d;margin:10px 0 4px}
+#form input,#form textarea,#form select{width:100%;padding:8px 10px;border:1px solid #a2a9b1;border-radius:3px;font-size:13px;font-family:inherit}
+#form textarea{min-height:80px;resize:vertical}
+#form button{width:100%;padding:10px;border:none;border-radius:4px;background:#0645ad;color:#fff;font-size:14px;cursor:pointer;margin-top:12px;font-weight:700}
+#form button:hover{background:#447ff5}
+#form .row{display:flex;gap:8px}
+#form .row>div{flex:1}
+#preview{flex:1;padding:24px;overflow-y:auto;max-height:100vh}
+#preview iframe{width:100%;height:100%;border:1px solid #ddd;border-radius:4px;background:#fff}
+#code{display:none;width:100%;height:300px;font-family:monospace;font-size:12px;margin-top:12px}
+.tab{display:flex;gap:4px;margin-bottom:12px}
+.tab button{padding:6px 14px;border:1px solid #ddd;background:#fff;cursor:pointer;border-radius:4px 4px 0 0;font-size:12px}
+.tab button.active{background:#0645ad;color:#fff;border-color:#0645ad}
+</style>
+</head>
+<body>
+<div id="form">
+  <h2>✏️ 人物页编辑器</h2>
+  
+  <label>📛 页面名（英文文件名）</label>
+  <input id="fname" placeholder="nangua" value="nangua">
+  
+  <label>👤 人物名</label>
+  <input id="name" placeholder="南瓜" value="南瓜">
+  
+  <label>🌍 英文名</label>
+  <input id="ename" placeholder="Nangua" value="Nangua">
+  
+  <label>📝 本名</label>
+  <input id="realname" placeholder="真实姓名" value="">
+  
+  <div class="row"><div>
+  <label>🎂 出生日期</label>
+  <input id="birth" placeholder="2010年4月1日" value="">
+  </div><div>
+  <label>📍 出生地</label>
+  <input id="birthplace" placeholder="重庆" value="">
+  </div></div>
+  
+  <label>🏷️ 别名（逗号分隔）</label>
+  <textarea id="aliases" placeholder="鸡, 老九, 臭鸡, 哈基丝"></textarea>
+  
+  <label>🔗 相关人物（名字=关系, 逗号分隔）</label>
+  <textarea id="relations" placeholder="南瓜=恋人, 韩堡戈=兄弟"></textarea>
+  
+  <label>💼 职业</label>
+  <input id="job" placeholder="学生" value="">
+  
+  <label>🎨 形象来源</label>
+  <input id="avatar" placeholder="天童爱丽丝" value="">
+  
+  <label>📖 简介</label>
+  <textarea id="intro" placeholder="一段简短的人物介绍..."></textarea>
+  
+  <label>📋 事迹（每行一个，用 | 分隔标题和内容）</label>
+  <textarea id="events" placeholder="标记炸弹安放点B | CS2阿努比斯地图，王招笑询问安九是否有标记炸弹安放点B...&#10;来！ | 韩堡戈来电诱骗打CS2，安九毫不犹豫地说出浑浊又坚定的来！"></textarea>
+  
+  <label>📚 参考文献（每行一个，用 | 分隔标题和URL）</label>
+  <textarea id="refs" placeholder="蔚蓝档案 | https://zh.wikipedia.org/wiki/蔚蓝档案&#10;鸡 | https://zh.wikipedia.org/wiki/鸡"></textarea>
+
+  <button onclick="generate()">🔄 生成 / 刷新预览</button>
+  <button onclick="copyCode()" style="background:#1a6e2a;margin-top:4px">📋 复制 HTML 代码</button>
+</div>
+<div id="preview">
+  <div class="tab">
+    <button class="active" onclick="switchTab('preview')">👁 预览</button>
+    <button onclick="switchTab('code')">📝 HTML 源码</button>
+  </div>
+  <iframe id="previewFrame"></iframe>
+</div>
+
+<script>
+function switchTab(t){document.querySelectorAll('.tab button').forEach(b=>b.classList.toggle('active',b.textContent.includes(t==='preview'?'预览':'源码')));document.getElementById('previewFrame').style.display=t==='preview'?'block':'none';}
+
+function generate(){
+  var fname=document.getElementById('fname').value||'new';
+  var name=document.getElementById('name').value||'未命名';
+  var ename=document.getElementById('ename').value||name;
+  var realname=document.getElementById('realname').value||'';
+  var birth=document.getElementById('birth').value||'未知';
+  var birthplace=document.getElementById('birthplace').value||'未知';
+  var aliases=(document.getElementById('aliases').value||'').split(',').map(s=>s.trim()).filter(Boolean);
+  var rels=(document.getElementById('relations').value||'').split(',').map(s=>{var p=s.trim().split('=');return{name:p[0]||'',rel:p[1]||''}}).filter(r=>r.name);
+  var job=document.getElementById('job').value||'';
+  var avatar=document.getElementById('avatar').value||'';
+  var intro=document.getElementById('intro').value||'';
+  var events=(document.getElementById('events').value||'').split('\n').map(s=>{var p=s.split('|');return{title:p[0]||'',content:p.slice(1).join('|')}}).filter(e=>e.title);
+  var refs=(document.getElementById('refs').value||'').split('\n').map(s=>{var p=s.split('|');return{text:p[0]||'',url:p[1]||''}}).filter(r=>r.text);
+
+  // Build aliases HTML
+  var aliasHtml=aliases.map(function(a){return a}).join('<br>');
+  
+  // Build relationships
+  var relsHtml='';
+  for(var i=0;i<rels.length;i++){
+    relsHtml+='<div class="infobox-row"><div class="infobox-label">'+rels[i].rel+'</div><div class="infobox-value">'+rels[i].name+'</div></div>';
+  }
+
+  // Build events HTML
+  var eventsHtml='';
+  for(var i=0;i<events.length;i++){
+    eventsHtml+='<h3 class="mw-heading">'+events[i].title+'<span class="edit-link"><a href="#">[编辑]</a></span></h3>\n<p>'+events[i].content+'</p>\n';
+  }
+
+  // Build references HTML
+  var refsHtml='';
+  for(var i=0;i<refs.length;i++){
+    refsHtml+='<li id="ref'+(i+1)+'"><a href="'+refs[i].url+'">'+refs[i].text+'</a></li>\n';
+  }
+
+  var html='<!DOCTYPE html>\n<html lang="zh">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width,initial-scale=1.0">\n<script>(function(){var s=localStorage.getItem("theme");if(s=="dark")document.documentElement.className="dark"})()<\/script>\n<link rel="icon" type="image/svg+xml" href="../favicon.svg">\n<title>'+name+' — 喂鸡百科</title>\n<meta name="description" content="'+name+' — '+job+'">\n<meta property="og:title" content="'+name+' — 喂鸡百科">\n<meta property="og:image" content="https://jbbfilm.xyz/images/Team.webp">\n<link href="../fonts/MiSans-Medium.min.css" rel="stylesheet">\n<link href="../fonts/MiSans-Bold.min.css" rel="stylesheet">\n<link href="../fonts/MiSans-Heavy.min.css" rel="stylesheet">\n<link rel="preload" href="../fonts/MiSans-Medium.5.woff2" as="font" type="font/woff2" crossorigin>\n<link rel="preload" href="../fonts/MiSans-Medium.6.woff2" as="font" type="font/woff2" crossorigin>\n<link rel="preload" href="../fonts/MiSans-Bold.5.woff2" as="font" type="font/woff2" crossorigin>\n<link rel="preload" href="../fonts/MiSans-Bold.6.woff2" as="font" type="font/woff2" crossorigin>\n<link rel="preload" href="../fonts/MiSans-Heavy.5.woff2" as="font" type="font/woff2" crossorigin>\n<link rel="preload" href="../fonts/MiSans-Heavy.6.woff2" as="font" type="font/woff2" crossorigin>\n<link rel="preload" href="../css/common.css" as="style">\n<link href="../css/common.css" rel="stylesheet">\n</head>\n<body>\n\n<div id="topbar">\n<a href="../" style="text-decoration:none;color:inherit"><div class="logo-area">\n<svg class="wiki-logo" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="#ddd"/><text x="20" y="26" text-anchor="middle" font-size="20">🐔</text></svg>\n<span class="site-name">喂鸡百科</span>\n<span class="site-tag">自由的鸡百科</span>\n</div></a>\n<div class="search-box"><input id="searchInput" placeholder="搜索喂鸡百科" onkeydown="if(event.key===\'Enter\')doSearch()"></div>\n<div class="top-actions">\n<a href="#" onclick="toggleMusic()" id="musicBtn">💿</a>\n<a href="#" onclick="toggleTheme()" id="themeToggle">🌙 深色</a>\n<a href="../suggestions.html">📋 反馈</a>\n<a href="../">🐔 首页</a>\n</div>\n</div>\n\n<div id="layout">\n<div id="sidebar">\n<div class="sb-section"><div class="sb-title">导航</div>\n<a href="../">🐔 首页</a>\n<a href="../#about">📖 关于</a>\n<a href="../#vision">🔭 愿景</a>\n</div>\n<div class="sb-section"><div class="sb-title">内容</div>\n<a href="#early">🌱 早年经历</a>\n<a href="#events">📋 主要事迹</a>\n<a href="#refs">📚 参考文献</a>\n</div>\n<div class="sb-section"><div class="sb-title">相关条目</div>\n<a href="../">🏢 喂鸡百科</a>\n<a href="anjiu-ovieo.html">🐔 Anjiu Ovieo</a>\n<a href="Makesade.html">🎤 Makesade</a>\n</div>\n</div>\n\n<div id="main">\n<div id="content">\n<div class="breadcrumb"><a href="../">🐔 首页</a> › <span>条目</span> › <span>'+name+'</span></div>\n<h1 class="article-title">'+name+'<span class="reading-time" id="readTime"></span></h1>\n<div class="article-sub">喂鸡百科，自由的鸡百科</div>\n\n<div class="infobox">\n<div class="infobox-header">'+name+'</div>\n<div class="infobox-row"><div class="infobox-label">本名</div><div class="infobox-value">'+(realname||'未知')+'</div></div>\n<div class="infobox-row"><div class="infobox-label">别名</div><div class="infobox-value">'+aliasHtml+'</div></div>\n<div class="infobox-row"><div class="infobox-label">出生</div><div class="infobox-value">'+birth+'<br>'+birthplace+'</div></div>\n'+relsHtml+'\n'+(job?'<div class="infobox-row"><div class="infobox-label">职业</div><div class="infobox-value">'+job+'</div></div>':'')+'\n'+(avatar?'<div class="infobox-row"><div class="infobox-label">形象</div><div class="infobox-value">'+avatar+'</div></div>':'')+'\n</div>\n\n<p style="font-size:15px;line-height:1.8;margin-bottom:16px"><b>'+name+'</b>（英语：<b>'+ename+'</b>），'+(realname?'原名<b>'+realname+'</b>，':'')+intro+'</p>\n\n<h2 class="mw-heading h2" id="events">主要事迹<span class="edit-link"><a href="#">[编辑]</a></span></h2>\n'+eventsHtml+'\n\n<h2 class="mw-heading h2" id="refs">参考文献<span class="edit-link"><a href="#">[编辑]</a></span></h2>\n<div class="reflist"><ol>\n'+refsHtml+'\n</ol></div>\n\n</div>\n</div>\n</div>\n\n<button id="backTop" onclick="window.scrollTo({top:0,behavior:\'smooth\'})">⬆</button>\n<audio id="bgm" loop preload="none"><source src="../audio/music_opus.ogg" type="audio/ogg"></audio>\n<div class="video-overlay" id="videoOverlay" onclick="closeVideo()">\n<button class="video-close" onclick="closeVideo()">✕</button>\n<div class="video-spinner" id="videoSpinner">⏳ 加载中...</div>\n<div class="video-text" id="videoText"><div class="vt-title"></div><div class="vt-desc"></div></div>\n<video id="modalVideo" controls playsinline preload="none" onclick="event.stopPropagation()" onended="closeVideo()" style="display:none" oncanplay="document.getElementById(\'videoSpinner\').style.display=\'none\';this.style.display=\'block\';this.play()"></video>\n</div>\n<div class="disclaimer">本站与维基媒体基金会无关 | 内容遵循 CC BY-SA 4.0</div>\n<div class="page-footer" id="pageFooter"></div>\n<script src="../js/common.js"><\/script>\n</body>\n</html>';
+
+  document.getElementById('previewFrame').srcdoc=html;
+  document.getElementById('previewFrame').style.display='block';
+  document.getElementById('_codeCache')&&document.getElementById('_codeCache').remove();
+  var ta=document.createElement('textarea');
+  ta.id='_codeCache';
+  ta.value=html;
+  ta.style.display='none';
+  document.body.appendChild(ta);
+  
+  // Also save to localStorage so friend can retrieve
+  localStorage.setItem('bio_'+fname,html);
+}
+
+function copyCode(){
+  var ta=document.getElementById('_codeCache');
+  if(!ta)return alert('先生成预览');
+  ta.style.display='block';
+  ta.select();
+  document.execCommand('copy');
+  ta.style.display='none';
+  alert('HTML 已复制！保存为 bio/'+document.getElementById('fname').value+'.html');
+}
+
+// Auto-generate on load
+generate();
+</script>
+</body>
+</html>
