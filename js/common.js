@@ -395,6 +395,8 @@ document.querySelectorAll('.edit-link a').forEach(function (el) {
     if (!ticking) {
       requestAnimationFrame(function () {
         btn.classList.toggle('visible', window.scrollY > 400);
+        var tb=document.getElementById('topbar');
+        if(tb)tb.classList.toggle('scrolled',window.scrollY>10);
         ticking = false;
       });
       ticking = true;
@@ -498,4 +500,23 @@ document.querySelectorAll('.edit-link a').forEach(function (el) {
   var m = String(d.getMonth() + 1).padStart(2, '0');
   var day = String(d.getDate()).padStart(2, '0');
   el.textContent = '📅 最后更新于 ' + y + '-' + m + '-' + day;
+})();
+
+// ── 外链标识符 ↗ ──
+(function(){
+  var host=location.hostname;
+  document.querySelectorAll('a[href^="http"]').forEach(function(a){
+    try{
+      var u=new URL(a.href);
+      if(u.hostname!==host&&!u.hostname.endsWith('.workers.dev')&&!a.querySelector('img,svg')){
+        if(!a.querySelector('.ext-arrow')){
+          var s=document.createElement('span');
+          s.className='ext-arrow';
+          s.textContent='↗';
+          s.style.cssText='font-size:10px;opacity:.5;margin-left:1px';
+          a.appendChild(s);
+        }
+      }
+    }catch(e){}
+  });
 })();

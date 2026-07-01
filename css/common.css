@@ -4,7 +4,8 @@
 body{background:var(--bg);color:var(--text);font-family:"MiSans Medium","MiSans",sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
 html{scroll-behavior:smooth}
 a{color:var(--link);text-decoration:none}a:hover{color:var(--link-hover);text-decoration:underline}a:visited{color:#795cb2}.dark a:visited{color:#a78bdb}
-#topbar{position:sticky;top:0;z-index:999;background:var(--header-bg);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:8px 20px;gap:16px}
+#topbar{position:sticky;top:0;z-index:999;background:var(--header-bg);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:8px 20px;gap:16px;transition:box-shadow .3s}
+#topbar.scrolled{box-shadow:0 2px 8px rgba(0,0,0,.08)}.dark #topbar.scrolled{box-shadow:0 2px 8px rgba(0,0,0,.4)}
 #topbar .logo-area{display:flex;align-items:center;gap:8px;white-space:nowrap}
 #topbar .wiki-logo{width:40px;height:40px;border-radius:50%}
 #topbar .site-name{font-size:18px;font-weight:700;color:var(--text)}
@@ -157,3 +158,4 @@ sup a:hover{text-decoration:underline}
 .cl-filter:hover{background:var(--infobox-header)}
 .cl-filter.active{background:var(--link)!important;color:#fff!important;border-color:var(--link)!important}
 @media(max-width:768px){.cl-version{padding-left:24px}.cl-ver-title{font-size:16px}}
+@media print{#topbar,#sidebar,#backTop,.video-overlay,.mwe-popups,.search-dropdown,.toast-container,audio{display:none!important}#layout{display:block}#main{padding:0;max-width:100%}.infobox{float:right}.cl-toolbar{display:none}a{color:#000;text-decoration:underline}a[href^="http"]::after{content:" ("attr(href)")";font-size:.8em;color:#666}}
