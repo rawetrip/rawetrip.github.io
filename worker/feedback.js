@@ -32,23 +32,18 @@ export default {
         return Response.redirect(`https://edit.jbbfilm.xyz/auth?goto=${goto}`, 302);
       }
 
-      // Authed — show file browser at root
+      // Authed — show file browser (仅人物页)
       if (url.pathname === '/' || url.pathname === '/bio/' || url.pathname === '' || url.pathname === '/bio') {
         const files = [
-          { path: '/index.html', name: '🏠 首页' },
-          { path: '/suggestions.html', name: '📋 意见追踪' },
-          { path: '/changelog.html', name: '📝 更新日志' },
-          { path: '/bio/anjiu-ovieo.html', name: '👤 Anjiu Ovieo' },
-          { path: '/bio/Makesade.html', name: '👤 Makesade' },
-          { path: '/bio/nangua.html', name: '👤 南瓜' },
-          { path: '/bio/goto.html', name: '👤 后藤' },
-          { path: '/bio/hanburger.html', name: '👤 韩堡戈' },
-          { path: '/bio/asakurakaren.html', name: '👤 AsakuraKaren' },
-          { path: '/css/common.css', name: '🎨 公共样式' },
-          { path: '/js/common.js', name: '⚙️ 公共JS' },
+          { path: '/bio/anjiu-ovieo.html', name: 'Anjiu Ovieo' },
+          { path: '/bio/Makesade.html', name: 'Makesade' },
+          { path: '/bio/nangua.html', name: '南瓜' },
+          { path: '/bio/goto.html', name: '后藤' },
+          { path: '/bio/hanburger.html', name: '韩堡戈' },
+          { path: '/bio/asakurakaren.html', name: 'AsakuraKaren' },
         ];
-        let list = files.map(f => `<a href="${f.path}" style="display:flex;padding:12px 16px;border-bottom:1px solid var(--border-light);color:var(--link);text-decoration:none;transition:background .2s"><span>${f.name}</span><span style="flex:1"></span><span style="font-size:11px;color:var(--text2)">${f.path}</span></a>`).join('');
-        return new Response(`<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>📂 编辑 — 喂鸡百科</title><style>:root{--bg:#f6f6f6;--paper:#fff;--text:#202122;--text2:#54595d;--link:#0645ad;--border-light:#eaecf0}.dark{--bg:#101418;--paper:#1b1d21;--text:#d8d9da;--text2:#a2a4a6;--link:#6da3f5;--border-light:#2a2d31}body{font-family:sans-serif;background:var(--bg);color:var(--text);max-width:600px;margin:40px auto;padding:0 16px}h2{font-size:20px;margin-bottom:16px}.file-list{border:1px solid var(--border-light);border-radius:8px;background:var(--paper);overflow:hidden}.file-list a:hover{background:var(--border-light)}</style></head><body><h2>📂 选择文件编辑</h2><div class="file-list">${list}</div></body></html>`, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+        let list = files.map(f => `<a href="${f.path}" class="file-link"><span>👤 ${f.name}</span><span class="file-path">${f.path}</span></a>`).join('');
+        return new Response(`<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><script>(function(){var s=localStorage.getItem("theme");if(s=="dark")document.documentElement.className="dark"})()</script><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>人物编辑 — 喂鸡百科</title><link href="/fonts/MiSans-Medium.min.css" rel="stylesheet"><link href="/fonts/MiSans-Bold.min.css" rel="stylesheet"><link href="/fonts/MiSans-Heavy.min.css" rel="stylesheet"><link rel="stylesheet" href="/css/common.css"><style>.edit-home{max-width:600px;margin:40px auto;padding:0 16px}.edit-home h1{font-size:22px;margin-bottom:8px}.file-link{display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border-light);color:var(--link);text-decoration:none;transition:background .2s;font-size:14px}.file-link:hover{background:var(--infobox-header);text-decoration:none}.file-path{flex:1;text-align:right;font-size:11px;color:var(--text2)}</style></head><body><div id="topbar"><div class="logo-area"><svg class="wiki-logo" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="#ddd"/><text x="20" y="26" text-anchor="middle" font-size="20">🐔</text></svg><span class="site-name">喂鸡百科</span><span class="site-tag">编辑模式</span></div><div class="top-actions"><a href="#" onclick="document.documentElement.classList.toggle('dark');localStorage.setItem('theme',document.documentElement.classList.contains('dark')?'dark':'light')">🔆</a><a href="/">🐔 首页</a></div></div><div class="edit-home"><h1>📝 选择人物编辑</h1><p class="article-sub">点击人物名进入可视化编辑器</p><div style="border:1px solid var(--border-light);border-radius:4px;background:var(--paper);overflow:hidden;margin-top:12px">${list}</div><div style="margin-top:24px;padding:12px;background:var(--infobox-header);border-radius:4px;font-size:12px;color:var(--text2)">💡 也可以直接访问 <code>edit.jbbfilm.xyz/bio/xxx.html</code> 编辑指定页面</div></div></body></html>`, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
       }
 
       // Authed → proxy page from GitHub Pages and inject editor
