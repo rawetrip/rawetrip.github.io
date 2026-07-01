@@ -1,2 +1,4 @@
 Main/
 Wikipedia-style/
+.wrangler/
+worker/.wrangler/
