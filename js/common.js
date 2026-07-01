@@ -128,6 +128,7 @@ var _searchIndex = [
   // ── 人物 ──
   {t:"Anjiu Ovieo", u:"anjiu-ovieo.html", c:"人物", p:"anjiu ovieo", k:"安九 蔡洪浩 鸡 爱丽丝 微电影导演 铸币聚集地"},
   {t:"Makesade", u:"Makesade.html", c:"人物", p:"makesade", k:"马可赛德 马克萨德 改车王 御坂美琴 学生 福建"},
+  {t:"南瓜", u:"nangua.html", c:"人物", p:"nangua", k:"南瓜 KOOK 铸币聚集地 Anjiu 恋人"},
 
   // ── 事件 ──
   {t:"标记炸弹安放点 B", u:"events.html#e1", c:"事件 · Anjiu", p:"biaojizhadananfangdian b", k:"CS2炸弹B点标记 战术"},
