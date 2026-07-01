@@ -46,11 +46,17 @@ function fadeInMusic() {
   }, 50);
 }
 
-function openVideo(src) {
+function openVideo(src, title, desc) {
   var ov = document.getElementById('videoOverlay');
   var v = document.getElementById('modalVideo');
   var sp = document.getElementById('videoSpinner');
+  var tx = document.getElementById('videoText');
   if (!ov || !v || !sp) return;
+  // 更新文字
+  if (tx) {
+    tx.querySelector('.vt-title').textContent = title || '';
+    tx.querySelector('.vt-desc').textContent = desc || '';
+  }
   sp.style.display = 'block';
   v.style.display = 'none';
   v.src = src;
