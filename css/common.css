@@ -19,23 +19,23 @@ a{color:var(--link);text-decoration:none}a:hover{color:var(--link-hover);text-de
 #sidebar .sb-title{padding:6px 12px;font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.05em}
 #sidebar a{display:block;padding:5px 12px;color:var(--link)}
 #sidebar a:hover{background:var(--infobox-header);text-decoration:none}
-#main{flex:1;min-width:0;padding:24px 32px 48px;overflow:hidden}#content{max-width:960px}
+#main{flex:1;min-width:0;padding:24px 32px 48px;overflow-x:hidden}#content{max-width:960px;word-wrap:break-word;overflow-wrap:break-word}
 .article-title{font-family:"MiSans Heavy","MiSans",sans-serif;font-size:28px;font-weight:400;border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:12px}
 .article-sub{font-size:13px;color:var(--text2);margin-bottom:20px}
 .infobox{float:right;width:270px;max-width:100%;margin:0 0 20px 24px;border:1px solid var(--border);background:var(--infobox-bg);font-size:12px;line-height:1.6;position:relative;z-index:0}
 .infobox-header{background:var(--infobox-header);padding:8px 12px;font-weight:700;text-align:center;font-size:14px}
 .infobox-image{padding:6px;text-align:center}.infobox-image img{max-width:100%;height:auto;aspect-ratio:auto}
 .infobox-image .caption{font-size:11px;color:var(--text2);margin-top:4px}
-.infobox-row{display:flex;border-top:1px solid var(--border-light)}
-.infobox-label{width:90px;min-width:90px;padding:6px 8px;font-weight:700;color:var(--text2)}
-.infobox-value{padding:6px 8px;flex:1}
+.infobox-row{display:flex;border-top:1px solid var(--border-light);word-break:break-word}
+.infobox-label{width:90px;min-width:90px;padding:6px 8px;font-weight:700;color:var(--text2);flex-shrink:0}
+.infobox-value{padding:6px 8px;flex:1;min-width:0}
 .mw-heading{font-family:"MiSans Heavy","MiSans",sans-serif;font-weight:400;border-bottom:1px solid var(--border-light);margin:24px 0 8px;padding-bottom:4px}
 .mw-heading.h2{font-size:21px}
 .mw-heading .edit-link{font-size:12px;margin-left:8px;font-weight:400}
 .toc{border:1px solid var(--toc-border);background:var(--toc-bg);padding:12px 16px;margin:16px 0;display:inline-block;min-width:260px;font-size:13px}
 .toc-title{font-weight:700;margin-bottom:8px}
 .toc ul{list-style:none;padding-left:0}.toc li{margin:4px 0}
-p{margin:8px 0}
+p{margin:8px 0;word-break:break-word}p a{word-break:break-all}
 .wikitable{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
 .wikitable th,.wikitable td{border:1px solid var(--border-light);padding:8px 10px;text-align:left}
 .wikitable th{background:var(--infobox-header);font-weight:700}
