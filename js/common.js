@@ -393,15 +393,41 @@ var _previewPages = window._previewPages || {};
     var url = info.url, text = info.text;
     var host = '';
     try { host = new URL(url).hostname.replace('www.',''); } catch(ex) {}
+    var c = popup.querySelector('.mwe-popups-container');
+
+    // Wikipedia: 用 REST API 获取摘要
+    if (/wikipedia\.org/.test(host)) {
+      var title = url.split('/wiki/')[1];
+      if (title) {
+        c.innerHTML = '<div class="popups-text" style="padding:6px 0"><span style="font-size:14px;font-weight:700">'+decodeURIComponent(title).replace(/_/g,' ')+'</span><div class="popups-desc" style="margin-top:6px">⏳ 加载摘要...</div><div style="font-size:10px;color:var(--text2);margin-top:4px">📖 维基百科</div></div>';
+        popup.classList.add('show');
+        var px = e.clientX + 15, py = e.clientY + 10;
+        if (px + 320 > window.innerWidth) px = e.clientX - 335;
+        if (py + 180 > window.innerHeight) py = e.clientY - 190;
+        popup.style.left = px + 'px'; popup.style.top = py + 'px';
+        popup._refX = px; popup._refY = py;
+        // Fetch summary
+        var api = 'https://' + host + '/api/rest_v1/page/summary/' + title;
+        fetch(api).then(function(r){return r.json()}).then(function(d){
+          var extract = (d.extract||'').substring(0, 200);
+          if (extract.length >= 200) extract += '...';
+          var img = d.thumbnail ? '<img src="'+d.thumbnail.source+'" style="width:100%;max-height:120px;object-fit:cover;border-radius:2px;margin-bottom:6px">' : '';
+          c.innerHTML = '<div class="popups-text">'+img+'<span style="font-size:14px;font-weight:700">'+d.title+'</span><div class="popups-desc" style="margin-top:6px">'+extract+'</div><div style="font-size:10px;color:var(--text2);margin-top:4px">📖 维基百科 · '+d.lang.toUpperCase()+'</div></div>';
+        }).catch(function(){
+          c.innerHTML = '<div class="popups-text"><span style="font-size:14px;font-weight:700">'+text+'</span><div class="popups-desc" style="margin-top:6px">'+url+'</div><div style="font-size:10px;color:var(--text2);margin-top:4px">📖 维基百科</div></div>';
+        });
+        return;
+      }
+    }
+
+    // 其他链接: 显示基本信息
     var label = '';
-    if (/wikipedia/.test(host)) label = '📖 维基百科';
-    else if (/bilibili/.test(host)) label = '🎬 Bilibili';
+    if (/bilibili/.test(host)) label = '🎬 Bilibili';
     else if (/hltv/.test(host)) label = '🎮 HLTV';
     else if (/baidu/.test(host)) label = '📚 百度百科';
     else if (/toutiao/.test(host)) label = '📰 头条百科';
     else if (/github/.test(host)) label = '💻 GitHub';
     else label = '🔗 ' + host;
-    var c = popup.querySelector('.mwe-popups-container');
     c.innerHTML = '<div class="popups-text"><span style="font-size:11px;color:var(--text2)">' + label + '</span><div class="popups-title" style="font-size:13px;margin-top:4px">' + text + '</div><div class="popups-desc" style="font-size:11px;word-break:break-all">' + url + '</div></div>';
     popup.classList.add('show');
     var x = e.clientX + 15, y = e.clientY + 10;
