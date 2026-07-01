@@ -5,13 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){var s=localStorage.getItem("theme");if(s=="dark")document.documentElement.className="dark"})()</script>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<title>更新日志 — 喂鸡百科</title>
-<meta name="description" content="喂鸡百科更新日志 — 记录每次版本更新的功能、改进和修复">
+<title>更新日志 · 129 commits — 喂鸡百科</title>
+<meta name="description" content="喂鸡百科更新日志 — 129 次提交的完整历史记录">
 <meta property="og:title" content="更新日志 — 喂鸡百科">
-<meta property="og:description" content="查看喂鸡百科的版本更新记录，了解最新的功能和改进。">
+<meta property="og:description" content="查看喂鸡百科的提交历史，了解最新的功能和改进。">
 <meta property="og:image" content="https://jbbfilm.xyz/images/Team.webp">
-<meta property="og:url" content="https://jbbfilm.xyz">
-<meta property="og:type" content="website">
 <link href="fonts/MiSans-Medium.min.css" rel="stylesheet">
 <link href="fonts/MiSans-Bold.min.css" rel="stylesheet">
 <link href="fonts/MiSans-Heavy.min.css" rel="stylesheet">
@@ -22,7 +20,43 @@
 <link rel="preload" href="fonts/MiSans-Heavy.5.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/MiSans-Heavy.6.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="css/common.css" as="style">
-<link href="css/common.css" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+<style>
+
+.cl-wrap{max-width:980px;margin:0 auto;padding:24px 16px 60px}
+.cl-header{border-bottom:1px solid var(--border-light);padding-bottom:16px;margin-bottom:8px}
+.cl-header h1{font-size:24px;font-weight:400;margin-bottom:4px}
+.cl-sub{font-size:14px;color:var(--text2)}
+.cl-toolbar{display:flex;gap:8px;align-items:center;padding:12px 0;border-bottom:1px solid var(--border-light);flex-wrap:wrap;position:sticky;top:56px;z-index:10;background:var(--bg)}
+.cl-filter{border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:12px;background:var(--btn-bg);color:var(--text);cursor:pointer;font-family:inherit;transition:.15s}
+.cl-filter:hover{background:var(--infobox-header)}
+.cl-filter.active{background:var(--link);color:#fff;border-color:var(--link)}
+.cl-day{margin-top:24px}
+.cl-day-head{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border-light)}
+.cl-day-date{font-size:15px;font-weight:600;color:var(--text)}
+.cl-day-count{font-size:12px;color:var(--text2)}
+.cl-commit{display:flex;align-items:flex-start;gap:12px;padding:8px 12px;border-radius:4px;transition:background .12s;line-height:1.5}
+.cl-commit:hover{background:var(--infobox-header)}
+.cl-commit-hash{flex-shrink:0;font-family:monospace;font-size:11px;min-width:56px}
+.cl-commit-hash a{color:var(--text2);text-decoration:none}
+.cl-commit-hash a:hover{color:var(--link);text-decoration:underline}
+.cl-badge{flex-shrink:0;font-size:10px;padding:1px 6px;border-radius:10px;font-weight:700;white-space:nowrap;line-height:18px;min-width:52px;text-align:center}
+.cl-badge.feat{background:#ddf4e0;color:#1a6e2a}.dark .cl-badge.feat{background:#1a3820;color:#66bb6a}
+.cl-badge.fix{background:#ffe8d6;color:#b85c05}.dark .cl-badge.fix{background:#3a2810;color:#ffa94d}
+.cl-badge.perf{background:#dbeafe;color:#1a56b0}.dark .cl-badge.perf{background:#1a3050;color:#64b5f6}
+.cl-badge.chore{background:var(--infobox-header);color:var(--text2)}
+.cl-badge.docs{background:#f3e5f5;color:#6b1a8a}.dark .cl-badge.docs{background:#2a1a38;color:#b388ff}
+.cl-commit-msg{flex:1;font-size:13px;color:var(--text);min-width:0;word-break:break-word}
+.cl-pagination{display:flex;justify-content:center;gap:4px;margin-top:32px;padding-top:16px;border-top:1px solid var(--border-light)}
+.cl-pagination button{border:1px solid var(--border);border-radius:6px;padding:6px 14px;font-size:13px;background:var(--btn-bg);color:var(--text);cursor:pointer;font-family:inherit}
+.cl-pagination button:hover{background:var(--infobox-header)}
+.cl-pagination button.active{background:var(--link);color:#fff;border-color:var(--link)}
+.cl-pagination button:disabled{opacity:.4;cursor:default}
+.cl-pagination .cl-page-info{display:flex;align-items:center;padding:0 12px;font-size:12px;color:var(--text2)}
+.cl-empty{text-align:center;padding:48px 0;color:var(--text2);font-size:14px}
+@media(max-width:640px){.cl-commit{padding:6px 8px;gap:6px}.cl-commit-hash{min-width:42px;font-size:10px}.cl-badge{min-width:40px;font-size:9px;padding:1px 4px}.cl-day-date{font-size:14px}}
+
+</style>
 </head>
 <body>
 
@@ -34,128 +68,106 @@
 </div>
 <div class="search-box"><input id="searchInput" placeholder="搜索喂鸡百科" onkeydown="if(event.key==='Enter')doSearch()"></div>
 <div class="top-actions">
-<a href="#" onclick="toggleMusic()" id="musicBtn" role="switch" aria-checked="false" aria-label="音乐开关">💿</a>
+<a href="#" onclick="toggleMusic()" id="musicBtn">💿</a>
 <a href="#" onclick="toggleTheme()" id="themeToggle">🌙 深色</a>
 <a href="suggestions.html">📋 反馈</a>
 <a href="index.html">🐔 首页</a>
 </div>
 </div>
 
-<div style="max-width:900px;margin:0 auto;padding:24px 16px 60px">
-
+<div class="cl-wrap">
+<div class="cl-header">
 <div class="breadcrumb"><a href="index.html">🐔 首页</a> › <span>📝 更新日志</span></div>
-<h1 class="article-title">更新日志</h1>
-<div class="article-sub">记录喂鸡百科每次版本迭代的功能更新、优化改进和问题修复</div>
-
-<!-- 筛选按钮 -->
-<div style="display:flex;gap:8px;align-items:center;margin-bottom:24px;flex-wrap:wrap" id="filterBar">
-  <span style="font-size:13px;color:var(--text2)">筛选：</span>
-  <button class="cl-filter active" data-type="all" onclick="filterCL('all')">全部</button>
-  <button class="cl-filter" data-type="feature" onclick="filterCL('feature')">🆕 新功能</button>
-  <button class="cl-filter" data-type="improvement" onclick="filterCL('improvement')">🔧 改进</button>
-  <button class="cl-filter" data-type="fix" onclick="filterCL('fix')">🐛 修复</button>
-  <div style="flex:1"></div>
-  <span style="font-size:12px;color:var(--text2)" id="clCount"></span>
+<h1>更新日志</h1>
+<div class="cl-sub" id="clSub">加载中...</div>
+</div>
+<div class="cl-toolbar">
+<span style="font-size:12px;color:var(--text2);white-space:nowrap">类型：</span>
+<button class="cl-filter active" data-type="all">全部</button>
+<button class="cl-filter" data-type="feature">🆕 功能</button>
+<button class="cl-filter" data-type="fix">🐛 修复</button>
+<button class="cl-filter" data-type="improvement">🔧 改进</button>
+<button class="cl-filter" data-type="chore">📦 杂项</button>
+<div style="flex:1"></div>
+<a href="https://github.com/rawetrip/rawetrip.github.io/commits/main" target="_blank" rel="noopener" style="font-size:12px;color:var(--link);white-space:nowrap">GitHub →</a>
+</div>
+<div id="clList"></div>
+<div class="cl-pagination" id="clPagination"></div>
 </div>
 
-<!-- 时间线 -->
-<div id="changelogTimeline"></div>
-
-</div>
-
-<!-- 回到顶部 -->
 <button id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
-
 <audio id="bgm" loop preload="none"><source src="audio/music_opus.ogg" type="audio/ogg"></audio>
-
 <div class="video-overlay" id="videoOverlay" onclick="closeVideo()">
 <button class="video-close" onclick="closeVideo()">✕</button>
-<div class="video-spinner" id="videoSpinner" style="color:#fff;font-size:16px">⏳ 加载中...</div>
+<div class="video-spinner" id="videoSpinner">⏳ 加载中...</div>
 <video id="modalVideo" controls playsinline preload="none" onclick="event.stopPropagation()" onended="closeVideo()" style="display:none" oncanplay="document.getElementById('videoSpinner').style.display='none';this.style.display='block';this.play()"></video>
 </div>
-
 <div class="disclaimer">本站与维基媒体基金会无关 | 内容遵循 CC BY-SA 4.0</div>
 <div class="page-footer" id="pageFooter"></div>
 
 <script src="js/common.js"></script>
 <script>
-// ── 加载 changelog ──
-var _clData = [];
-var _clFilter = 'all';
 
-var _typeMap = {
-  'feature':  { icon: '🆕', label: '新功能', cls: 'cl-feature'  },
-  'improvement': { icon: '🔧', label: '改进',   cls: 'cl-improvement' },
-  'fix':      { icon: '🐛', label: '修复',   cls: 'cl-fix'       }
-};
+var _all=[], _filter='all', _page=1, _perPage=5;
+var _badgeMap={'feature':['feat','🆕功能'],'fix':['fix','🐛修复'],'improvement':['perf','🔧改进'],'chore':['chore','📦杂项'],'docs':['docs','📄文档'],'style':['style','🎨样式']};
 
-function renderChangelog() {
-  var h = '';
-  var total = 0;
-  for (var v = 0; v < _clData.length; v++) {
-    var ver = _clData[v];
-    var changes = ver.changes;
-    if (_clFilter !== 'all') {
-      changes = changes.filter(function(c) { return c.type === _clFilter; });
-    }
-    if (changes.length === 0) continue;
-
-    total += changes.length;
-    h += '<div class="cl-version">';
-    h += '<div class="cl-ver-dot"><span></span></div>';
-    h += '<div class="cl-ver-card">';
-    h += '<div class="cl-ver-header">';
-    h += '<span class="cl-ver-tag">v' + ver.version + '</span>';
-    h += '<span class="cl-ver-date">' + ver.date + '</span>';
-    h += '</div>';
-    h += '<div class="cl-ver-title">' + ver.title + '</div>';
-    h += '<div class="cl-change-list">';
-
-    for (var i = 0; i < changes.length; i++) {
-      var c = changes[i];
-      var m = _typeMap[c.type] || _typeMap['feature'];
-      h += '<div class="cl-change ' + m.cls + '">';
-      h += '<span class="cl-change-icon">' + m.icon + '</span>';
-      h += '<div class="cl-change-body">';
-      h += '<div class="cl-change-text">' + c.text + '</div>';
-      if (c.detail) {
-        h += '<div class="cl-change-detail">' + c.detail + '</div>';
-      }
-      h += '</div>';
-      h += '</div>';
-    }
-
-    h += '</div></div></div>';
+function render(){
+  var days=_all;
+  if(_filter!=='all'){
+    days=_all.map(function(d){
+      var cs=d.commits.filter(function(c){return c.t===_filter});
+      if(cs.length===0)return null;
+      return {date:d.date,count:cs.length,commits:cs};
+    }).filter(Boolean);
   }
-
-  document.getElementById('changelogTimeline').innerHTML = h || '<div style="text-align:center;padding:40px;color:var(--text2)">暂无此分类的更新记录</div>';
-  document.getElementById('clCount').textContent = '共 ' + total + ' 条';
+  var totalDays=days.length;
+  var totalCommits=days.reduce(function(s,d){return s+d.count},0);
+  var totalPages=Math.ceil(totalDays/_perPage);
+  if(_page>totalPages)_page=totalPages||1;
+  var start=(_page-1)*_perPage;
+  var pageDays=days.slice(start,start+_perPage);
+  document.getElementById('clSub').textContent=totalCommits+' commits · '+totalDays+' 天';
+  var h='';
+  for(var i=0;i<pageDays.length;i++){
+    var d=pageDays[i];
+    h+='<div class="cl-day">';
+    h+='<div class="cl-day-head"><span class="cl-day-date">'+d.date+'</span><span class="cl-day-count">'+d.count+' commits</span></div>';
+    for(var j=0;j<d.commits.length;j++){
+      var c=d.commits[j];
+      var b=_badgeMap[c.t]||['chore','📦'];
+      h+='<div class="cl-commit">';
+      h+='<span class="cl-commit-hash"><a href="https://github.com/rawetrip/rawetrip.github.io/commit/'+c.h+'" target="_blank" rel="noopener">'+c.h+'</a></span>';
+      h+='<span class="cl-badge '+b[0]+'">'+b[1]+'</span>';
+      h+='<span class="cl-commit-msg">'+c.m+'</span>';
+      h+='</div>';
+    }
+    h+='</div>';
+  }
+  document.getElementById('clList').innerHTML=h||'<div class="cl-empty">暂无匹配记录</div>';
+  var ph='';
+  ph+='<button '+(page<=1?'disabled':'')+' onclick="goPage('+(page-1)+')">← 之前</button>';
+  for(var p=1;p<=totalPages;p++){
+    if(totalPages<=7||p===1||p===totalPages||Math.abs(p-page)<=2){
+      ph+='<button class="'+(p===page?'active':'')+'" onclick="goPage('+p+')">'+p+'</button>';
+    } else if(p===2||p===totalPages-1){
+      ph+='<span class="cl-page-info">...</span>';
+    }
+  }
+  ph+='<button '+(page>=totalPages?'disabled':'')+' onclick="goPage('+(page+1)+')">之后 →</button>';
+  document.getElementById('clPagination').innerHTML=ph;
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function filterCL(type) {
-  _clFilter = type;
-  document.querySelectorAll('.cl-filter').forEach(function(b) { b.classList.remove('active'); });
-  var btn = document.querySelector('.cl-filter[data-type="' + type + '"]');
-  if (btn) btn.classList.add('active');
-  renderChangelog();
-}
+function goPage(p){_page=p;render()}
+function filterCL(t){_filter=t;_page=1;document.querySelectorAll('.cl-filter').forEach(function(b){b.classList.toggle('active',b.dataset.type===t)});render()}
 
-// ── 初始化 ──
-fetch('changelog.json')
-  .then(function(r) { return r.json(); })
-  .then(function(data) {
-    _clData = data;
-    renderChangelog();
-  })
-  .catch(function() {
-    document.getElementById('changelogTimeline').innerHTML = '<div style="text-align:center;padding:40px;color:var(--text2)">⚠ 加载失败，请刷新重试</div>';
-  });
+fetch('changelog.json').then(function(r){return r.json()}).then(function(d){_all=d;render()}).catch(function(){document.getElementById('clList').innerHTML='<div class="cl-empty">⚠ 加载失败，请刷新重试</div>'});
 
-// 页脚日期
 (function(){
-  var d = new Date(document.lastModified);
-  document.getElementById('pageFooter').textContent = '📅 最后更新于 ' + d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  var d=new Date(document.lastModified);
+  document.getElementById('pageFooter').textContent='📅 最后更新于 '+d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 })();
+
 </script>
 </body>
 </html>

@@ -1,65 +1,689 @@
 [
   {
-    "version": "1.4",
     "date": "2026-07-01",
-    "title": "Worker 部署 & 更新日志",
-    "changes": [
-      { "type": "feature", "text": "Cloudflare Worker 部署上线", "detail": "feedback.js 代理 GitHub Issues API，保护 GH_TOKEN。支持 GET 获取列表 + POST 创建 Issue，部署至 feedback.jbbfilm.workers.dev。" },
-      { "type": "feature", "text": "更新日志页面", "detail": "按版本记录所有功能更新、改进和修复，支持分类筛选和时间线浏览。" }
+    "count": 5,
+    "commits": [
+      {
+        "h": "5afb902",
+        "m": "fix: 恢复 label 过滤 + 同时发送 suggestion 和 type 标签",
+        "t": "fix"
+      },
+      {
+        "h": "a53e429",
+        "m": "fix: 类型写入标题前缀 [🆕功能] 绕过 label 权限问题",
+        "t": "fix"
+      },
+      {
+        "h": "6de7c90",
+        "m": "fix: Worker 去掉 label 过滤; 首页添加更新日志入口",
+        "t": "fix"
+      },
+      {
+        "h": "6ad5fed",
+        "m": "fix: 反馈标签改为 GitHub 现有标签 (enhancement/bug/question)",
+        "t": "fix"
+      },
+      {
+        "h": "f1c1c80",
+        "m": "feat: Worker 部署 + 更新日志 + 反馈走 Worker 读取",
+        "t": "feature"
+      }
     ]
   },
   {
-    "version": "1.3",
     "date": "2026-06-30",
-    "title": "搜索增强 & 懒加载 & Toast & 意见箱",
-    "changes": [
-      { "type": "feature", "text": "搜索增强", "detail": "模糊匹配 + 拼音首字母 + 实时建议下拉 (27 条索引)。支持 ↑↓/Enter/Esc 操作。" },
-      { "type": "feature", "text": "图片懒加载 blur-up", "detail": "blur(15px)→清晰 0.6s 过渡，shimmer 骨架屏占位，MutationObserver 监听动态图片。" },
-      { "type": "feature", "text": "Toast 轻提示", "detail": "替代 alert()，右上角滑入 3 秒消失，3 种类型：success / error / warn。" },
-      { "type": "feature", "text": "意见反馈系统", "detail": "问卷式表单 → Worker → GitHub Issue，失败时 EmailJS fallback (R4nd0m 账号)。" },
-      { "type": "feature", "text": "意见追踪页 (suggestions.html)", "detail": "GitHub Issues 风格列表，状态筛选 (全部/开放/计划中/已完成)，点击展开详情。" },
-      { "type": "feature", "text": "MC Wiki 风格重构", "detail": "MC-wiki 分支：门户 (3D 按钮/斜面/时间线) + 事件专栏 (16 件) + 媒体库 (Tab 切换)。" },
-      { "type": "feature", "text": "回到顶部按钮", "detail": "右下角浮动 ⬆ 按钮，滚动 >300px 显示。" },
-      { "type": "feature", "text": "预计阅读时间", "detail": "中英文字符数估算，显示在文章副标题旁。" },
-      { "type": "feature", "text": "页脚更新日期", "detail": "通过 document.lastModified 显示 📅 最后更新于。" },
-      { "type": "improvement", "text": "公共 CSS/JS 提取", "detail": "消除 ~80 行 ×3 页重复代码，提取至 css/common.css 和 js/common.js。" },
-      { "type": "improvement", "text": "字体预加载优化", "detail": "<link rel=\"preload\"> 预加载 6 个关键 woff2 + common.css。" },
-      { "type": "fix", "text": "赞助商 png→webp 扩展名", "detail": "9 处图片引用残留的 .png 改为 .webp。" }
+    "count": 17,
+    "commits": [
+      {
+        "h": "9fea51c",
+        "m": "feat: Cloudflare Worker 代理 GitHub Issues API",
+        "t": "feature"
+      },
+      {
+        "h": "80fc740",
+        "m": "refactor: suggestions.html 数据源切换为 GitHub Issues API",
+        "t": "improvement"
+      },
+      {
+        "h": "cd4ee7e",
+        "m": "chore: 新增意见反馈 #5 (体验优化) to suggestions.json",
+        "t": "chore"
+      },
+      {
+        "h": "e72bb4c",
+        "m": "feat: GitHub Issues 风格意见追踪页面",
+        "t": "feature"
+      },
+      {
+        "h": "71a9ebd",
+        "m": "fix: 意见反馈切换到新 EmailJS 账号 (r4nd0m0721@outlook.com)",
+        "t": "fix"
+      },
+      {
+        "h": "7d5e612",
+        "m": "feat: 意见反馈入口 — 问卷式表单 + EmailJS",
+        "t": "feature"
+      },
+      {
+        "h": "728e382",
+        "m": "fix: Toast 样式匹配主分支 Wiki 风格，去掉 MC 斜面效果",
+        "t": "fix"
+      },
+      {
+        "h": "ff4898c",
+        "m": "feat: Toast 轻提示 — 替代 alert()，右上角滑入式消息",
+        "t": "feature"
+      },
+      {
+        "h": "92c5f57",
+        "m": "feat: 页脚更新日期 — 显示 📅 最后更新于 XXXX-XX-XX",
+        "t": "feature"
+      },
+      {
+        "h": "f3170c5",
+        "m": "feat: 图片懒加载模糊占位 — 加载前模糊缩略图，加载后渐入",
+        "t": "feature"
+      },
+      {
+        "h": "b3d4db1",
+        "m": "feat: 搜索增强 — 模糊匹配 + 拼音 + 实时建议下拉",
+        "t": "feature"
+      },
+      {
+        "h": "013765c",
+        "m": "fix: 赞助商图片扩展名 png→webp，修复跨页面显示问题",
+        "t": "fix"
+      },
+      {
+        "h": "fd82a84",
+        "m": "fix: 赞助商图片扩展名 png→webp，修复 9 张图片无法显示",
+        "t": "fix"
+      },
+      {
+        "h": "2cbb05c",
+        "m": "refactor: 完全匹配 MC Wiki 源码结构",
+        "t": "improvement"
+      },
+      {
+        "h": "b9c69b5",
+        "m": "refactor: 1:1 复刻 Minecraft Wiki UI/风格",
+        "t": "improvement"
+      },
+      {
+        "h": "2d9c9ae",
+        "m": "refactor: MC Wiki 风格门户首页 — 人物/事件/媒体/文章 四板块",
+        "t": "improvement"
+      },
+      {
+        "h": "dac7195",
+        "m": "feat: 回到顶部按钮 + 预计阅读时间",
+        "t": "feature"
+      }
     ]
   },
   {
-    "version": "1.2",
     "date": "2026-06-29",
-    "title": "性能优化 — CDN 本地化 & 图片压缩",
-    "changes": [
-      { "type": "improvement", "text": "图片压缩 16MB→3MB (81%)", "detail": "修复 JPG RGBA 模式错误、3840×2160 缩放、PNG→WebP 转换。" },
-      { "type": "improvement", "text": "CDN 本地化", "detail": "MiSans 字体 (288 woff2) + EmailJS 从 jsdelivr 迁移到本地，零外部 CDN 依赖。" },
-      { "type": "improvement", "text": "Cloudflare CDN 接入", "detail": "jbbfilm.xyz Nameserver 切至 Cloudflare，SSL/TLS Full 模式。" },
-      { "type": "improvement", "text": "缓存规则 30d", "detail": "静态资源 Edge TTL 30d + Browser TTL 30d (mp4/webp/woff2 等)。" },
-      { "type": "improvement", "text": "音频压缩 8.1→2.9MB (64%)", "detail": "MP3 → Opus 格式转换。" },
-      { "type": "fix", "text": "视频预加载修复", "detail": "首页 preload=none；传记页保持 auto (display:none + preload=none 导致 oncanplay 不触发)。" },
-      { "type": "feature", "text": "robots.txt", "detail": "允许所有爬虫，Sitemap 指向 jbbfilm.xyz。" }
+    "count": 18,
+    "commits": [
+      {
+        "h": "a41af12",
+        "m": "revert: 撤销 opacity hack 和 anjiu/Makesade preload=none，还原为旧版行为",
+        "t": "fix"
+      },
+      {
+        "h": "646a8c1",
+        "m": "fix: 185与085 视频链接改为正文内联",
+        "t": "fix"
+      },
+      {
+        "h": "f17369a",
+        "m": "refactor: 185与085 视频链接移至段落前，&amp; 编码修复",
+        "t": "improvement"
+      },
+      {
+        "h": "480a0f9",
+        "m": "fix: 视频加载改用 opacity:0→1 替代 display:none→block，避免 preload=none 时浏览器不加载",
+        "t": "fix"
+      },
+      {
+        "h": "8a9a462",
+        "m": "fix: openVideo 移除 display:none，避免 preload=none 时浏览器不加载隐藏视频",
+        "t": "fix"
+      },
+      {
+        "h": "2d7c381",
+        "m": "fix: 185&085.mp4 onclick 中 & 改用 %26 编码，避免 HTML 解析/广告拦截器误判",
+        "t": "fix"
+      },
+      {
+        "h": "c122b5b",
+        "m": "docs: add README.md",
+        "t": "docs"
+      },
+      {
+        "h": "6b74408",
+        "m": "refactor: 提取公共 JS 为 js/common.js + 修复音频引用/视频预加载 - 新建 js/common.js — 主题切换/音乐控制/视频弹窗/搜索定向/悬浮预览/Rick Roll - 三个 HTML 各减少 80-150 行重复 JS，改为 <script src=\"js/common.js\"> - 修复 anjiu/Makesade 音频引用 music.mp3→music_opus.ogg (此前迁移遗漏) - 修复 anjiu/Makesade 视频 preload=\"auto\"→\"none\" - toggleMusic/openVideo/closeVideo 增加 DOM 元素 null 检查",
+        "t": "improvement"
+      },
+      {
+        "h": "274a704",
+        "m": "perf: 字体+CSS预加载 (6关键woff2 + common.css)",
+        "t": "improvement"
+      },
+      {
+        "h": "9fe9fa0",
+        "m": "refactor: 提取公共 CSS 为 css/common.css (消除 79行×3 重复)",
+        "t": "improvement"
+      },
+      {
+        "h": "2746e85",
+        "m": "chore: 清理旧文件 (赞助商PNG + music.mp3)",
+        "t": "chore"
+      },
+      {
+        "h": "ddeb0e7",
+        "m": "perf: 背景音乐 MP3->Opus 64k (8.1MB->2.9MB)",
+        "t": "improvement"
+      },
+      {
+        "h": "158ef0a",
+        "m": "feat: 添加 robots.txt 屏蔽爬虫抓取视频/音频/字体",
+        "t": "feature"
+      },
+      {
+        "h": "a868465",
+        "m": "tweak: 编辑按钮 -> 当前页重定向而非新窗口",
+        "t": "improvement"
+      },
+      {
+        "h": "ea0c456",
+        "m": "feat: [编辑] 按钮 -> B站 Rick Roll 彩蛋",
+        "t": "feature"
+      },
+      {
+        "h": "fee9994",
+        "m": "fix: Makesade 人设来源修正 魔法禁书目录 -> 某科学的超电磁炮, 参考文献改用萌娘百科",
+        "t": "fix"
+      },
+      {
+        "h": "49972fa",
+        "m": "fix: Makesade 人设来源修正 魔法禁书目录 -> 某科学的超电磁炮, 参考文献改用萌娘百科",
+        "t": "fix"
+      },
+      {
+        "h": "652fe04",
+        "m": "perf: CDN本地化 + 图片压缩 + Cloudflare接入",
+        "t": "improvement"
+      }
     ]
   },
   {
-    "version": "1.1",
     "date": "2026-06-28",
-    "title": "人物传记页面上线",
-    "changes": [
-      { "type": "feature", "text": "Anjiu Ovieo 传记页", "detail": "信息框 + 早年经历 + 主要事迹 (8 事件) + 注释 + 参考文献 (15 条) + 4 个视频。" },
-      { "type": "feature", "text": "Makesade 传记页", "detail": "信息框 + 早年经历 + 主要事迹 (7 事件) + 注释 + 参考文献 (9 条) + 3 个视频。" }
+    "count": 57,
+    "commits": [
+      {
+        "h": "92ed1c8",
+        "m": "Fix all code review findings: search, popups, cross-links, ib_caption, disclaimer, EmailJS, bgm.play catch, Makesade定向",
+        "t": "fix"
+      },
+      {
+        "h": "1808128",
+        "m": "Merge branch 'wikipedia-style'",
+        "t": "chore"
+      },
+      {
+        "h": "8509f1f",
+        "m": "Add friends list to Makesade infobox",
+        "t": "chore"
+      },
+      {
+        "h": "51bf2b0",
+        "m": "Restore preload=auto on video elements",
+        "t": "chore"
+      },
+      {
+        "h": "59e832f",
+        "m": "Merge branch 'wikipedia-style'",
+        "t": "chore"
+      },
+      {
+        "h": "f67e8ac",
+        "m": "Remove loading percentage and preload=auto from video player",
+        "t": "chore"
+      },
+      {
+        "h": "2743fb1",
+        "m": "Merge branch 'wikipedia-style'",
+        "t": "chore"
+      },
+      {
+        "h": "7782899",
+        "m": "Compress videos: total 331MB -> 60MB (82% reduction)",
+        "t": "improvement"
+      },
+      {
+        "h": "e1eb2ff",
+        "m": "Merge branch 'wikipedia-style'",
+        "t": "chore"
+      },
+      {
+        "h": "3bf5124",
+        "m": "Add loading progress percentage to video player",
+        "t": "chore"
+      },
+      {
+        "h": "3440126",
+        "m": "Merge branch 'wikipedia-style'",
+        "t": "chore"
+      },
+      {
+        "h": "ddc191a",
+        "m": "Reorder references by first-appearance: [9]赛博春晚 [10]英国伦敦 [11]GTA5 [12]PEAK [13]网信办 [14]OW [15]Inferno",
+        "t": "improvement"
+      },
+      {
+        "h": "752c820",
+        "m": "Add 赛博春晚 reference [15]",
+        "t": "chore"
+      },
+      {
+        "h": "c5351e8",
+        "m": "Merge branch 'wikipedia-style'",
+        "t": "chore"
+      },
+      {
+        "h": "bf7651c",
+        "m": "Add '由于此行为十分奇异搞笑' prefix to 赛博春晚 reference",
+        "t": "chore"
+      },
+      {
+        "h": "e26bd67",
+        "m": "Merge branch 'wikipedia-style'",
+        "t": "chore"
+      },
+      {
+        "h": "e855671",
+        "m": "Add 赛博春晚 video reference to 手机砸蛋 event",
+        "t": "chore"
+      },
+      {
+        "h": "77c177c",
+        "m": "Merge branch 'wikipedia-style'",
+        "t": "chore"
+      },
+      {
+        "h": "3a59531",
+        "m": "Optimize video loading: oncanplay event + loading spinner, remove fixed 500ms timeout",
+        "t": "improvement"
+      },
+      {
+        "h": "95cb5cd",
+        "m": "Merge branch 'wikipedia-style'",
+        "t": "chore"
+      },
+      {
+        "h": "eb2f9a2",
+        "m": "Fix anjiu-ovieo: add missing openVideo/closeVideo functions, prevent href=# scroll",
+        "t": "fix"
+      },
+      {
+        "h": "e94c776",
+        "m": "Merge branch 'wikipedia-style'",
+        "t": "chore"
+      },
+      {
+        "h": "d1f3084",
+        "m": "Add compressed anti-fraud video (92MB)",
+        "t": "chore"
+      },
+      {
+        "h": "7237449",
+        "m": "Remove broken anti-fraud video link (file too large for GitHub)",
+        "t": "chore"
+      },
+      {
+        "h": "ceb4328",
+        "m": "Add 3 Anjiu event videos (anti-fraud excluded: 223MB exceeds GitHub limit)",
+        "t": "feature"
+      },
+      {
+        "h": "1cb2134",
+        "m": "Merge branch 'wikipedia-style'",
+        "t": "chore"
+      },
+      {
+        "h": "37bf243",
+        "m": "Link video playback to inline text: 即时回放 and 保存了一段频道录音",
+        "t": "improvement"
+      },
+      {
+        "h": "c4dca18",
+        "m": "Add inline video play buttons for 185&085, 摸来摸去, 漏尿",
+        "t": "chore"
+      },
+      {
+        "h": "2976b4a",
+        "m": "Sort Makesade aliases by character count",
+        "t": "chore"
+      },
+      {
+        "h": "01611eb",
+        "m": "Fix alias order by character count",
+        "t": "chore"
+      },
+      {
+        "h": "f12579a",
+        "m": "Switch PEAK reference to Wikipedia",
+        "t": "chore"
+      },
+      {
+        "h": "0cee73b",
+        "m": "Merge branch 'wikipedia-style'",
+        "t": "chore"
+      },
+      {
+        "h": "3d45fa2",
+        "m": "Add 3 new Anjiu Ovieo events: British London, PEAK anti-fraud, Inferno wallbang",
+        "t": "feature"
+      },
+      {
+        "h": "066fd88",
+        "m": "Merge branch 'wikipedia-style'",
+        "t": "chore"
+      },
+      {
+        "h": "c14c1ee",
+        "m": "Fix all code review findings: closeVideo, search, disclaimer, orphan ref, sidebar link, dead EmailJS, timer consistency, nested ternary",
+        "t": "fix"
+      },
+      {
+        "h": "5e45ee2",
+        "m": "Restore Anjiu's original avatar",
+        "t": "chore"
+      },
+      {
+        "h": "e5585c6",
+        "m": "Replace profile avatars globally",
+        "t": "chore"
+      },
+      {
+        "h": "04d4384",
+        "m": "Add AsakuraKaren as Makesade's close friend",
+        "t": "chore"
+      },
+      {
+        "h": "67ded42",
+        "m": "Fix Makesade.html meta tags, title, breadcrumb",
+        "t": "chore"
+      },
+      {
+        "h": "9128921",
+        "m": "Create Makesade.html entry page",
+        "t": "chore"
+      },
+      {
+        "h": "4bb3fdb",
+        "m": "Add video timestamps and PEAK reference from 1.md",
+        "t": "chore"
+      },
+      {
+        "h": "004478f",
+        "m": "Fix home/sidebar/breadcrumb links: # -> index.html",
+        "t": "fix"
+      },
+      {
+        "h": "b41d600",
+        "m": "Add Makesade blue link in team table",
+        "t": "chore"
+      },
+      {
+        "h": "901e3c9",
+        "m": "Merge branch 'wikipedia-style'",
+        "t": "chore"
+      },
+      {
+        "h": "0050da1",
+        "m": "Remove type and founder rows from infobox",
+        "t": "chore"
+      },
+      {
+        "h": "9e94e77",
+        "m": "Rewrite about section: film studio -> chicken encyclopedia (all 7 languages)",
+        "t": "improvement"
+      },
+      {
+        "h": "1c4fcc5",
+        "m": "Rename JBB FILM to 喂鸡百科",
+        "t": "chore"
+      },
+      {
+        "h": "e7141c5",
+        "m": "Merge wikipedia-style into main",
+        "t": "chore"
+      },
+      {
+        "h": "d2d1333",
+        "m": "User edits: infobox tweaks, citation adjustments, text refinements",
+        "t": "improvement"
+      },
+      {
+        "h": "11c34f0",
+        "m": "Make sidebar sticky on scroll",
+        "t": "chore"
+      },
+      {
+        "h": "e630ec0",
+        "m": "Sort aliases by character count ascending",
+        "t": "chore"
+      },
+      {
+        "h": "0769f94",
+        "m": "Stack aliases vertically in infobox",
+        "t": "chore"
+      },
+      {
+        "h": "8c5e474",
+        "m": "Stack friends vertically in infobox",
+        "t": "chore"
+      },
+      {
+        "h": "2b22bb1",
+        "m": "Add friends to Anjiu Ovieo infobox",
+        "t": "chore"
+      },
+      {
+        "h": "cc6db51",
+        "m": "Add relationship info to Anjiu Ovieo infobox",
+        "t": "chore"
+      },
+      {
+        "h": "a952613",
+        "m": "Reorder references by first-appearance order",
+        "t": "chore"
+      },
+      {
+        "h": "b0523cd",
+        "m": "Remove google.html and all references",
+        "t": "chore"
+      }
     ]
   },
   {
-    "version": "1.0",
     "date": "2026-06-27",
-    "title": "初始上线",
-    "changes": [
-      { "type": "feature", "text": "喂鸡百科门户首页", "detail": "信息框 + 关于我们 (7 语言) + 团队成员 (8 人) + 代表作品 (6 电影) + 公司位置 (重庆轮播) + 赞助商 (20 个) + 联系我们 (EmailJS)。" },
-      { "type": "feature", "text": "深色模式", "detail": "CSS 变量 + .dark 类切换，localStorage 持久化。" },
-      { "type": "feature", "text": "背景音乐", "detail": "<audio> fadeIn/fadeOut 控制。" },
-      { "type": "feature", "text": "悬浮预览卡片", "detail": "Anjiu + Makesade 链接悬停弹出人物信息。" },
-      { "type": "feature", "text": "Rick Roll 彩蛋", "detail": "赞助商特定区域点击触发。" }
+    "count": 20,
+    "commits": [
+      {
+        "h": "cbbef76",
+        "m": "Add popup previews to all Wikipedia-style pages",
+        "t": "chore"
+      },
+      {
+        "h": "59960d8",
+        "m": "Add Wikipedia-style page preview popups on hover",
+        "t": "chore"
+      },
+      {
+        "h": "a291a47",
+        "m": "Add inline citations for references and notes",
+        "t": "chore"
+      },
+      {
+        "h": "464e85c",
+        "m": "Add all aliases to Anjiu Ovieo infobox",
+        "t": "chore"
+      },
+      {
+        "h": "e3df2d5",
+        "m": "Add search: 19 keywords redirect to Anjiu Ovieo page",
+        "t": "feature"
+      },
+      {
+        "h": "6a8eae6",
+        "m": "Add Anjiu Ovieo blue link in team table",
+        "t": "chore"
+      },
+      {
+        "h": "011a24e",
+        "m": "Add Anjiu Ovieo biography page with blue link",
+        "t": "chore"
+      },
+      {
+        "h": "2774880",
+        "m": "维鸡百科 → 喂鸡百科",
+        "t": "chore"
+      },
+      {
+        "h": "8fe5825",
+        "m": "Update .gitignore",
+        "t": "chore"
+      },
+      {
+        "h": "e776af7",
+        "m": "Remove team photo header column",
+        "t": "chore"
+      },
+      {
+        "h": "73c1f5f",
+        "m": "Optimize: MiSans font, textContent, interval cleanup, ESC key, ARIA, html lang",
+        "t": "improvement"
+      },
+      {
+        "h": "aa97e43",
+        "m": "Switch base font to MiSans Heavy",
+        "t": "chore"
+      },
+      {
+        "h": "1136355",
+        "m": "Add MiSans Bold/Heavy weights, member name font-weight 900",
+        "t": "chore"
+      },
+      {
+        "h": "081325c",
+        "m": "Fix: remove defer from EmailJS to prevent ReferenceError blocking setLang",
+        "t": "fix"
+      },
+      {
+        "h": "dab67a6",
+        "m": "Switch to MiSans Medium font",
+        "t": "chore"
+      },
+      {
+        "h": "428fbb2",
+        "m": "Fix: Chinese font fallback, innerText->textContent",
+        "t": "fix"
+      },
+      {
+        "h": "a7673ec",
+        "m": "Add .gitignore for local branch folders",
+        "t": "chore"
+      },
+      {
+        "h": "0771de7",
+        "m": "Add .gitignore for local branch folders",
+        "t": "chore"
+      },
+      {
+        "h": "90b9ef5",
+        "m": "Optimize: async fonts, defer EmailJS, ARIA, ESC close, interval cleanup",
+        "t": "improvement"
+      },
+      {
+        "h": "b9b6576",
+        "m": "Remove index_backup.html",
+        "t": "chore"
+      }
+    ]
+  },
+  {
+    "date": "2026-06-25",
+    "count": 10,
+    "commits": [
+      {
+        "h": "351685f",
+        "m": "Fix: move music btn to topbar, i18n breadcrumb/infobox/refs",
+        "t": "fix"
+      },
+      {
+        "h": "d0fa0be",
+        "m": "Fix: move music button to header, right of lang toggle",
+        "t": "fix"
+      },
+      {
+        "h": "3616769",
+        "m": "Fix: lang dropdown z-index to prevent music button overlap",
+        "t": "fix"
+      },
+      {
+        "h": "991224d",
+        "m": "Fix: music button z-index overlap with header on narrow screens",
+        "t": "fix"
+      },
+      {
+        "h": "d9995ca",
+        "m": "Optimize: team photos, smooth scroll, OG tags, ib caption i18n, sidebar active fix",
+        "t": "improvement"
+      },
+      {
+        "h": "4715799",
+        "m": "Add missing Mate3.jpg",
+        "t": "chore"
+      },
+      {
+        "h": "fe8da92",
+        "m": "Redesign: Wikipedia-style layout (维鸡百科)",
+        "t": "feature"
+      },
+      {
+        "h": "d6b138b",
+        "m": "Add film5 white placeholder, restore 6th film card with translations",
+        "t": "chore"
+      },
+      {
+        "h": "9eab5e3",
+        "m": "perf: lazy loading images, remove Tailwind CDN, add preconnect, meta desc, remove broken film5",
+        "t": "improvement"
+      },
+      {
+        "h": "c40093a",
+        "m": "Remove unused stats section",
+        "t": "chore"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-18",
+    "count": 2,
+    "commits": [
+      {
+        "h": "d598fb1",
+        "m": "Add files via upload",
+        "t": "chore"
+      },
+      {
+        "h": "3339f43",
+        "m": "Add files via upload",
+        "t": "chore"
+      }
     ]
   }
 ]
