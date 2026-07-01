@@ -32,6 +32,25 @@ export default {
         return Response.redirect(`https://edit.jbbfilm.xyz/auth?goto=${goto}`, 302);
       }
 
+      // Authed — show file browser at root
+      if (url.pathname === '/' || url.pathname === '/bio/' || url.pathname === '' || url.pathname === '/bio') {
+        const files = [
+          { path: '/index.html', name: '🏠 首页' },
+          { path: '/suggestions.html', name: '📋 意见追踪' },
+          { path: '/changelog.html', name: '📝 更新日志' },
+          { path: '/bio/anjiu-ovieo.html', name: '👤 Anjiu Ovieo' },
+          { path: '/bio/Makesade.html', name: '👤 Makesade' },
+          { path: '/bio/nangua.html', name: '👤 南瓜' },
+          { path: '/bio/goto.html', name: '👤 后藤' },
+          { path: '/bio/hanburger.html', name: '👤 韩堡戈' },
+          { path: '/bio/asakurakaren.html', name: '👤 AsakuraKaren' },
+          { path: '/css/common.css', name: '🎨 公共样式' },
+          { path: '/js/common.js', name: '⚙️ 公共JS' },
+        ];
+        let list = files.map(f => `<a href="${f.path}" style="display:flex;padding:12px 16px;border-bottom:1px solid var(--border-light);color:var(--link);text-decoration:none;transition:background .2s"><span>${f.name}</span><span style="flex:1"></span><span style="font-size:11px;color:var(--text2)">${f.path}</span></a>`).join('');
+        return new Response(`<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>📂 编辑 — 喂鸡百科</title><style>:root{--bg:#f6f6f6;--paper:#fff;--text:#202122;--text2:#54595d;--link:#0645ad;--border-light:#eaecf0}.dark{--bg:#101418;--paper:#1b1d21;--text:#d8d9da;--text2:#a2a4a6;--link:#6da3f5;--border-light:#2a2d31}body{font-family:sans-serif;background:var(--bg);color:var(--text);max-width:600px;margin:40px auto;padding:0 16px}h2{font-size:20px;margin-bottom:16px}.file-list{border:1px solid var(--border-light);border-radius:8px;background:var(--paper);overflow:hidden}.file-list a:hover{background:var(--border-light)}</style></head><body><h2>📂 选择文件编辑</h2><div class="file-list">${list}</div></body></html>`, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+      }
+
       // Authed → proxy page from GitHub Pages and inject editor
       const targetUrl = 'https://rawetrip.github.io' + url.pathname + url.search;
       const res = await fetch(targetUrl);
