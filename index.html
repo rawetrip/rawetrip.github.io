@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){var s=localStorage.getItem("theme");if(s=="dark")document.documentElement.className="dark"})()</script>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://feedback.jbbfilm.workers.dev">
 <title>喂鸡百科 — 喂鸡百科</title>
 <meta name="description" content="喂鸡百科 影视工作室 · 喂鸡百科，自由的鸡百科">
 <meta property="og:title" content="喂鸡百科 — 喂鸡百科">
@@ -24,7 +25,7 @@
 <link rel="preload" href="fonts/MiSans-Heavy.6.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="css/common.css" as="style">
 <link rel="preload" href="images/Team.webp" as="image" fetchpriority="high">
-<link rel="preload" href="images/Chongqing.jpg" as="image">
+<link rel="preload" href="images/Chongqing.webp" as="image">
 <link href="css/common.css" rel="stylesheet">
 </head>
 <body>
@@ -117,7 +118,7 @@
 <h2 class="mw-heading h2" id="location"><span data-i18n="location_title"></span><span class="edit-link"><a href="#">[编辑]</a></span></h2>
 <p data-i18n="location_sub"></p>
 <div class="location-box">
-<div class="location-slide active"><img src="images/Chongqing.jpg" decoding="async" alt="Chongqing" width="1200" height="675" style="width:100%;height:100%;object-fit:cover"></div>
+<div class="location-slide active"><img src="images/Chongqing.webp" decoding="async" alt="Chongqing" width="1200" height="675" style="width:100%;height:100%;object-fit:cover"></div>
 <div class="location-slide"><img src="images/Chongqing0.jpg" loading="lazy" decoding="async" alt="Chongqing0"></div>
 <div class="location-slide"><img src="images/Chongqing1.jpg" loading="lazy" decoding="async" alt="Chongqing1"></div>
 <div class="location-caption" data-i18n="location_text"></div>
@@ -397,12 +398,12 @@ tbody.innerHTML=h;
 function renderFilmGallery(lang){
 var d=T[lang];
 var films=[
-{img:"images/film0.jpg",key:"film0"},
-{img:"images/film1.jpg",key:"film1"},
-{img:"images/film2.jpg",key:"film2"},
-{img:"images/film3.jpg",key:"film3"},
-{img:"images/film4.jpg",key:"film4"},
-{img:"images/film5.jpg",key:"film5"}
+{img:"images/film0.webp",key:"film0"},
+{img:"images/film1.webp",key:"film1"},
+{img:"images/film2.webp",key:"film2"},
+{img:"images/film3.webp",key:"film3"},
+{img:"images/film4.webp",key:"film4"},
+{img:"images/film5.webp",key:"film5"}
 ];
 var h='';
 for(var i=0;i<films.length;i++){
