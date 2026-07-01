@@ -1,0 +1,19 @@
+# Cloudflare Worker - 意见反馈代理
+# 代理 GitHub Issues API，保护 GH_TOKEN 不暴露在前端
+
+name = "feedback"
+main = "feedback.js"
+compatibility_date = "2026-06-30"
+
+# 自定义 workers.dev 子域名
+# 部署后地址: https://feedback.jbbfilm.workers.dev
+workers_dev = true
+
+# 如果要用自定义域名 (feedback.jbbfilm.xyz)，取消下面注释:
+# routes = [
+#   { pattern = "feedback.jbbfilm.xyz", custom_domain = true }
+# ]
+
+[observability]
+enabled = true
+head_sampling_rate = 1

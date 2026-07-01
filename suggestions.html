@@ -145,7 +145,7 @@ function parseGHIssue(issue){
 
 function loadIssues(){
   document.getElementById('issueList').innerHTML='<div style="text-align:center;padding:40px;color:var(--text2)">加载中...</div>';
-  fetch('https://api.github.com/repos/rawetrip/rawetrip.github.io/issues?state=all&labels=suggestion&per_page=50')
+  fetch('https://feedback.jbbfilm.workers.dev?state=all&per_page=50')
   .then(function(r){return r.json()})
   .then(function(data){
     _issues=[];

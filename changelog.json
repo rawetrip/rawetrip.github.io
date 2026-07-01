@@ -1,0 +1,65 @@
+[
+  {
+    "version": "1.4",
+    "date": "2026-07-01",
+    "title": "Worker 部署 & 更新日志",
+    "changes": [
+      { "type": "feature", "text": "Cloudflare Worker 部署上线", "detail": "feedback.js 代理 GitHub Issues API，保护 GH_TOKEN。支持 GET 获取列表 + POST 创建 Issue，部署至 feedback.jbbfilm.workers.dev。" },
+      { "type": "feature", "text": "更新日志页面", "detail": "按版本记录所有功能更新、改进和修复，支持分类筛选和时间线浏览。" }
+    ]
+  },
+  {
+    "version": "1.3",
+    "date": "2026-06-30",
+    "title": "搜索增强 & 懒加载 & Toast & 意见箱",
+    "changes": [
+      { "type": "feature", "text": "搜索增强", "detail": "模糊匹配 + 拼音首字母 + 实时建议下拉 (27 条索引)。支持 ↑↓/Enter/Esc 操作。" },
+      { "type": "feature", "text": "图片懒加载 blur-up", "detail": "blur(15px)→清晰 0.6s 过渡，shimmer 骨架屏占位，MutationObserver 监听动态图片。" },
+      { "type": "feature", "text": "Toast 轻提示", "detail": "替代 alert()，右上角滑入 3 秒消失，3 种类型：success / error / warn。" },
+      { "type": "feature", "text": "意见反馈系统", "detail": "问卷式表单 → Worker → GitHub Issue，失败时 EmailJS fallback (R4nd0m 账号)。" },
+      { "type": "feature", "text": "意见追踪页 (suggestions.html)", "detail": "GitHub Issues 风格列表，状态筛选 (全部/开放/计划中/已完成)，点击展开详情。" },
+      { "type": "feature", "text": "MC Wiki 风格重构", "detail": "MC-wiki 分支：门户 (3D 按钮/斜面/时间线) + 事件专栏 (16 件) + 媒体库 (Tab 切换)。" },
+      { "type": "feature", "text": "回到顶部按钮", "detail": "右下角浮动 ⬆ 按钮，滚动 >300px 显示。" },
+      { "type": "feature", "text": "预计阅读时间", "detail": "中英文字符数估算，显示在文章副标题旁。" },
+      { "type": "feature", "text": "页脚更新日期", "detail": "通过 document.lastModified 显示 📅 最后更新于。" },
+      { "type": "improvement", "text": "公共 CSS/JS 提取", "detail": "消除 ~80 行 ×3 页重复代码，提取至 css/common.css 和 js/common.js。" },
+      { "type": "improvement", "text": "字体预加载优化", "detail": "<link rel=\"preload\"> 预加载 6 个关键 woff2 + common.css。" },
+      { "type": "fix", "text": "赞助商 png→webp 扩展名", "detail": "9 处图片引用残留的 .png 改为 .webp。" }
+    ]
+  },
+  {
+    "version": "1.2",
+    "date": "2026-06-29",
+    "title": "性能优化 — CDN 本地化 & 图片压缩",
+    "changes": [
+      { "type": "improvement", "text": "图片压缩 16MB→3MB (81%)", "detail": "修复 JPG RGBA 模式错误、3840×2160 缩放、PNG→WebP 转换。" },
+      { "type": "improvement", "text": "CDN 本地化", "detail": "MiSans 字体 (288 woff2) + EmailJS 从 jsdelivr 迁移到本地，零外部 CDN 依赖。" },
+      { "type": "improvement", "text": "Cloudflare CDN 接入", "detail": "jbbfilm.xyz Nameserver 切至 Cloudflare，SSL/TLS Full 模式。" },
+      { "type": "improvement", "text": "缓存规则 30d", "detail": "静态资源 Edge TTL 30d + Browser TTL 30d (mp4/webp/woff2 等)。" },
+      { "type": "improvement", "text": "音频压缩 8.1→2.9MB (64%)", "detail": "MP3 → Opus 格式转换。" },
+      { "type": "fix", "text": "视频预加载修复", "detail": "首页 preload=none；传记页保持 auto (display:none + preload=none 导致 oncanplay 不触发)。" },
+      { "type": "feature", "text": "robots.txt", "detail": "允许所有爬虫，Sitemap 指向 jbbfilm.xyz。" }
+    ]
+  },
+  {
+    "version": "1.1",
+    "date": "2026-06-28",
+    "title": "人物传记页面上线",
+    "changes": [
+      { "type": "feature", "text": "Anjiu Ovieo 传记页", "detail": "信息框 + 早年经历 + 主要事迹 (8 事件) + 注释 + 参考文献 (15 条) + 4 个视频。" },
+      { "type": "feature", "text": "Makesade 传记页", "detail": "信息框 + 早年经历 + 主要事迹 (7 事件) + 注释 + 参考文献 (9 条) + 3 个视频。" }
+    ]
+  },
+  {
+    "version": "1.0",
+    "date": "2026-06-27",
+    "title": "初始上线",
+    "changes": [
+      { "type": "feature", "text": "喂鸡百科门户首页", "detail": "信息框 + 关于我们 (7 语言) + 团队成员 (8 人) + 代表作品 (6 电影) + 公司位置 (重庆轮播) + 赞助商 (20 个) + 联系我们 (EmailJS)。" },
+      { "type": "feature", "text": "深色模式", "detail": "CSS 变量 + .dark 类切换，localStorage 持久化。" },
+      { "type": "feature", "text": "背景音乐", "detail": "<audio> fadeIn/fadeOut 控制。" },
+      { "type": "feature", "text": "悬浮预览卡片", "detail": "Anjiu + Makesade 链接悬停弹出人物信息。" },
+      { "type": "feature", "text": "Rick Roll 彩蛋", "detail": "赞助商特定区域点击触发。" }
+    ]
+  }
+]

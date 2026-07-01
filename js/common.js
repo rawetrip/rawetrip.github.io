@@ -146,6 +146,7 @@ var _searchIndex = [
   {t:"媒体库", u:"media.html", c:"页面", p:"meitiku", k:"媒体 视频 音频 图片 资源"},
   {t:"赞助商", u:"index.html#sponsors", c:"页面", p:"zanzhushang", k:"sponsors 合作 伙伴"},
   {t:"联系我们", u:"index.html#contact", c:"页面", p:"lianxiwomen", k:"contact 联系 邮件 表单"},
+  {t:"更新日志", u:"changelog.html", c:"页面", p:"gengxinrizhi", k:"changelog 版本 更新 历史"},
 
   // ── 赞助商品牌 ──
   {t:"Los Pollos Hermanos", u:"index.html#sponsors", c:"赞助商", p:"", k:"赞助商"},
