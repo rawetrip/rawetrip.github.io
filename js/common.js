@@ -375,9 +375,22 @@ var _previewPages = window._previewPages || {};
   });
 
   // ── 参考文献悬浮预览 ──
+  var _refCache = {};
+  function getRefInfo(href) {
+    if (_refCache[href] !== undefined) return _refCache[href];
+    var m = href.match(/#(ref\d+|cite_note-\d+)/);
+    if (!m) return (_refCache[href] = null);
+    var el = document.getElementById(m[1]);
+    if (!el) return (_refCache[href] = null);
+    var link = el.querySelector('a[href^="http"]');
+    if (!link) return (_refCache[href] = null);
+    return (_refCache[href] = { url: link.href, text: link.textContent.trim(), liText: el.textContent.trim() });
+  }
+
   function showRefPopup(e, a) {
-    var url = a.href;
-    var text = a.textContent.trim();
+    var info = getRefInfo(a.getAttribute('href'));
+    if (!info) return;
+    var url = info.url, text = info.text;
     var host = '';
     try { host = new URL(url).hostname.replace('www.',''); } catch(ex) {}
     var label = '';
@@ -398,8 +411,9 @@ var _previewPages = window._previewPages || {};
     popup.style.top = y + 'px';
   }
 
-  document.querySelectorAll('sup a[href^="http"]').forEach(function (a) {
+  document.querySelectorAll('sup a[href^="#ref"], sup a[href^="#cite"]').forEach(function (a) {
     a.addEventListener('mouseenter', function (e) {
+      if (!getRefInfo(a.getAttribute('href'))) return;
       clearTimeout(timer);
       timer = setTimeout(function () { showRefPopup(e, a); }, 300);
     });
