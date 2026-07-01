@@ -25,7 +25,7 @@ export default {
         apiUrl = `https://api.github.com/repos/rawetrip/rawetrip.github.io/commits?sha=${sha}&per_page=${per_page}&page=${page}`;
       } else {
         const state = url.searchParams.get('state') || 'all';
-        apiUrl = `https://api.github.com/repos/rawetrip/rawetrip.github.io/issues?labels=suggestion&state=${state}&per_page=${per_page}&page=${page}`;
+        apiUrl = `https://api.github.com/repos/rawetrip/rawetrip.github.io/issues?state=${state}&per_page=${per_page}&page=${page}`;
       }
 
       const res = await fetch(apiUrl, {
