@@ -137,7 +137,7 @@ p{margin:8px 0;word-break:break-word}p a{word-break:break-all}
 .video-text{position:absolute;bottom:8vh;left:8vw;max-width:40vw;color:#fff;opacity:0;transform:translateY(20px);transition:opacity .5s .15s,transform .5s .15s cubic-bezier(.22,.61,.36,1)}
 .video-overlay.active .video-text{opacity:1;transform:translateY(0)}
 .video-text .vt-title{font-family:"MiSans Heavy","MiSans",sans-serif;font-size:clamp(1.8rem,4vw,3.5rem);line-height:1.1;margin-bottom:12px;text-shadow:0 2px 20px rgba(0,0,0,.5)}
-.video-text .vt-desc{font-size:clamp(.9rem,2vw,1.2rem);opacity:.65;line-height:1.5;max-width:90%;text-shadow:0 1px 10px rgba(0,0,0,.4)}
+.video-text .vt-desc{font-size:clamp(.9rem,2vw,1.2rem);opacity:.65;line-height:1.5;max-width:90%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 10px rgba(0,0,0,.4)}
 @media(max-width:768px){
   .video-overlay video{top:auto;bottom:6vh;right:0;left:0;width:90vw;max-width:none;margin:0 auto;max-height:40vh}
   .video-text{bottom:auto;top:8vh;left:5vw;max-width:85vw}
