@@ -397,7 +397,7 @@ var _previewPages = window._previewPages || {};
 
     // Wikipedia: 用 REST API 获取摘要
     if (/wikipedia\.org/.test(host)) {
-      var title = url.split('/wiki/')[1];
+      var title = (url.split('/wiki/')[1]||'').split('#')[0].split('?')[0];
       if (title) {
         c.innerHTML = '<div class="popups-text" style="padding:6px 0"><span style="font-size:14px;font-weight:700">'+decodeURIComponent(title).replace(/_/g,' ')+'</span><div class="popups-desc" style="margin-top:6px">⏳ 加载摘要...</div><div style="font-size:10px;color:var(--text2);margin-top:4px">📖 维基百科</div></div>';
         popup.classList.add('show');
@@ -420,7 +420,7 @@ var _previewPages = window._previewPages || {};
       }
     }
 
-    // 其他链接: 显示参考文献完整信息
+    // 其他链接: Worker 代理抓取元数据
     var label = '';
     if (/bilibili/.test(host)) label = '🎬 Bilibili';
     else if (/hltv/.test(host)) label = '🎮 HLTV';
@@ -428,15 +428,27 @@ var _previewPages = window._previewPages || {};
     else if (/toutiao/.test(host)) label = '📰 头条百科';
     else if (/github/.test(host)) label = '💻 GitHub';
     else label = '🔗 ' + host;
-    var context = info.liText || text;
-    if (context.length > 250) context = context.substring(0, 250) + '...';
-    c.innerHTML = '<div class="popups-text"><span style="font-size:11px;color:var(--text2)">' + label + '</span><div class="popups-title" style="font-size:14px;font-weight:700;margin-top:4px">' + text + '</div><div class="popups-desc" style="margin-top:6px;line-height:1.5">' + context + '</div></div>';
+    c.innerHTML = '<div class="popups-text"><span style="font-size:11px;color:var(--text2)">' + label + '</span><div style="font-size:14px;font-weight:700;margin-top:4px">' + text + '</div><div class="popups-desc" style="margin-top:6px">⏳ 抓取页面信息...</div></div>';
     popup.classList.add('show');
     var x = e.clientX + 15, y = e.clientY + 10;
     if (x + 320 > window.innerWidth) x = e.clientX - 335;
     if (y + 160 > window.innerHeight) y = e.clientY - 170;
     popup.style.left = x + 'px';
     popup.style.top = y + 'px';
+    // Fetch via Worker
+    fetch('/api?type=preview&url=' + encodeURIComponent(url))
+      .then(function(r){return r.json()})
+      .then(function(d){
+        if (d.error) throw new Error('fetch failed');
+        var desc = (d.desc||'').substring(0, 250);
+        if (desc.length >= 250) desc += '...';
+        c.innerHTML = '<div class="popups-text"><span style="font-size:11px;color:var(--text2)">' + label + '</span><div class="popups-title" style="font-size:14px;font-weight:700;margin-top:4px">' + (d.title||text) + '</div><div class="popups-desc" style="margin-top:6px;line-height:1.5">' + (desc||info.liText||'') + '</div></div>';
+      })
+      .catch(function(){
+        var ctx = info.liText||text;
+        if (ctx.length > 250) ctx = ctx.substring(0,250)+'...';
+        c.innerHTML = '<div class="popups-text"><span style="font-size:11px;color:var(--text2)">' + label + '</span><div class="popups-title" style="font-size:14px;font-weight:700;margin-top:4px">' + text + '</div><div class="popups-desc" style="margin-top:6px;line-height:1.5">' + ctx + '</div></div>';
+      });
   }
 
   document.querySelectorAll('sup a[href^="#ref"], sup a[href^="#cite"]').forEach(function (a) {
