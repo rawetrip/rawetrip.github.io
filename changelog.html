@@ -145,15 +145,15 @@ function render(){
   }
   document.getElementById('clList').innerHTML=h||'<div class="cl-empty">暂无匹配记录</div>';
   var ph='';
-  ph+='<button '+(page<=1?'disabled':'')+' onclick="goPage('+(page-1)+')">← 之前</button>';
+  ph+='<button '+(_page<=1?'disabled':'')+' onclick="goPage('+(_page-1)+')">← 之前</button>';
   for(var p=1;p<=totalPages;p++){
-    if(totalPages<=7||p===1||p===totalPages||Math.abs(p-page)<=2){
-      ph+='<button class="'+(p===page?'active':'')+'" onclick="goPage('+p+')">'+p+'</button>';
+    if(totalPages<=7||p===1||p===totalPages||Math.abs(p-_page)<=2){
+      ph+='<button class="'+(p===_page?'active':'')+'" onclick="goPage('+p+')">'+p+'</button>';
     } else if(p===2||p===totalPages-1){
       ph+='<span class="cl-page-info">...</span>';
     }
   }
-  ph+='<button '+(page>=totalPages?'disabled':'')+' onclick="goPage('+(page+1)+')">之后 →</button>';
+  ph+='<button '+(_page>=totalPages?'disabled':'')+' onclick="goPage('+(_page+1)+')">之后 →</button>';
   document.getElementById('clPagination').innerHTML=ph;
   window.scrollTo({top:0,behavior:'smooth'});
 }
