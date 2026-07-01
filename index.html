@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){var s=localStorage.getItem("theme");if(s=="dark")document.documentElement.className="dark"})()</script>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="preconnect" href="https://feedback.jbbfilm.workers.dev">
 <link rel="prefetch" href="anjiu-ovieo.html">
 <link rel="prefetch" href="Makesade.html">
 <title>喂鸡百科 — 喂鸡百科</title>
@@ -488,7 +487,7 @@ var typeMap={'enhancement':'🆕功能','bug':'🐛Bug','question':'💬其他'}
 var typeEmoji=typeMap[type]||'💬其他';
 var labels=['suggestion',type];
 var fullTitle='['+typeEmoji+'] '+title;
-fetch('https://feedback.jbbfilm.workers.dev',{
+fetch('/api',{
   method:'POST',
   headers:{'Content-Type':'application/json'},
   body:JSON.stringify({title:fullTitle,body:body,labels:labels})

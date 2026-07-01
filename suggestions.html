@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){var s=localStorage.getItem("theme");if(s=="dark")document.documentElement.className="dark"})()</script>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="preconnect" href="https://feedback.jbbfilm.workers.dev">
+
 <title>意见追踪 — 喂鸡百科</title>
 <meta name="description" content="喂鸡百科意见追踪 — 功能建议、Bug 反馈、体验优化">
 <meta property="og:title" content="意见追踪 — 喂鸡百科">
@@ -157,7 +157,7 @@ function parseGHIssue(issue){
 
 function loadIssues(){
   document.getElementById('issueList').innerHTML='<div style="text-align:center;padding:40px;color:var(--text2)">加载中...</div>';
-  fetch('https://feedback.jbbfilm.workers.dev?state=all&per_page=50')
+  fetch('/api?state=all&per_page=50')
   .then(function(r){return r.json()})
   .then(function(data){
     _issues=[];
