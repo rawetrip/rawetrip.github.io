@@ -481,7 +481,7 @@ btn.textContent='提交中...';
 var body=desc||'(无详细描述)';
 var typeMap={'enhancement':'🆕功能','bug':'🐛Bug','question':'💬其他'};
 var typeEmoji=typeMap[type]||'💬其他';
-var labels=['suggestion'];
+var labels=['suggestion',type];
 var fullTitle='['+typeEmoji+'] '+title;
 fetch('https://feedback.jbbfilm.workers.dev',{
   method:'POST',
