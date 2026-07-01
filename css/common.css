@@ -186,7 +186,7 @@ p{margin:8px 0;word-break:break-word}p a{word-break:break-all}
 .search-dropdown .sd-sub{font-size:11px;color:var(--text2);margin-top:1px}
 .search-dropdown .sd-empty{padding:12px 14px;font-size:13px;color:var(--text2);text-align:center}
 
-.mwe-popups{position:fixed;z-index:99999;background:var(--paper);border:1px solid var(--border);border-radius:4px;box-shadow:0 4px 20px rgba(0,0,0,.2);max-width:340px;font-size:13px;line-height:1.5;opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s}
+.mwe-popups{position:fixed;z-index:99999;background:var(--paper);border:1px solid var(--border);border-radius:4px;box-shadow:0 4px 20px rgba(0,0,0,.2);max-width:340px;font-size:13px;line-height:1.5;opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s;pointer-events:none}
 .mwe-popups.show{opacity:1;transform:translateY(0)}
 .mwe-popups img{width:100%;max-height:160px;object-fit:cover;border-radius:4px 4px 0 0;display:block}
 .mwe-popups .popups-text{padding:10px 14px;color:var(--text)}

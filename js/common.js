@@ -373,6 +373,38 @@ var _previewPages = window._previewPages || {};
     });
     a.addEventListener('mouseleave', function () { clearTimeout(timer); hidePopup(); });
   });
+
+  // ── 参考文献悬浮预览 ──
+  function showRefPopup(e, a) {
+    var url = a.href;
+    var text = a.textContent.trim();
+    var host = '';
+    try { host = new URL(url).hostname.replace('www.',''); } catch(ex) {}
+    var label = '';
+    if (/wikipedia/.test(host)) label = '📖 维基百科';
+    else if (/bilibili/.test(host)) label = '🎬 Bilibili';
+    else if (/hltv/.test(host)) label = '🎮 HLTV';
+    else if (/baidu/.test(host)) label = '📚 百度百科';
+    else if (/toutiao/.test(host)) label = '📰 头条百科';
+    else if (/github/.test(host)) label = '💻 GitHub';
+    else label = '🔗 ' + host;
+    var c = popup.querySelector('.mwe-popups-container');
+    c.innerHTML = '<div class="popups-text"><span style="font-size:11px;color:var(--text2)">' + label + '</span><div class="popups-title" style="font-size:13px;margin-top:4px">' + text + '</div><div class="popups-desc" style="font-size:11px;word-break:break-all">' + url + '</div></div>';
+    popup.classList.add('show');
+    var x = e.clientX + 15, y = e.clientY + 10;
+    if (x + 300 > window.innerWidth) x = e.clientX - 315;
+    if (y + 120 > window.innerHeight) y = e.clientY - 130;
+    popup.style.left = x + 'px';
+    popup.style.top = y + 'px';
+  }
+
+  document.querySelectorAll('sup a[href^="http"]').forEach(function (a) {
+    a.addEventListener('mouseenter', function (e) {
+      clearTimeout(timer);
+      timer = setTimeout(function () { showRefPopup(e, a); }, 300);
+    });
+    a.addEventListener('mouseleave', function () { clearTimeout(timer); hidePopup(); });
+  });
 })();
 
 document.querySelectorAll('.edit-link a').forEach(function (el) {
