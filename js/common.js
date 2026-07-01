@@ -126,8 +126,8 @@ function toast(msg, type){
 // ═══════════════════ Search Engine ═══════════════════
 var _searchIndex = [
   // ── 人物 ──
-  {t:"Anjiu Ovieo", u:"anjiu-ovieo.html", c:"人物", p:"anjiu ovieo", k:"安九 蔡洪浩 鸡 爱丽丝 微电影导演 铸币聚集地"},
-  {t:"Makesade", u:"Makesade.html", c:"人物", p:"makesade", k:"马可赛德 马克萨德 改车王 御坂美琴 学生 福建"},
+  {t:"Anjiu Ovieo", u:"bio/anjiu-ovieo.html", c:"人物", p:"anjiu ovieo", k:"安九 蔡洪浩 鸡 爱丽丝 微电影导演 铸币聚集地"},
+  {t:"Makesade", u:"bio/Makesade.html", c:"人物", p:"makesade", k:"马可赛德 马克萨德 改车王 御坂美琴 学生 福建"},
   {t:"南瓜", u:"bio/nangua.html", c:"人物", p:"nangua", k:"南瓜 KOOK 铸币聚集地 Anjiu 恋人"},
   {t:"后藤", u:"bio/goto.html", c:"人物", p:"houteng", k:"后藤 goto 铸币聚集地 兄弟"},
   {t:"韩堡戈", u:"bio/hanburger.html", c:"人物", p:"hanbaoge", k:"韩堡戈 Hanburger 兄弟 Anjiu CS2"},
