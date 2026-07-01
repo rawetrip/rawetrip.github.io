@@ -122,18 +122,30 @@ function filterIssues(f){
 // ── GitHub Issues API ──
 function parseGHIssue(issue){
   var labels=issue.labels.map(function(l){return l.name});
-	var type='💬其他';
-	if(labels.indexOf('bug')>=0)type='🐛Bug';
-	else if(labels.indexOf('enhancement')>=0)type='🆕功能';
-	else if(labels.indexOf('question')>=0)type='💬其他';
-	var priority='';
-var status='open';
+  var title=issue.title||'';
+  // 从标题前缀提取类型 [🆕功能] / [🐛Bug] / [💬其他]
+  var type='💬其他';
+  var m=title.match(/^\[(.+?)\]\s*/);
+  if(m){
+    var tag=m[1];
+    if(tag.indexOf('Bug')>=0)type='🐛Bug';
+    else if(tag.indexOf('功能')>=0)type='🆕功能';
+    else if(tag.indexOf('其他')>=0)type='💬其他';
+    title=title.substring(m[0].length); // 去掉前缀
+  } else {
+    // fallback: 从 label 判断
+    if(labels.indexOf('bug')>=0)type='🐛Bug';
+    else if(labels.indexOf('enhancement')>=0)type='🆕功能';
+    else if(labels.indexOf('question')>=0)type='💬其他';
+  }
+  var priority='';
+  var status='open';
   if(issue.state==='closed')status='done';
   else if(labels.indexOf('planned')>=0)status='planned';
   return {
     id:issue.number,
     type:type,
-    title:issue.title,
+    title:title,
     desc:(issue.body||'').replace(/\n/g,'<br>'),
     priority:priority,
     status:status,

@@ -479,11 +479,14 @@ btn.disabled=true;
 var orig=btn.textContent;
 btn.textContent='提交中...';
 var body=desc||'(无详细描述)';
-var labels=['suggestion',type];
+var typeMap={'enhancement':'🆕功能','bug':'🐛Bug','question':'💬其他'};
+var typeEmoji=typeMap[type]||'💬其他';
+var labels=['suggestion'];
+var fullTitle='['+typeEmoji+'] '+title;
 fetch('https://feedback.jbbfilm.workers.dev',{
   method:'POST',
   headers:{'Content-Type':'application/json'},
-  body:JSON.stringify({title:title,body:body,labels:labels})
+  body:JSON.stringify({title:fullTitle,body:body,labels:labels})
 })
 .then(function(r){if(!r.ok)throw new Error('GH API error');return r.json()})
 .then(function(data){
