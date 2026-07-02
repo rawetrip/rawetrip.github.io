@@ -157,14 +157,16 @@ function parseHTML(html,fname){
   var rows=div.querySelectorAll('.infobox-row');
   var aliases='',birth='',birthplace='',job='',avatar='';
   var relations=[];
-  var knownLabels=['本名','别名','出生','国籍','职业','形象','活跃时期','知名于'];
+  var knownLabels=['出生','国籍','职业','形象','活跃时期','知名于'];
   for(var i=0;i<rows.length;i++){
     var label=rows[i].querySelector('.infobox-label');
     var value=rows[i].querySelector('.infobox-value');
     if(!label||!value)continue;
     var lt=label.textContent.trim();
     var vt=value.textContent.trim();
-    if(lt==='别名'){
+    if(lt==='本名'){
+      if(!realname)realname=vt;
+    }else if(lt==='别名'){
       aliases=vt.replace(/\n/g,', ');
     }else if(lt==='出生'){
       var lines=vt.split(/\n/);
@@ -193,18 +195,24 @@ function parseHTML(html,fname){
   document.getElementById('avatar').value=avatar||'';
   document.getElementById('relations').value=relations.join(', ');
 
-  // 提取事迹 (h3 标题 + 后续 <p>)
-  var eventsDiv=div.querySelector('#events')||div;
-  var h3s=eventsDiv.querySelectorAll('h3.mw-heading, h3');
+  // 提取事迹 — 遍历 #events (h2) 之后的兄弟节点，直到下一个 h2
+  var eventsHeading=div.querySelector('#events');
   var eventsArr=[];
-  for(var i=0;i<h3s.length;i++){
-    var h3t=h3s[i].textContent.replace(/\[编辑\]/g,'').trim();
-    var p=h3s[i].nextElementSibling;
-    var pText='';
-    if(p&&p.tagName==='P'){
-      pText=p.textContent.replace(/\[注\s*\d+\]/g,'').trim();
+  if(eventsHeading){
+    var el=eventsHeading.nextElementSibling;
+    while(el){
+      if(el.tagName==='H2')break;
+      if(el.tagName==='H3'){
+        var h3t=el.textContent.replace(/\[编辑\]/g,'').trim();
+        var p=el.nextElementSibling;
+        var pText='';
+        if(p&&p.tagName==='P'){
+          pText=p.textContent.replace(/\[注\s*\d+\]/g,'').trim();
+        }
+        if(h3t)eventsArr.push(h3t+' | '+pText);
+      }
+      el=el.nextElementSibling;
     }
-    eventsArr.push(h3t+' | '+pText);
   }
   document.getElementById('events').value=eventsArr.join('\n');
 
