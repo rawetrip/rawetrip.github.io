@@ -75,8 +75,12 @@ body{font-family:"MiSans",sans-serif;background:#f6f6f6;color:#202122;display:fl
   <label>📚 参考文献（每行一个，用 | 分隔标题和URL）</label>
   <textarea id="refs" placeholder="蔚蓝档案 | https://zh.wikipedia.org/wiki/蔚蓝档案&#10;鸡 | https://zh.wikipedia.org/wiki/鸡"></textarea>
 
+  <label>🔑 保存密码</label>
+  <input id="savePass" type="password" placeholder="输入密码后才能保存">
   <button onclick="generate()">🔄 生成 / 刷新预览</button>
   <button onclick="copyCode()" style="background:#1a6e2a;margin-top:4px">📋 复制 HTML 代码</button>
+  <button onclick="saveToServer()" style="background:#d97706;margin-top:4px" id="saveServerBtn">💾 保存到网站</button>
+  <div id="saveMsg" style="font-size:12px;margin-top:6px;text-align:center"></div>
 </div>
 <div id="preview">
   <div class="tab">
@@ -283,6 +287,42 @@ function generate(){
   
   // Also save to localStorage so friend can retrieve
   localStorage.setItem('bio_'+fname,html);
+}
+
+function saveToServer(){
+  var fname=document.getElementById('fname').value;
+  if(!fname)return alert('请先选择页面');
+  var pass=document.getElementById('savePass').value;
+  if(!pass)return alert('请输入保存密码');
+  var ta=document.getElementById('_codeCache');
+  if(!ta)return alert('先生成预览');
+  var msg=document.getElementById('saveMsg');
+  var btn=document.getElementById('saveServerBtn');
+  msg.textContent='⏳ 保存中...';
+  msg.style.color='#d97706';
+  btn.disabled=true;
+  fetch('/api?type=save',{
+    method:'POST',
+    body:JSON.stringify({path:'/bio/'+fname+'.html',content:ta.value,pass:pass})
+  })
+  .then(function(r){return r.json().then(function(d){return{ok:r.ok,data:d}}) })
+  .then(function(d){
+    if(d.ok){
+      msg.textContent='✅ 已保存到 '+fname+'.html';
+      msg.style.color='#1a6e2a';
+      // Update localStorage cache
+      localStorage.setItem('bio_'+fname,d.data.content||ta.value);
+    }else{
+      msg.textContent='❌ '+(d.data.error||'保存失败');
+      msg.style.color='#c62828';
+    }
+    btn.disabled=false;
+  })
+  .catch(function(e){
+    msg.textContent='❌ 网络错误: '+e.message;
+    msg.style.color='#c62828';
+    btn.disabled=false;
+  });
 }
 
 function copyCode(){

@@ -235,8 +235,12 @@ export default {
     const saveType = url.searchParams.get('type');
     if (request.method === 'POST' && saveType === 'save') {
       const body = await request.json();
-      const { path, content } = body;
+      const { path, content, pass } = body;
       if (!path || !content) return new Response('Missing path/content', { status: 400 });
+      // Password check for main domain saves
+      if (!pass || pass !== EDIT_PASS) {
+        return new Response(JSON.stringify({ error: '密码错误' }), { status: 403, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+      }
       // Get current file SHA
       const shaRes = await fetch(`https://api.github.com/repos/rawetrip/rawetrip.github.io/contents${path}`, {
         headers: { 'Authorization': `Bearer ${env.GH_TOKEN}`, 'Accept': 'application/vnd.github+json', 'User-Agent': 'jbbfilm-edit' }
