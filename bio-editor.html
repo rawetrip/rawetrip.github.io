@@ -29,7 +29,7 @@ body{font-family:"MiSans",sans-serif;background:#f6f6f6;color:#202122;display:fl
   <h2>✏️ 人物页编辑器</h2>
   
   <label>📛 选择页面</label>
-  <select id="fname">
+  <select id="fname" onchange="loadPage(this.value)">
     <option value="nangua">南瓜 (nangua)</option>
     <option value="goto">后藤 (goto)</option>
     <option value="hanburger">韩堡戈 (hanburger)</option>
@@ -88,7 +88,144 @@ body{font-family:"MiSans",sans-serif;background:#f6f6f6;color:#202122;display:fl
 </div>
 
 <script>
-function switchTab(t){document.querySelectorAll('.tab button').forEach(b=>b.classList.toggle('active',b.textContent.includes(t==='preview'?'预览':'源码')));document.getElementById('previewFrame').style.display=t==='preview'?'block':'none';}
+function switchTab(t){document.querySelectorAll('.tab button').forEach(b=>b.classList.toggle('active',b.textContent.includes(t==='preview'?'预览':'源码')));document.getElementById('previewFrame').style.display=t==='preview'?'block':'none';document.getElementById('code').style.display=t==='code'?'block':'none';}
+
+// ── 加载已有页面 ──
+function loadPage(fname){
+  if(!fname)return;
+  // 1. 先检查 localStorage（编辑器之前保存过的）
+  var cached=localStorage.getItem('bio_'+fname);
+  if(cached){
+    parseHTML(cached,fname);
+    return;
+  }
+  // 2. 从服务器拉取 HTML
+  var url='bio/'+fname+'.html';
+  fetch(url).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    return r.text();
+  }).then(function(html){
+    parseHTML(html,fname);
+  }).catch(function(e){
+    alert('⚠️ 无法加载 '+fname+'.html\n'+e.message+'\n\n将填入默认值。');
+    // 尝试 localStorage 兜底
+    var fallback=localStorage.getItem('bio_'+fname);
+    if(fallback)parseHTML(fallback,fname);
+    else generate();
+  });
+}
+
+function parseHTML(html,fname){
+  var div=document.createElement('div');
+  div.innerHTML=html;
+
+  // 提取名称
+  var h1=div.querySelector('.article-title, h1');
+  var name=h1?h1.textContent.replace(/\[编辑\]/g,'').trim():'';
+  if(!name){
+    var title=div.querySelector('title');
+    name=title?title.textContent.replace(/—.*/,'').trim():fname;
+  }
+  document.getElementById('name').value=name||'';
+
+  // 从简介段提取 英文名/本名
+  var introP=null;
+  var ps=div.querySelectorAll('#content p, p');
+  for(var i=0;i<ps.length;i++){
+    var t=ps[i].textContent.trim();
+    if(t.indexOf('英语')>=0||t.indexOf('原名')>=0||t.indexOf('简介')>=0){
+      introP=ps[i];break;
+    }
+  }
+  var ename='',realname='',intro='';
+  if(introP){
+    var ihtml=introP.innerHTML;
+    var eMatch=ihtml.match(/英语[：:]\s*<b>([^<]+)<\/b>/);
+    if(eMatch)ename=eMatch[1];
+    var rMatch=ihtml.match(/原名\s*<b>([^<]+)<\/b>/);
+    if(rMatch)realname=rMatch[1];
+    intro=introP.textContent.replace(/^[^，,]*[，,]?\s*/,'').trim();
+  }else{
+    // fallback: 从 infobox 提取
+    var infoName=div.querySelector('.infobox-header');
+    if(infoName)ename=infoName.textContent.trim();
+  }
+  document.getElementById('ename').value=ename||name||'';
+  document.getElementById('realname').value=realname||'';
+  document.getElementById('intro').value=intro||'';
+
+  // 从 infobox 提取字段
+  var rows=div.querySelectorAll('.infobox-row');
+  var aliases='',birth='',birthplace='',job='',avatar='';
+  var relations=[];
+  var knownLabels=['本名','别名','出生','国籍','职业','形象','活跃时期','知名于'];
+  for(var i=0;i<rows.length;i++){
+    var label=rows[i].querySelector('.infobox-label');
+    var value=rows[i].querySelector('.infobox-value');
+    if(!label||!value)continue;
+    var lt=label.textContent.trim();
+    var vt=value.textContent.trim();
+    if(lt==='别名'){
+      aliases=vt.replace(/\n/g,', ');
+    }else if(lt==='出生'){
+      var lines=vt.split(/\n/);
+      birth=lines[0]||'';
+      birthplace=lines[1]||'';
+    }else if(lt==='职业'){
+      job=vt;
+    }else if(lt==='形象'){
+      avatar=vt;
+    }else if(knownLabels.indexOf(lt)<0){
+      // 关系类字段 (恋人, 兄弟, 闺蜜, 绯闻女友, 朋友 等)
+      // value 可能包含 <br> 分隔的多人
+      var htmlV=value.innerHTML;
+      var names=htmlV.split(/<br\s*\/?>/i).map(function(s){
+        return s.replace(/<[^>]+>/g,'').replace(/\[注\s*\d+\]/g,'').trim();
+      }).filter(Boolean);
+      for(var j=0;j<names.length;j++){
+        relations.push(names[j]+'='+lt);
+      }
+    }
+  }
+  document.getElementById('aliases').value=aliases;
+  document.getElementById('birth').value=birth||'';
+  document.getElementById('birthplace').value=birthplace||'';
+  document.getElementById('job').value=job||'';
+  document.getElementById('avatar').value=avatar||'';
+  document.getElementById('relations').value=relations.join(', ');
+
+  // 提取事迹 (h3 标题 + 后续 <p>)
+  var eventsDiv=div.querySelector('#events')||div;
+  var h3s=eventsDiv.querySelectorAll('h3.mw-heading, h3');
+  var eventsArr=[];
+  for(var i=0;i<h3s.length;i++){
+    var h3t=h3s[i].textContent.replace(/\[编辑\]/g,'').trim();
+    var p=h3s[i].nextElementSibling;
+    var pText='';
+    if(p&&p.tagName==='P'){
+      pText=p.textContent.replace(/\[注\s*\d+\]/g,'').trim();
+    }
+    eventsArr.push(h3t+' | '+pText);
+  }
+  document.getElementById('events').value=eventsArr.join('\n');
+
+  // 提取参考文献
+  var refList=div.querySelector('.reflist ol, #refs ol');
+  var refsArr=[];
+  if(refList){
+    var lis=refList.querySelectorAll('li');
+    for(var i=0;i<lis.length;i++){
+      var a=lis[i].querySelector('a');
+      var refText=lis[i].textContent.replace(/\[注\s*\d+\]/g,'').trim();
+      var refUrl=a?a.getAttribute('href')||'':'';
+      if(refText)refsArr.push(refText+' | '+refUrl);
+    }
+  }
+  document.getElementById('refs').value=refsArr.join('\n');
+
+  // 生成预览
+  generate();
+}
 
 function generate(){
   var fname=document.getElementById('fname').value||'new';
@@ -151,8 +288,11 @@ function copyCode(){
   alert('HTML 已复制！保存为 bio/'+document.getElementById('fname').value+'.html');
 }
 
-// Auto-generate on load
-generate();
+// 页面加载时自动读取默认页面
+window.addEventListener('DOMContentLoaded',function(){
+  var sel=document.getElementById('fname');
+  loadPage(sel.value||'nangua');
+});
 </script>
 </body>
 </html>
