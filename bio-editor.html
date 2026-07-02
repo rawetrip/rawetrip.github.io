@@ -29,13 +29,17 @@ body{font-family:"MiSans",sans-serif;background:#f6f6f6;color:#202122;display:fl
   <h2>✏️ 人物页编辑器</h2>
   
   <label>📛 选择页面</label>
-  <select id="fname" onchange="loadPage(this.value)">
+  <select id="fname" onchange="loadPage(this.value,true)">
     <option value="nangua">南瓜 (nangua)</option>
     <option value="goto">后藤 (goto/AsakuraKaren)</option>
     <option value="hanburger">韩堡戈 (hanburger)</option>
     <option value="anjiu-ovieo">Anjiu Ovieo</option>
     <option value="Makesade">Makesade</option>
   </select>
+  <div style="display:flex;gap:6px;margin-top:4px">
+    <button onclick="loadPage(document.getElementById('fname').value,true)" style="flex:1;background:#54595d;font-size:11px;padding:4px 8px;margin-top:0">🔄 从服务器重新加载</button>
+    <button onclick="localStorage.removeItem('bio_server_'+document.getElementById('fname').value);localStorage.removeItem('bio_'+document.getElementById('fname').value);loadPage(document.getElementById('fname').value,true)" style="flex:1;background:#c62828;font-size:11px;padding:4px 8px;margin-top:0">🗑 清除缓存并重载</button>
+  </div>
   
   <label>👤 人物名</label>
   <input id="name" placeholder="南瓜" value="南瓜">
@@ -94,46 +98,62 @@ body{font-family:"MiSans",sans-serif;background:#f6f6f6;color:#202122;display:fl
 function switchTab(t){document.querySelectorAll('.tab button').forEach(b=>b.classList.toggle('active',b.textContent.includes(t==='preview'?'预览':'源码')));document.getElementById('previewFrame').style.display=t==='preview'?'block':'none';document.getElementById('code').style.display=t==='code'?'block':'none';}
 
 // ── 加载已有页面 ──
-function loadPage(fname){
+var _serverHtml={};
+function loadPage(fname,forceReload){
   if(!fname)return;
-  // 1. 先检查 localStorage（编辑器之前保存过的）
-  var cached=localStorage.getItem('bio_'+fname);
-  if(cached){
-    parseHTML(cached,fname);
-    return;
+  // forceReload: 强制从服务器重新拉取，忽略 localStorage
+  if(!forceReload){
+    var cached=localStorage.getItem('bio_server_'+fname);
+    if(cached){
+      parseHTML(cached,fname);
+      // 同时尝试从服务器更新
+      fetchServer(fname);
+      return;
+    }
   }
-  // 2. 从服务器拉取 HTML
+  fetchServer(fname);
+}
+
+function fetchServer(fname){
   var url='bio/'+fname+'.html';
   fetch(url).then(function(r){
     if(!r.ok)throw new Error('HTTP '+r.status);
     return r.text();
   }).then(function(html){
+    // 保存服务器原始HTML到单独的缓存key
+    localStorage.setItem('bio_server_'+fname,html);
     parseHTML(html,fname);
   }).catch(function(e){
-    alert('⚠️ 无法加载 '+fname+'.html\n'+e.message+'\n\n将填入默认值。');
-    // 尝试 localStorage 兜底
-    var fallback=localStorage.getItem('bio_'+fname);
-    if(fallback)parseHTML(fallback,fname);
-    else generate();
+    // 尝试 localStorage 兜底（编辑器之前保存过的）
+    var fallback=localStorage.getItem('bio_server_'+fname)||localStorage.getItem('bio_'+fname);
+    if(fallback){
+      parseHTML(fallback,fname);
+    }else{
+      alert('⚠️ 无法加载 '+fname+'.html\n'+e.message+'\n\n将填入默认值。');
+      generate();
+    }
   });
 }
 
 function parseHTML(html,fname){
-  var div=document.createElement('div');
-  div.innerHTML=html;
+  // 使用 DOMParser 正确解析完整 HTML 文档（避免 innerHTML 丢失结构）
+  var parser=new DOMParser();
+  var doc=parser.parseFromString(html,'text/html');
+  var body=doc.body;
+  if(!body)body=doc.documentElement;
 
   // 提取名称
-  var h1=div.querySelector('.article-title, h1');
+  var h1=body.querySelector('.article-title, h1');
   var name=h1?h1.textContent.replace(/\[编辑\]/g,'').trim():'';
   if(!name){
-    var title=div.querySelector('title');
+    var title=body.querySelector('title');
     name=title?title.textContent.replace(/—.*/,'').trim():fname;
   }
   document.getElementById('name').value=name||'';
 
   // 从简介段提取 英文名/本名
   var introP=null;
-  var ps=div.querySelectorAll('#content p, p');
+  var ps=body.querySelectorAll('#content p, p');
   for(var i=0;i<ps.length;i++){
     var t=ps[i].textContent.trim();
     if(t.indexOf('英语')>=0||t.indexOf('原名')>=0||t.indexOf('简介')>=0){
@@ -150,7 +170,7 @@ function parseHTML(html,fname){
     intro=introP.textContent.replace(/^[^，,]*[，,]?\s*/,'').trim();
   }else{
     // fallback: 从 infobox 提取
-    var infoName=div.querySelector('.infobox-header');
+    var infoName=body.querySelector('.infobox-header');
     if(infoName)ename=infoName.textContent.trim();
   }
   document.getElementById('ename').value=ename||name||'';
@@ -158,7 +178,7 @@ function parseHTML(html,fname){
   document.getElementById('intro').value=intro||'';
 
   // 从 infobox 提取字段
-  var rows=div.querySelectorAll('.infobox-row');
+  var rows=body.querySelectorAll('.infobox-row');
   var aliases='',birth='',birthplace='',job='',avatar='';
   var relations=[];
   var knownLabels=['出生','国籍','职业','形象','活跃时期','知名于'];
@@ -200,7 +220,7 @@ function parseHTML(html,fname){
   document.getElementById('relations').value=relations.join(', ');
 
   // 提取事迹 — 遍历 #events (h2) 之后的兄弟节点，直到下一个 h2
-  var eventsHeading=div.querySelector('#events');
+  var eventsHeading=body.querySelector('#events');
   var eventsArr=[];
   if(eventsHeading){
     var el=eventsHeading.nextElementSibling;
@@ -221,7 +241,7 @@ function parseHTML(html,fname){
   document.getElementById('events').value=eventsArr.join('\n');
 
   // 提取参考文献
-  var refList=div.querySelector('.reflist ol, #refs ol');
+  var refList=body.querySelector('.reflist ol, #refs ol');
   var refsArr=[];
   if(refList){
     var lis=refList.querySelectorAll('li');
@@ -285,7 +305,7 @@ function generate(){
   ta.style.display='none';
   document.body.appendChild(ta);
   
-  // Also save to localStorage so friend can retrieve
+  // Also save to localStorage so user can retrieve work-in-progress
   localStorage.setItem('bio_'+fname,html);
 }
 
@@ -310,8 +330,9 @@ function saveToServer(){
     if(d.ok){
       msg.textContent='✅ 已保存到 '+fname+'.html';
       msg.style.color='#1a6e2a';
-      // Update localStorage cache
-      localStorage.setItem('bio_'+fname,d.data.content||ta.value);
+      // Update both caches
+      localStorage.setItem('bio_server_'+fname,ta.value);
+      localStorage.setItem('bio_'+fname,ta.value);
     }else{
       msg.textContent='❌ '+(d.data.error||'保存失败');
       msg.style.color='#c62828';
@@ -335,10 +356,10 @@ function copyCode(){
   alert('HTML 已复制！保存为 bio/'+document.getElementById('fname').value+'.html');
 }
 
-// 页面加载时自动读取默认页面
+// 页面加载时自动读取默认页面（强制从服务器加载）
 window.addEventListener('DOMContentLoaded',function(){
   var sel=document.getElementById('fname');
-  loadPage(sel.value||'nangua');
+  loadPage(sel.value||'nangua',true);
 });
 </script>
 </body>
