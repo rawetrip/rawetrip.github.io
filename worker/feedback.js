@@ -32,6 +32,80 @@ export default {
         return Response.redirect(`https://edit.jbbfilm.xyz/auth?goto=${goto}`, 302);
       }
 
+      // ── /api routes inside edit. domain ──
+      if (url.pathname === '/api') {
+        // CORS preflight for edit domain
+        if (request.method === 'OPTIONS') {
+          return new Response(null, {
+            headers: {
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+              'Access-Control-Allow-Headers': 'Content-Type',
+              'Access-Control-Max-Age': '86400'
+            }
+          });
+        }
+
+        // GET: preview (突破CORS抓取页面元数据)
+        if (request.method === 'GET') {
+          const type = url.searchParams.get('type') || 'issues';
+          if (type === 'preview') {
+            const target = url.searchParams.get('url');
+            if (!target) return new Response('Missing url', { status: 400 });
+            try {
+              const html = await fetch(target, {
+                headers: { 'User-Agent': 'jbbfilm-preview/1.0' },
+                redirect: 'follow'
+              });
+              const text = await html.text();
+              const titleMatch = text.match(/<title[^>]*>([^<]+)<\/title>/i);
+              const title = titleMatch ? titleMatch[1].trim() : '';
+              const descMatch = text.match(/<meta[^>]+property="og:description"[^>]+content="([^"]+)"/i) ||
+                               text.match(/<meta[^>]+name="description"[^>]+content="([^"]+)"/i);
+              const desc = descMatch ? descMatch[1] : '';
+              const imgMatch = text.match(/<meta[^>]+property="og:image"[^>]+content="([^"]+)"/i);
+              const img = imgMatch ? imgMatch[1] : '';
+              return new Response(JSON.stringify({ title, desc: desc.substring(0, 300), img }), {
+                headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'public, max-age=1296000' }
+              });
+            } catch (e) {
+              return new Response(JSON.stringify({ error: 'fetch failed' }), {
+                status: 502, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+              });
+            }
+          }
+          // Other GET types (issues, commits) not used on edit domain
+          return new Response(JSON.stringify({ error: 'unknown type' }), { status: 400, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+        }
+
+        // POST: 保存编辑 (edit domain core feature)
+        if (request.method === 'POST' && url.searchParams.get('type') === 'save') {
+          const body = await request.json();
+          const { path, content } = body;
+          if (!path || !content) return new Response('Missing path/content', { status: 400 });
+          // Get current file SHA
+          const shaRes = await fetch(`https://api.github.com/repos/rawetrip/rawetrip.github.io/contents${path}`, {
+            headers: { 'Authorization': `Bearer ${env.GH_TOKEN}`, 'Accept': 'application/vnd.github+json', 'User-Agent': 'jbbfilm-edit' }
+          });
+          const shaData = await shaRes.json();
+          const sha = shaData.sha;
+          // Commit file
+          const b64 = btoa(unescape(encodeURIComponent(content)));
+          const res = await fetch(`https://api.github.com/repos/rawetrip/rawetrip.github.io/contents${path}`, {
+            method: 'PUT',
+            headers: { 'Authorization': `Bearer ${env.GH_TOKEN}`, 'Accept': 'application/vnd.github+json', 'User-Agent': 'jbbfilm-edit' },
+            body: JSON.stringify({ message: `edit: ${path}`, content: b64, sha })
+          });
+          const data = await res.json();
+          return new Response(JSON.stringify(data), {
+            status: res.status,
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+          });
+        }
+
+        return new Response('Method not allowed', { status: 405 });
+      }
+
       // Authed — show file browser (仅人物页)
       if (url.pathname === '/' || url.pathname === '/bio/' || url.pathname === '' || url.pathname === '/bio') {
         const files = [
