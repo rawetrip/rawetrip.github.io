@@ -233,4 +233,8 @@ sup a:hover{text-decoration:underline}
 .cl-filter:hover{background:var(--infobox-header)}
 .cl-filter.active{background:var(--link)!important;color:#fff!important;border-color:var(--link)!important}
 @media(max-width:768px){.cl-version{padding-left:24px}.cl-ver-title{font-size:16px}}
+/* ── Bio Pages ── */
+.bio-intro{font-size:15px;line-height:1.8;margin-bottom:16px}
+.bio-notebox{text-align:center;margin:16px 0;padding:12px;background:var(--infobox-bg);border:1px solid var(--border-light);border-radius:4px;font-size:13px}
+.notelist{margin:16px 0;font-size:12px;color:var(--text2)}.notelist ol{margin-left:20px}.notelist li{margin:4px 0}
 @media print{#topbar,#sidebar,#backTop,.video-overlay,.mwe-popups,.search-dropdown,.toast-container,audio{display:none!important}#layout{display:block}#main{padding:0;max-width:100%}.infobox{float:right}.cl-toolbar{display:none}a{color:#000;text-decoration:underline}a[href^="http"]::after{content:" ("attr(href)")";font-size:.8em;color:#666}}
