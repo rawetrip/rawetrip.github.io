@@ -577,9 +577,9 @@ img,video{max-width:100%;height:auto}
 .tab-stage-wrap {
   overflow: hidden;
   position: relative;
-  transform: scale(0.9);
-  transform-origin: top center;
   padding-top: 16px;
+  max-width: 1500px;
+  margin: 0 auto;
 }
 .tab-stage {
   display: flex;
@@ -1123,10 +1123,13 @@ function openPanel(id) {
     requestAnimationFrame(animate);
   }, {passive: false});
   // Double font size for all content text (excluding hero banner and footer)
+  // Skip non-text elements
+  var skipTags = {'IMG':1,'VIDEO':1,'SVG':1,'INPUT':1,'TEXTAREA':1,'BUTTON':1,'BR':1,'HR':1,'SOURCE':1};
   var tabContent = document.querySelector('.tab-stage');
   if (tabContent) {
     var all = tabContent.querySelectorAll('*');
     for (var i = 0; i < all.length; i++) {
+      if (skipTags[all[i].tagName]) continue;
       // Skip elements inside footer
       if (all[i].closest('[style*="border-top"]')) continue;
       var fs = parseFloat(getComputedStyle(all[i]).fontSize);
