@@ -46,15 +46,56 @@ function fadeInMusic() {
   }, 50);
 }
 
-function openVideo(src) {
+function _onVideoReady() {
+  var v = document.getElementById('modalVideo');
+  var sp = document.getElementById('videoSpinner');
+  if (!v || !sp) return;
+  sp.style.display = 'none';
+  v.style.display = 'block';
+  v.play().catch(function(){});
+  // Clean up listeners to avoid duplicate calls
+  v.removeEventListener('canplay', _onVideoReady);
+  v.removeEventListener('loadeddata', _onVideoReady);
+  v.removeEventListener('playing', _onVideoReady);
+}
+
+function openVideo(src, title, desc) {
   var ov = document.getElementById('videoOverlay');
   var v = document.getElementById('modalVideo');
   var sp = document.getElementById('videoSpinner');
+  var tx = document.getElementById('videoText');
   if (!ov || !v || !sp) return;
+  // 更新文字
+  if (tx) {
+    tx.querySelector('.vt-title').textContent = title || '';
+    tx.querySelector('.vt-desc').textContent = desc || '';
+  }
+  // 移除旧监听器防止重复绑定
+  v.removeEventListener('canplay', _onVideoReady);
+  v.removeEventListener('loadeddata', _onVideoReady);
+  v.removeEventListener('playing', _onVideoReady);
+  // 添加多事件兜底
+  v.addEventListener('canplay', _onVideoReady);
+  v.addEventListener('loadeddata', _onVideoReady);
+  v.addEventListener('playing', _onVideoReady);
   sp.style.display = 'block';
-  v.style.display = 'none';
+  v.style.display = 'block';
   v.src = src;
+  // 强制浏览器开始加载
+  v.load();
   ov.classList.add('active');
+  // 超时兜底：5秒后强制隐藏 spinner
+  if (v._spinnerTimer) clearTimeout(v._spinnerTimer);
+  v._spinnerTimer = setTimeout(function() {
+    if (sp.style.display !== 'none') {
+      sp.style.display = 'none';
+      v.style.display = 'block';
+      v.play().catch(function(){});
+      v.removeEventListener('canplay', _onVideoReady);
+      v.removeEventListener('loadeddata', _onVideoReady);
+      v.removeEventListener('playing', _onVideoReady);
+    }
+  }, 5000);
   fadeOutMusic();
 }
 
@@ -120,8 +161,11 @@ function toast(msg, type){
 // ═══════════════════ Search Engine ═══════════════════
 var _searchIndex = [
   // ── 人物 ──
-  {t:"Anjiu Ovieo", u:"anjiu-ovieo.html", c:"人物", p:"anjiu ovieo", k:"安九 蔡洪浩 鸡 爱丽丝 微电影导演 铸币聚集地"},
-  {t:"Makesade", u:"Makesade.html", c:"人物", p:"makesade", k:"马可赛德 马克萨德 改车王 御坂美琴 学生 福建"},
+  {t:"Anjiu Ovieo", u:"bio/anjiu-ovieo.html", c:"人物", p:"anjiu ovieo", k:"安九 蔡洪浩 鸡 爱丽丝 微电影导演 铸币聚集地"},
+  {t:"Makesade", u:"bio/Makesade.html", c:"人物", p:"makesade", k:"马可赛德 马克萨德 改车王 御坂美琴 学生 福建"},
+  {t:"南瓜", u:"bio/nangua.html", c:"人物", p:"nangua", k:"南瓜 KOOK 铸币聚集地 Anjiu 恋人"},
+  {t:"后藤", u:"bio/goto.html", c:"人物", p:"houteng", k:"后藤 goto AsakuraKaren 铸币聚集地 兄弟 闺蜜 Makesade"},
+  {t:"韩堡戈", u:"bio/hanburger.html", c:"人物", p:"hanbaoge", k:"韩堡戈 Hanburger 兄弟 Anjiu CS2"},
 
   // ── 事件 ──
   {t:"标记炸弹安放点 B", u:"events.html#e1", c:"事件 · Anjiu", p:"biaojizhadananfangdian b", k:"CS2炸弹B点标记 战术"},
@@ -370,6 +414,106 @@ var _previewPages = window._previewPages || {};
     a.addEventListener('mouseenter', function (e) {
       clearTimeout(timer);
       timer = setTimeout(function () { showPopup(e, a.getAttribute('href')); }, 250);
+    });
+    a.addEventListener('mouseleave', function () { clearTimeout(timer); hidePopup(); });
+  });
+
+  // ── 参考文献悬浮预览 ──
+  var _refCache = {};
+  function getRefInfo(href) {
+    if (_refCache[href] !== undefined) return _refCache[href];
+    var m = href.match(/#(ref\d+|cite_note-\d+)/);
+    if (!m) return (_refCache[href] = null);
+    var el = document.getElementById(m[1]);
+    if (!el) return (_refCache[href] = null);
+    var link = el.querySelector('a[href^="http"]');
+    if (link) return (_refCache[href] = { url: link.href, text: link.textContent.trim(), liText: el.textContent.trim() });
+    // 无外部链接的注释（如 cite_note）
+    if (el.textContent.trim()) return (_refCache[href] = { url: null, text: el.textContent.trim(), liText: el.textContent.trim() });
+    return (_refCache[href] = null);
+  }
+
+  function showRefPopup(e, a) {
+    var info = getRefInfo(a.getAttribute('href'));
+    if (!info) return;
+    var url = info.url, text = info.text;
+    // 纯文本注释（无外部链接）
+    if (!url) {
+      var ctx = info.liText||text;
+      if (ctx.length > 300) ctx = ctx.substring(0,300)+'...';
+      c.innerHTML = '<div class="popups-text"><span style="font-size:11px;color:var(--text2)">📝 注释</span><div class="popups-desc" style="margin-top:6px;line-height:1.5">'+ctx+'</div></div>';
+      popup.classList.add('show');
+      var x = e.clientX + 15, y = e.clientY + 10;
+      if (x + 280 > window.innerWidth) x = e.clientX - 295;
+      if (y + 100 > window.innerHeight) y = e.clientY - 110;
+      popup.style.left = x + 'px'; popup.style.top = y + 'px';
+      return;
+    }
+    var host = '';
+    try { host = new URL(url).hostname.replace('www.',''); } catch(ex) {}
+    var c = popup.querySelector('.mwe-popups-container');
+
+    // Wikipedia: 用 REST API 获取摘要
+    if (/wikipedia\.org/.test(host)) {
+      var title = (url.split('/wiki/')[1]||'').split('#')[0].split('?')[0];
+      if (title) {
+        c.innerHTML = '<div class="popups-text" style="padding:6px 0"><span style="font-size:14px;font-weight:700">'+decodeURIComponent(title).replace(/_/g,' ')+'</span><div class="popups-desc" style="margin-top:6px">⏳ 加载摘要...</div><div style="font-size:10px;color:var(--text2);margin-top:4px">📖 维基百科</div></div>';
+        popup.classList.add('show');
+        var px = e.clientX + 15, py = e.clientY + 10;
+        if (px + 320 > window.innerWidth) px = e.clientX - 335;
+        if (py + 180 > window.innerHeight) py = e.clientY - 190;
+        popup.style.left = px + 'px'; popup.style.top = py + 'px';
+        popup._refX = px; popup._refY = py;
+        // Fetch summary
+        var api = 'https://' + host + '/api/rest_v1/page/summary/' + title;
+        fetch(api).then(function(r){return r.json()}).then(function(d){
+          var extract = (d.extract||'').substring(0, 200);
+          if (extract.length >= 200) extract += '...';
+          var img = d.thumbnail ? '<img src="'+d.thumbnail.source+'" style="width:100%;max-height:120px;object-fit:cover;border-radius:2px;margin-bottom:6px">' : '';
+          c.innerHTML = '<div class="popups-text">'+img+'<span style="font-size:14px;font-weight:700">'+d.title+'</span><div class="popups-desc" style="margin-top:6px">'+extract+'</div><div style="font-size:10px;color:var(--text2);margin-top:4px">📖 维基百科 · '+d.lang.toUpperCase()+'</div></div>';
+        }).catch(function(){
+          c.innerHTML = '<div class="popups-text"><span style="font-size:14px;font-weight:700">'+text+'</span><div class="popups-desc" style="margin-top:6px">'+url+'</div><div style="font-size:10px;color:var(--text2);margin-top:4px">📖 维基百科</div></div>';
+        });
+        return;
+      }
+    }
+
+    // 其他链接: Worker 代理抓取元数据
+    var label = '';
+    if (/bilibili/.test(host)) label = '🎬 Bilibili';
+    else if (/hltv/.test(host)) label = '🎮 HLTV';
+    else if (/baidu/.test(host)) label = '📚 百度百科';
+    else if (/toutiao/.test(host)) label = '📰 头条百科';
+    else if (/github/.test(host)) label = '💻 GitHub';
+    else label = '🔗 ' + host;
+    c.innerHTML = '<div class="popups-text"><span style="font-size:11px;color:var(--text2)">' + label + '</span><div style="font-size:14px;font-weight:700;margin-top:4px">' + text + '</div><div class="popups-desc" style="margin-top:6px">⏳ 抓取页面信息...</div></div>';
+    popup.classList.add('show');
+    var x = e.clientX + 15, y = e.clientY + 10;
+    if (x + 320 > window.innerWidth) x = e.clientX - 335;
+    if (y + 160 > window.innerHeight) y = e.clientY - 170;
+    popup.style.left = x + 'px';
+    popup.style.top = y + 'px';
+    // Fetch via Worker
+    fetch('/api?type=preview&url=' + encodeURIComponent(url))
+      .then(function(r){return r.json()})
+      .then(function(d){
+        if (d.error) throw new Error('fetch failed');
+        var desc = (d.desc||'').substring(0, 250);
+        if (desc.length >= 250) desc += '...';
+        c.innerHTML = '<div class="popups-text"><span style="font-size:11px;color:var(--text2)">' + label + '</span><div class="popups-title" style="font-size:14px;font-weight:700;margin-top:4px">' + (d.title||text) + '</div><div class="popups-desc" style="margin-top:6px;line-height:1.5">' + (desc||info.liText||'') + '</div></div>';
+      })
+      .catch(function(){
+        var ctx = info.liText||text;
+        if (ctx.length > 250) ctx = ctx.substring(0,250)+'...';
+        c.innerHTML = '<div class="popups-text"><span style="font-size:11px;color:var(--text2)">' + label + '</span><div class="popups-title" style="font-size:14px;font-weight:700;margin-top:4px">' + text + '</div><div class="popups-desc" style="margin-top:6px;line-height:1.5">' + ctx + '</div></div>';
+      });
+  }
+
+  document.querySelectorAll('sup a[href^="#ref"], sup a[href^="#cite"], a[href^="#cite_note"]').forEach(function (a) {
+    a.addEventListener('mouseenter', function (e) {
+      if (!getRefInfo(a.getAttribute('href'))) return;
+      clearTimeout(timer);
+      timer = setTimeout(function () { showRefPopup(e, a); }, 300);
     });
     a.addEventListener('mouseleave', function () { clearTimeout(timer); hidePopup(); });
   });

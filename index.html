@@ -5,9 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){var s=localStorage.getItem("theme");if(s=="dark")document.documentElement.className="dark"})()</script>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="prefetch" href="anjiu-ovieo.html">
-<link rel="prefetch" href="Makesade.html">
-<title>喂鸡百科 — 喂鸡百科</title>
+<title>喂鸡百科 — 首页</title>
 <meta name="description" content="喂鸡百科 影视工作室 · 喂鸡百科，自由的鸡百科">
 <meta property="og:title" content="喂鸡百科 — 喂鸡百科">
 <meta property="og:description" content="喂鸡百科 影视工作室 · 自由的鸡百科">
@@ -24,20 +22,613 @@
 <link rel="preload" href="fonts/MiSans-Bold.6.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/MiSans-Heavy.5.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/MiSans-Heavy.6.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="css/common.css?v=3" as="style">
+<link rel="preload" href="css/common.css" as="style">
 <link rel="preload" href="images/Team.webp" as="image" fetchpriority="high">
 <link rel="preload" href="images/Chongqing.webp" as="image">
-<link href="css/common.css?v=3" rel="stylesheet">
+<link href="css/common.css" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   Portal Homepage — Game Wiki Portal
+   ═══════════════════════════════════════════ */
+:root {
+  --portal-w: 1500px;
+  --portal-gap: 20px;
+  --portal-card-bg: rgba(255,255,255,.04);
+  --portal-card-border: 1px solid rgba(255,255,255,.08);
+  --portal-card-hover: rgba(255,255,255,.08);
+  --portal-radius: 0;
+  --portal-banner-h: 750px;
+  --portal-accent: #6da3f5;
+  --portal-accent2: #a78bdb;
+}
+.dark {
+  --portal-card-bg: rgba(255,255,255,.04);
+  --portal-card-border: 1px solid rgba(255,255,255,.08);
+  --portal-card-hover: rgba(255,255,255,.08);
+}
+
+/* ── Portal Layout ── */
+.portal-wrap {
+  max-width: var(--portal-w);
+  margin: 0 auto;
+  padding: 8px 20px 40px;
+}
+
+/* ── Spacer ── */
+.portal-nav-spacer {
+  height: 16px;
+}
+
+/* ── Hero Banner ── */
+.portal-banner {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  height: 780px;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.banner-bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+  filter: brightness(0.5);
+}
+.portal-banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.3);
+  z-index: 0;
+  pointer-events: none;
+}
+.banner-spacer {
+  height: 780px;
+}
+.banner-main {
+  position: relative;
+  height: 650px;
+  padding: 30px 40px 36px;
+  max-width: 1550px;
+  margin: 74px auto 0;
+  inset: 0;
+  background: rgba(0,0,0,.3);
+  z-index: 0;
+  pointer-events: none;
+}
+.banner-main h1,
+.banner-main .banner-tagline {
+  position: relative;
+  z-index: 1;
+}
+.banner-main h1,
+.banner-main .banner-tagline {
+  position: relative;
+  z-index: 1;
+}
+.banner-main h1 {
+  font-family: "MiSans Heavy", "MiSans", sans-serif;
+  font-size: 5.2rem;
+  margin: 0 0 16px;
+  color: var(--text);
+  line-height: 1.15;
+}
+.banner-main .banner-tagline {
+  font-size: 1.47rem;
+  color: var(--text2);
+  margin-bottom: 22px;
+  white-space: nowrap;
+  line-height: 1.6;
+}
+.banner-main .banner-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.banner-main .banner-actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--portal-accent);
+  text-decoration: none;
+  transition: all .2s;
+  border: none;
+}
+.banner-main .banner-actions a:hover {
+  background: #5b8ee0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(109,163,245,.35);
+}
+.banner-main .banner-actions a.sec {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.banner-main .banner-actions a.sec:hover {
+  background: var(--portal-card-bg);
+  border-color: var(--link);
+  color: var(--link);
+  box-shadow: none;
+}
+/* ── News Ticker (Vertical) ── */
+.banner-ticker {
+  margin-top: 0;
+  margin-bottom: 24px;
+  overflow: hidden;
+  background: rgba(109,163,245,.08);
+  border-left: 3px solid var(--portal-accent);
+  height: 36px;
+  position: relative;
+}
+.banner-ticker-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.ticker-item {
+  position: absolute;
+  left: 14px;
+  right: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: var(--text2);
+  white-space: nowrap;
+  transform: translateY(100%);
+  opacity: 0;
+}
+@keyframes tickerScroll {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* ── Section Headers ── */
+.portal-section {
+  margin-bottom: 28px;
+}
+.portal-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-light);
+}
+.portal-section-header h2 {
+  font-family: "MiSans Bold", "MiSans", sans-serif;
+  font-size: 18px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+}
+.portal-section-header h2 .icon {
+  font-size: 20px;
+}
+.portal-section-header a {
+  font-size: 12px;
+  color: var(--text2);
+  text-decoration: none;
+  transition: color .2s;
+}
+.portal-section-header a:hover {
+  color: var(--link);
+}
+
+/* ── Category Cards Grid ── */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.cat-card {
+  background: var(--portal-card-bg);
+  border: var(--portal-card-border);
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: all .25s;
+  position: relative;
+  overflow: hidden;
+}
+.cat-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--portal-accent);
+  opacity: 0;
+  transition: opacity .25s;
+}
+.cat-card:hover {
+  background: var(--portal-card-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0,0,0,.25);
+}
+.cat-card:hover::after {
+  opacity: 1;
+}
+.cat-card .cat-icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+  line-height: 1;
+}
+.cat-card .cat-title {
+  font-family: "MiSans Bold", "MiSans", sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.cat-card .cat-desc {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+/* ── Content Area (2-col) ── */
+.content-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--portal-gap);
+}
+.content-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.content-card {
+  display: flex;
+  gap: 14px;
+  background: var(--portal-card-bg);
+  border: var(--portal-card-border);
+  padding: 14px;
+  transition: all .2s;
+  cursor: pointer;
+}
+.content-card:hover {
+  background: var(--portal-card-hover);
+  transform: translateX(4px);
+}
+.content-card .cc-thumb {
+  width: 120px;
+  min-height: 68px;
+  flex-shrink: 0;
+  background: var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  overflow: hidden;
+}
+.content-card .cc-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.content-card .cc-body {
+  flex: 1;
+  min-width: 0;
+}
+.content-card .cc-title {
+  font-family: "MiSans Bold", "MiSans", sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 2px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.content-card .cc-meta {
+  font-size: 11px;
+  color: var(--text2);
+  display: flex;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.content-card .cc-desc {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Featured card (large) */
+.content-card.featured {
+  flex-direction: column;
+  padding: 0;
+}
+.content-card.featured .cc-thumb {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+}
+.content-card.featured .cc-body {
+  padding: 14px;
+}
+
+/* ── Team Grid ── */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.team-card {
+  background: var(--portal-card-bg);
+  border: var(--portal-card-border);
+  padding: 24px 16px 20px;
+  text-align: center;
+  transition: all .25s;
+  cursor: pointer;
+}
+.team-card:hover {
+  background: var(--portal-card-hover);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(0,0,0,.3);
+}
+.team-card .tc-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+  overflow: hidden;
+  border: 2px solid var(--border);
+  transition: all .3s;
+}
+.team-card:hover .tc-avatar {
+  border-color: var(--portal-accent);
+  transform: scale(1.08);
+}
+.team-card .tc-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.team-card .tc-name {
+  font-family: "MiSans Bold", "MiSans", sans-serif;
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.team-card .tc-role {
+  font-size: 12px;
+  color: var(--portal-accent);
+  margin-bottom: 6px;
+}
+.team-card .tc-desc {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Info Box (Wiki style) ── */
+.info-box-wrap {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--portal-gap);
+  margin-bottom: 28px;
+}
+.portal-infobox {
+  background: var(--portal-card-bg);
+  border: 2px solid var(--border);
+  padding: 0;
+}
+.portal-infobox .ib-header {
+  background: var(--infobox-header);
+  padding: 10px 16px;
+  font-family: "MiSans Bold", "MiSans", sans-serif;
+  font-size: 15px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.portal-infobox .ib-img {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-light);
+}
+.portal-infobox .ib-img img {
+  max-width: 100%;
+  height: auto;
+}
+.portal-infobox .ib-row {
+  display: flex;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 13px;
+}
+.portal-infobox .ib-row:last-child {
+  border-bottom: none;
+}
+.portal-infobox .ib-label {
+  width: 90px;
+  flex-shrink: 0;
+  padding: 8px 12px;
+  color: var(--text2);
+  font-weight: 600;
+  background: var(--infobox-bg);
+}
+.portal-infobox .ib-value {
+  flex: 1;
+  padding: 8px 12px;
+  color: var(--text);
+  word-break: break-all;
+}
+.portal-infobox .ib-value a {
+  color: var(--link);
+}
+
+/* ── Sponsors ── */
+.sponsor-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.sponsor-bar .sp-item {
+  background: var(--portal-card-bg);
+  border: var(--portal-card-border);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 72px;
+  transition: all .2s;
+}
+.sponsor-bar .sp-item:hover {
+  background: var(--portal-card-hover);
+  transform: translateY(-2px);
+}
+.sponsor-bar .sp-item img {
+  max-width: 85%;
+  max-height: 48px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: .7;
+  transition: opacity .2s;
+}
+.sponsor-bar .sp-item:hover img {
+  opacity: 1;
+}
+
+/* ── Contact / Feedback ── */
+.contact-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--portal-gap);
+  margin-bottom: 20px;
+}
+.contact-split .contact-form {
+  background: var(--portal-card-bg);
+  border: var(--portal-card-border);
+  padding: 20px;
+}
+.contact-split .contact-form h3 {
+  font-family: "MiSans Bold", "MiSans", sans-serif;
+  font-size: 15px;
+  margin: 0 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+}
+.contact-split .contact-form input,
+.contact-split .contact-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  background: var(--paper);
+  color: var(--text);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color .2s;
+}
+.contact-split .contact-form input:focus,
+.contact-split .contact-form textarea:focus {
+  border-color: var(--link);
+}
+.contact-split .contact-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+.contact-split .contact-form button {
+  padding: 10px 24px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--portal-accent);
+  border: none;
+  cursor: pointer;
+  transition: all .2s;
+  font-family: inherit;
+}
+.contact-split .contact-form button:hover {
+  background: #5b8ee0;
+  transform: translateY(-1px);
+}
+
+/* ── Responsive ── */
+/* ── Page View (Slide) ── */
+/* ── Tab Stage ── */
+.tab-stage-wrap {
+  overflow: hidden;
+  position: relative;
+  transform: scale(0.9);
+  transform-origin: top center;
+  padding-top: 16px;
+}
+.tab-stage {
+  display: flex;
+  transition: transform .45s cubic-bezier(.22,.61,.36,1);
+  position: relative;
+  z-index: 1;
+}
+.tab-content {
+  flex: 0 0 100%;
+  max-width: 100%;
+  padding-top: 25px;
+}
+.tab-content.tab-active {
+  display: block;
+}
+/* Fallback: hide non-active tabs when JS hasn't run yet */
+.tab-stage:not(.tab-ready) .tab-content:not(.tab-active) {
+  display: none;
+}
+
+@media (max-width: 1200px) {
+  .cat-grid { grid-template-columns: repeat(3, 1fr); }
+  .team-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px) {
+  .info-box-wrap { grid-template-columns: 1fr; }
+  .content-2col { grid-template-columns: 1fr; }
+  .contact-split { grid-template-columns: 1fr; }
+  .cat-grid { grid-template-columns: repeat(2, 1fr); }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .banner-main h1 { font-size: 2rem; }
+}
+@media (max-width: 600px) {
+  .cat-grid { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr; }
+  .banner-main { padding: 24px 20px; }
+  .banner-main h1 { font-size: 1.6rem; }
+}
+</style>
 </head>
 <body>
 
 <div id="topbar">
-<a href="/" style="text-decoration:none;color:inherit"><div class="logo-area">
+<a href="index.html" style="text-decoration:none;color:inherit"><div class="logo-area">
 <svg class="wiki-logo" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="#ddd"/><text x="20" y="26" text-anchor="middle" font-size="20">🐔</text></svg>
 <span class="site-name">喂鸡百科</span>
 <span class="site-tag">自由的鸡百科</span>
 </div></a>
-<div class="search-box"><input id="searchInput" placeholder="搜索喂鸡百科" onkeydown="if(event.key==='Enter')doSearch()"></div>
 <div class="top-actions">
 <a href="#" onclick="toggleMusic()" id="musicBtn" role="switch" aria-checked="false" aria-label="音乐开关">💿</a>
 <a href="#" onclick="toggleTheme()" id="themeToggle">🌙 深色</a>
@@ -47,473 +638,514 @@
 </div>
 </div>
 
-<div id="layout">
-<nav id="sidebar">
-<div class="sb-section"><div class="sb-title">导航</div>
-<a href="#" class="active">🐔 首页</a>
-<a href="#about">📖 关于</a>
-<a href="#vision">🔭 愿景</a>
+
+<div class="portal-wrap">
+
+<!-- ═══ Hero Banner + Stats ═══ -->
+<div class="portal-banner">
+  <video class="banner-bg-video" autoplay muted loop playsinline preload="auto">
+    <source src="videos/TOP.mp4" type="video/mp4">
+  </video>
+  <div class="banner-main">
+    <h1>喂鸡百科</h1>
+    <p class="banner-tagline">自由的鸡百科 · 用独特的鸡式语言记录万物，连接全球读者。</p>
+    </div>
+  </div>
 </div>
-<div class="sb-section"><div class="sb-title">条目</div>
-<a href="#team">👥 团队成员</a>
-<a href="#films">🎬 代表作品</a>
-<a href="#location">📍 公司位置</a>
-<a href="#sponsors">🤝 赞助商</a>
-</div>
-<div class="sb-section"><div class="sb-title">语言</div>
-<a href="#" onclick="setLang('zh')">🇨🇳 简体中文</a>
-<a href="#" onclick="setLang('tw')">🇹🇼 繁體中文</a>
-<a href="#" onclick="setLang('en')">🇺🇸 English</a>
-<a href="#" onclick="setLang('ja')">🇯🇵 日本語</a>
-<a href="#" onclick="setLang('de')">🇩🇪 Deutsch</a>
-<a href="#" onclick="setLang('fr')">🇫🇷 Français</a>
-<a href="#" onclick="setLang('ru')">🇷🇺 Русский</a>
-</div>
-<div class="sb-section"><div class="sb-title">工具</div>
-<a href="#" onclick="toggleTheme()">🔆 切换外观</a>
-<a href="#contact">✉️ 联系我们</a>
-</div>
+<div class="banner-spacer"></div>
+
+<!-- ═══ Horizontal Nav Tabs + Search ═══ -->
+<nav class="portal-nav" id="mainNav">
+  <a href="#" data-section="home" class="active">🏠 首页</a>
+  <a href="#" data-section="team">👥 团队</a>
+  <a href="#" data-section="works">🎬 作品</a>
+  <a href="#" data-section="events">📅 事件</a>
+  <a href="#" data-section="sponsors">🤝 赞助</a>
+  <a href="#" data-section="contact">✉️ 联系</a>
+  <div class="portal-nav-search search-box">
+    <input id="searchInput" placeholder="搜索喂鸡百科" onkeydown="if(event.key==='Enter')doSearch()">
+  </div>
 </nav>
 
-<div id="main"><div id="content">
+<div class="portal-nav-spacer"></div>
+<div class="tab-stage-wrap">
+<div class="tab-stage" id="tabStage">
 
-<div class="breadcrumb"><a href="#" data-i18n="crumb_home">🐔 首页</a> › <a href="#" data-i18n="crumb_article">条目</a> › <span>喂鸡百科</span></div>
-<h1 class="article-title" data-i18n="article_title">喂鸡百科</h1>
-<div class="article-sub" data-i18n="article_sub"></div>
+<!-- ═══ Tab: 首页 ═══ -->
+<div class="tab-content tab-active" id="tabHome">
 
-<div class="infobox">
-<div class="infobox-header">喂鸡百科</div>
-<div class="infobox-image"><img src="images/Team.webp" decoding="async" alt="喂鸡百科" width="270" height="180" style="width:100%;height:auto;aspect-ratio:3/2"><div class="caption" data-i18n="ib_caption"></div></div>
-<div class="infobox-row"><div class="infobox-label" data-i18n="ib_label_hq">总部</div><div class="infobox-value" data-i18n="ib_hq"></div></div>
-<div class="infobox-row"><div class="infobox-label" data-i18n="ib_label_est">成立</div><div class="infobox-value">2020</div></div>
-<div class="infobox-row"><div class="infobox-label" data-i18n="ib_label_web">官网</div><div class="infobox-value"><a href="https://jbbfilm.xyz">jbbfilm.xyz</a></div></div>
+
+<!-- ═══ Works & Content 2-col ═══ -->
+<div class="portal-section" id="works">
+  <div class="portal-section-header">
+    <h2><span class="icon">🎬</span> 内容推荐</h2>
+  </div>
+    <div class="banner-ticker">
+      <div class="banner-ticker-inner" id="tickerInner">
+        <span class="ticker-item">📢 news1</span>
+        <span class="ticker-item">📢 news2</span>
+        <span class="ticker-item">📢 news3</span>
+        <span class="ticker-item">📢 news4</span>
+        <span class="ticker-item">📢 news5</span>
+        <span class="ticker-item">📢 news6</span>
+      </div>
+    </div>
+  <div class="content-2col">
+    <div>
+      <div class="portal-section-header" style="border-bottom:none;margin-bottom:12px">
+        <h2 style="font-size:18px">最新作品</h2>
+      </div>
+      <div class="content-list">
+        <div class="content-card featured" onclick="openVideo('../videos/work1.mp4')">
+          <div class="cc-thumb"><img src="images/film0.webp" alt="鸡皮书" loading="lazy"></div>
+          <div class="cc-body">
+            <div class="cc-title">鸡皮书</div>
+            <div class="cc-meta"><span>🎬 制作中</span><span>📅 2026</span></div>
+            <div class="cc-desc">喂鸡百科最新影视项目，敬请期待</div>
+          </div>
+        </div>
+        <div class="content-card">
+          <div class="cc-thumb"><img src="images/film1.webp" alt="阿鸡蒸转" loading="lazy"></div>
+          <div class="cc-body">
+            <div class="cc-title">阿鸡蒸转</div>
+            <div class="cc-meta"><span>🎬 短片</span></div>
+            <div class="cc-desc">喂鸡百科出品</div>
+          </div>
+        </div>
+        <div class="content-card">
+          <div class="cc-thumb"><img src="images/film2.webp" alt="绝命财神" loading="lazy"></div>
+          <div class="cc-body">
+            <div class="cc-title">绝命财神</div>
+            <div class="cc-meta"><span>🎬 短片</span></div>
+            <div class="cc-desc">喂鸡百科出品</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="portal-section-header" style="border-bottom:none;margin-bottom:12px">
+        <h2 style="font-size:18px">热门条目</h2>
+      </div>
+      <div class="content-list">
+        <div class="content-card" onclick="location.href='bio/anjiu-ovieo.html'">
+          <div class="cc-thumb"><img src="images/Mate0.jpg" alt="Anjiu Ovieo" loading="lazy"></div>
+          <div class="cc-body">
+            <div class="cc-title">Anjiu Ovieo</div>
+            <div class="cc-meta"><span>👤 人物</span><span>📄 182 次编辑</span></div>
+            <div class="cc-desc">安九·奥维奥，微电影导演，铸币聚集地创始人</div>
+          </div>
+        </div>
+        <div class="content-card" onclick="location.href='bio/Makesade.html'">
+          <div class="cc-thumb"><img src="images/Mate1.jpg" alt="Makesade" loading="lazy"></div>
+          <div class="cc-body">
+            <div class="cc-title">Makesade</div>
+            <div class="cc-meta"><span>👤 人物</span><span>📄 156 次编辑</span></div>
+            <div class="cc-desc">马可赛德，改车王，以各种抽象行为而著名</div>
+          </div>
+        </div>
+        <div class="content-card" onclick="location.href='bio/nangua.html'">
+          <div class="cc-thumb"><img src="images/Mate2.jpg" alt="南瓜" loading="lazy"></div>
+          <div class="cc-body">
+            <div class="cc-title">南瓜</div>
+            <div class="cc-meta"><span>👤 人物</span></div>
+            <div class="cc-desc">蔡洪浩，铸币聚集地第一唐人</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="toc"><div class="toc-title" data-i18n="toc_title"></div><ul>
-<li><a href="#about">1 <span data-i18n="about_title"></span></a></li>
-<li><a href="#vision">2 <span data-i18n="vision_title"></span></a></li>
-<li><a href="#team">3 <span data-i18n="team_title"></span></a></li>
-<li><a href="#films">4 <span data-i18n="films_title"></span></a></li>
-<li><a href="#location">5 <span data-i18n="location_title"></span></a></li>
-<li><a href="#sponsors">6 <span data-i18n="sponsor_title"></span></a></li>
-<li><a href="#contact">7 <span data-i18n="contact_title"></span></a></li>
-<li><a href="#refs">8 <span data-i18n="refs_title"></span></a></li>
-</ul></div>
+<!-- ═══ About + InfoBox 2-col ═══ -->
+<div class="info-box-wrap">
+  <div>
+    <div class="portal-section" id="about" style="margin-bottom:0">
+      <div class="portal-section-header">
+        <h2><span class="icon">📖</span> 关于我们</h2>
+      </div>
+      <p style="font-size:14px;line-height:1.8;color:var(--text);margin-bottom:12px">
+        <b>喂鸡百科</b>（英语：<b>Chickenpedia</b>）是一个由 Anjiu Ovieo 创立的影视工作室。我们以独特的鸡式语言记录万物，制作原创影视内容，致力于用电影语言连接全球观众。
+      </p>
+      <p style="font-size:14px;line-height:1.8;color:var(--text);margin-bottom:4px">
+        总部位于中国重庆，团队成员来自全国各地。主要作品包括《阿鸡蒸转》、《绝命财神》等短片，以及正在制作中的《鸡皮书》等项目。
+      </p>
+    </div>
 
-<h2 class="mw-heading h2" id="about"><span data-i18n="about_title"></span><span class="edit-link"><a href="#">[编辑]</a></span></h2>
-<p data-i18n="about_text"></p>
+    <div class="portal-section" id="vision" style="margin-bottom:0;margin-top:24px">
+      <div class="portal-section-header">
+        <h2><span class="icon">🔭</span> 愿景</h2>
+      </div>
+      <p style="font-size:14px;line-height:1.8;color:var(--text);margin-bottom:4px">
+        用电影语言连接全球观众。我们相信每个人都有自己的故事，而我们的使命是用镜头记录这些真实、有趣、感人的瞬间，让世界听到我们的声音。
+      </p>
+    </div>
 
-<h2 class="mw-heading h2" id="vision"><span data-i18n="vision_title"></span><span class="edit-link"><a href="#">[编辑]</a></span></h2>
-<p data-i18n="vision_text"></p>
+    <div class="portal-section" id="location" style="margin-bottom:0;margin-top:24px">
+      <div class="portal-section-header">
+        <h2><span class="icon">📍</span> 公司位置</h2>
+      </div>
+      <p style="font-size:14px;line-height:1.8;color:var(--text);margin-bottom:4px">
+        中国 重庆 · 渝中区。一座被山和水滋养的城市，也是我们灵感的源泉。
+      </p>
+    </div>
+  </div>
 
-<h2 class="mw-heading h2" id="team"><span data-i18n="team_title"></span><span class="edit-link"><a href="#">[编辑]</a></span></h2>
-<p data-i18n="team_subtitle"></p>
-<div style="overflow-x:auto"><table class="wikitable" id="teamTable" style="min-height:200px"<thead><tr>
-<th data-i18n="team_col_name"></th><th data-i18n="team_col_role"></th><th data-i18n="team_col_desc"></th>
-</tr></thead><tbody></tbody></table></div>
-
-<h2 class="mw-heading h2" id="films"><span data-i18n="films_title"></span><span class="edit-link"><a href="#">[编辑]</a></span></h2>
-<p data-i18n="films_sub"></p>
-<div class="film-gallery" id="filmGallery" style="min-height:250px"></div>
-
-<h2 class="mw-heading h2" id="location"><span data-i18n="location_title"></span><span class="edit-link"><a href="#">[编辑]</a></span></h2>
-<p data-i18n="location_sub"></p>
-<div class="location-box">
-<div class="location-slide active"><img src="images/Chongqing.webp" decoding="async" alt="Chongqing" width="1200" height="675" style="width:100%;height:100%;object-fit:cover"></div>
-<div class="location-slide"><img src="images/Chongqing0.jpg" loading="lazy" decoding="async" alt="Chongqing0"></div>
-<div class="location-slide"><img src="images/Chongqing1.jpg" loading="lazy" decoding="async" alt="Chongqing1"></div>
-<div class="location-caption" data-i18n="location_text"></div>
+  <!-- ═══ InfoBox ═══ -->
+  <div class="portal-infobox">
+    <div class="ib-header">喂鸡百科</div>
+    <div class="ib-img"><img src="images/Team.webp" alt="喂鸡百科" loading="lazy"></div>
+    <div class="ib-row">
+      <div class="ib-label">Logo</div>
+      <div class="ib-value">🐔</div>
+    </div>
+    <div class="ib-row">
+      <div class="ib-label">总部</div>
+      <div class="ib-value">中国 重庆</div>
+    </div>
+    <div class="ib-row">
+      <div class="ib-label">成立时间</div>
+      <div class="ib-value">2020年</div>
+    </div>
+    <div class="ib-row">
+      <div class="ib-label">官网</div>
+      <div class="ib-value"><a href="https://jbbfilm.xyz" target="_blank">jbbfilm.xyz</a></div>
+    </div>
+    <div class="ib-row">
+      <div class="ib-label">联系方式</div>
+      <div class="ib-value">r4nd0m0721@outlook.com</div>
+    </div>
+  </div>
 </div>
 
-<h2 class="mw-heading h2" id="sponsors"><span data-i18n="sponsor_title"></span><span class="edit-link"><a href="#">[编辑]</a></span></h2>
-<p data-i18n="sponsor_sub"></p>
-<div class="sponsor-grid" id="sponsorGrid" style="min-height:120px"></div>
-
-<h2 class="mw-heading h2" id="contact"><span data-i18n="contact_title"></span><span class="edit-link"><a href="#">[编辑]</a></span></h2>
-<p data-i18n="contact_sub"></p>
-<div class="contact-form">
-<input id="cname" data-i18n-placeholder="placeholder_name">
-<input id="cemail" data-i18n-placeholder="placeholder_email">
-<textarea id="cmsg" data-i18n-placeholder="placeholder_message"></textarea>
-<button onclick="sendMail()" data-i18n="send_btn"></button>
+<!-- ═══ Sponsors ═══ -->
+<div class="portal-section" id="sponsors">
+  <div class="portal-section-header">
+    <h2><span class="icon">🤝</span> 赞助商</h2>
+  </div>
+  <div class="sponsor-bar" id="sponsorBar"></div>
 </div>
 
-<h2 class="mw-heading h2" id="feedback">📋 意见反馈<span class="edit-link"><a href="#">[编辑]</a></span></h2>
-<p>欢迎提出新功能建议或 Bug 反馈，选择类型后填写即可。 <a href="suggestions.html">查看所有反馈 →</a></p>
-<div class="contact-form">
-<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
-<label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer;padding:8px 14px;border:1px solid var(--border);border-radius:4px;background:var(--btn-bg)"><input type="radio" name="ftype" value="enhancement" checked onchange="document.getElementById('ftype').value=this.value"> 🆕 功能</label>
-<label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer;padding:8px 14px;border:1px solid var(--border);border-radius:4px;background:var(--btn-bg)"><input type="radio" name="ftype" value="bug" onchange="document.getElementById('ftype').value=this.value"> 🐛 Bug</label>
-<label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer;padding:8px 14px;border:1px solid var(--border);border-radius:4px;background:var(--btn-bg)"><input type="radio" name="ftype" value="enhancement" onchange="document.getElementById('ftype').value=this.value"> 🎨 体验</label>
-<label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer;padding:8px 14px;border:1px solid var(--border);border-radius:4px;background:var(--btn-bg)"><input type="radio" name="ftype" value="question" onchange="document.getElementById('ftype').value=this.value"> 💬 其他</label>
-</div>
-<input type="hidden" id="ftype" value="enhancement">
-<input id="ftitle" placeholder="一句话概括（必填）">
-<textarea id="fdesc" placeholder="详细描述（可选）"></textarea>
-<div style="display:flex;gap:8px;align-items:center;margin-bottom:10px">
-</div>
-<button id="feedbackBtn" onclick="sendFeedback()">提交反馈</button>
+<!-- ═══ Footer ═══ -->
+<div style="text-align:center;padding:30px 0 10px;border-top:1px solid var(--border-light);font-size:0.8em;color:var(--text2)">
+  <p>🐔 喂鸡百科 · 自由的鸡百科</p>
+  <p style="margin-top:4px">© 2020-2026 jbbfilm.xyz &nbsp;·&nbsp; CC BY-SA &nbsp;·&nbsp; <a href="changelog.html">更新日志</a> &nbsp;·&nbsp; <a href="sitemap.xml">站点地图</a></p>
 </div>
 
-<h2 class="mw-heading h2" id="refs"><span data-i18n="refs_title"></span><span class="edit-link"><a href="#">[编辑]</a></span></h2>
-<div class="reflist"><ol>
-<li><span data-i18n="ref1">喂鸡百科 官方网站</span> — <a href="https://jbbfilm.xyz">https://jbbfilm.xyz</a></li>
-<li><span data-i18n="ref2">喂鸡百科 GitHub</span> — <a href="https://github.com/rawetrip/rawetrip.github.io">rawetrip/rawetrip.github.io</a></li>
-</ol></div>
 
-<div class="disclaimer" data-i18n="disclaimer"></div>
-<div class="page-footer" id="pageFooter"></div>
+</div>
 
-</div></div></div>
+<!-- ═══ Tab: 团队 ═══ -->
+<div class="tab-content" id="tabTeam">
+  <div class="portal-section">
+    <div class="portal-section-header">
+      <h2><span class="icon">👥</span> 团队成员</h2>
+    </div>
+    <div class="team-grid" id="teamGrid">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+</div>
 
-<audio id="bgm" loop preload="none"><source src="audio/music_opus.ogg" type="audio/ogg"></audio>
+<!-- ═══ Tab: 作品 ═══ -->
+<div class="tab-content" id="tabWorks">
+  <div class="portal-section">
+    <div class="portal-section-header">
+      <h2><span class="icon">🎬</span> 作品</h2>
+    </div>
+    <div style="padding:60px 0;text-align:center;color:var(--text2);font-size:15px">暂无内容</div>
+  </div>
+</div>
 
+<!-- ═══ Tab: 事件 ═══ -->
+<div class="tab-content" id="tabEvents">
+  <div class="portal-section">
+    <div class="portal-section-header">
+      <h2><span class="icon">📅</span> 事件</h2>
+    </div>
+    <div style="padding:60px 0;text-align:center;color:var(--text2);font-size:15px">暂无内容</div>
+  </div>
+</div>
+
+<!-- ═══ Tab: 赞助 ═══ -->
+<div class="tab-content" id="tabSponsors">
+  <div class="portal-section">
+    <div class="portal-section-header">
+      <h2><span class="icon">🤝</span> 赞助商</h2>
+    </div>
+    <div class="sponsor-bar" id="sponsorBar"></div>
+  </div>
+</div>
+
+<!-- ═══ Tab: 联系 ═══ -->
+<div class="tab-content" id="tabContact">
+  <div class="portal-section">
+    <div class="portal-section-header">
+      <h2><span class="icon">✉️</span> 讨论 & 反馈</h2>
+    </div>
+    <div class="contact-split">
+      <div class="contact-form" id="feedback">
+        <h3>💬 意见反馈</h3>
+        <input type="text" id="fbName" placeholder="你的名字（可选）">
+        <input type="email" id="fbEmail" placeholder="邮箱">
+        <select id="fbType" style="width:100%;padding:10px 12px;margin-bottom:10px;border:1px solid var(--border);background:var(--paper);color:var(--text);font-size:13px;font-family:inherit;outline:none">
+          <option value="">选择反馈类型</option>
+          <option value="功能建议">功能建议</option>
+          <option value="Bug 反馈">Bug 反馈</option>
+          <option value="体验优化">体验优化</option>
+        </select>
+        <textarea id="fbMsg" placeholder="详细描述你的建议或问题..."></textarea>
+        <button onclick="submitFeedback()">提交反馈</button>
+      </div>
+      <div class="contact-form">
+        <h3>📋 快速联系</h3>
+        <input type="text" id="ctName" placeholder="你的名字">
+        <input type="email" id="ctEmail" placeholder="邮箱">
+        <textarea id="ctMsg" placeholder="留言内容..."></textarea>
+        <button onclick="submitContact()">发送留言</button>
+        <p style="font-size:12px;color:var(--text2);margin-top:10px">或发送邮件至：r4nd0m0721@outlook.com</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /tab-stage -->
+</div><!-- /tab-stage-wrap -->
+
+</div><!-- /portal-wrap -->
+
+<!-- ═══ Video Overlay (shared) ═══ -->
 <div class="video-overlay" id="videoOverlay" onclick="closeVideo()">
-<button class="video-close" onclick="closeVideo()">✕</button>
-<div class="video-spinner" id="videoSpinner" style="color:#fff;font-size:16px">⏳ 加载中...</div>
-<video id="modalVideo" controls playsinline preload="none"onclick="event.stopPropagation()" onended="closeVideo()" style="display:none" oncanplay="document.getElementById('videoSpinner').style.display='none';this.style.display='block';this.play()"></video>
+  <button class="video-close" onclick="closeVideo()">✕</button>
+  <div class="video-spinner" id="videoSpinner" style="color:#fff;font-size:16px">⏳ 加载中...</div>
+  <div class="video-text" id="videoText"><div class="vt-title"></div><div class="vt-desc"></div></div>
+  <video id="modalVideo" controls playsinline preload="auto" onclick="event.stopPropagation()" onended="closeVideo()" style="display:none"></video>
+  <button class="video-close video-up" onclick="closeVideo()">⬆</button>
 </div>
 
+<!-- ═══ Toast ═══ -->
+<div id="toastContainer"></div>
+
+<script src="js/common.js"></script>
 <script>
+/* ═══════════════════════════════════════════
+   Portal Homepage JS
+   ═══════════════════════════════════════════ */
 
-var T={
-zh:{
-article_title:"喂鸡百科",article_sub:"喂鸡百科，自由的鸡百科",crumb_home:"🐔 首页",crumb_article:"条目",ib_label_hq:"总部",ib_label_est:"成立",ib_label_web:"官网",ref1:"喂鸡百科 官方网站",ref2:"喂鸡百科 GitHub",
-toc_title:"目录",
-about_title:"关于我们",about_text:"喂鸡百科是一部自由的鸡百科全书，由 Anjiu Ovieo 创立。它以独特的鸡式语言记录万物，连接全球读者。",
-vision_title:"愿景",vision_text:"通过电影语言与未来视觉连接全球观众，打造具有影响力的影视作品。",
-team_title:"团队成员",team_subtitle:"喂鸡百科 核心创作团队由以下 8 名成员组成，涵盖导演、编剧、摄影、声音设计等关键职位。",team_col_name:"姓名",team_col_role:"职位",team_col_desc:"简介",
-films_title:"代表作品",films_sub:"以下是 喂鸡百科 的主要制作作品列表。",
-location_title:"公司位置",location_sub:"总部位于中国重庆市。",location_text:"喂鸡百科 总部位于中国重庆市，专注于电影级视觉叙事与未来感影像表达。",
-contact_title:"联系我们",contact_sub:"如需合作或咨询，请通过此表单联系我们。",send_btn:"发送",
-placeholder_name:"姓名",placeholder_email:"邮箱",placeholder_message:"留言内容",
-sponsor_title:"赞助商",sponsor_sub:"特别鸣谢以下合作伙伴。",
-refs_title:"参考资料",disclaimer:"本页面由喂鸡百科编辑者维护。内容遵循 CC BY-SA 协议。",
-ib_hq:"中国 重庆",ib_caption:"喂鸡百科 标识",
-team0_role:"导演 / 编剧",team0_desc:"负责整体视觉与故事统筹，参与《世界大战1》《世界大战2》制作，基霸比影业创始人。",
-team1_role:"声音设计师 / 后期音乐",team1_desc:"声音设计与后期混音，按导演要求完成音频处理，参与《世界大战1》《世界大战2》，参加说唱节目有相关经历。",
-team2_role:"剪辑师 / 编剧",team2_desc:"负责按导演节奏完成剪辑与素材整理，参与《韩骨的痛》后期制作，目前参与新项目剧本筹备。",
-team3_role:"编剧 / 主演",team3_desc:"负责配合剧本执行与拍摄工作，也参与《韩骨的痛》主演，客串《世界大战2》，在相关作品中有出演经历。",
-team4_role:"视觉概念",team4_desc:"负责视觉概念设计与素材整理，按导演要求提供画面参考，曾参与肥腻莫属节目相关制作。",
-team5_role:"艺术指导",team5_desc:"负责现场美术设计与场景搭建，按整体方案完成布置，参与日本相关项目执行工作。",
-team6_role:"制片人",team6_desc:"负责项目流程统筹、现场协调及物资管理，按导演安排推进制作，在假人慢打节目中参与现场工作。",
-team7_role:"摄影指导 / 剪辑指导",team7_desc:"负责摄影与后期剪辑基础工作，按导演要求完成镜头执行与素材整理，参与相关影视与节目制作。",
-film0_title:"鸡皮书",film1_title:"阿鸡蒸转",film2_title:"绝命财神",film3_title:"教禽",film4_title:"奥本海富",film5_title:"点击输入文本"
-},
-tw:{
-article_title:"喂鸡百科",article_sub:"維雞百科，自由的雞百科",crumb_home:"🐔 首頁",crumb_article:"條目",ib_label_hq:"總部",ib_label_est:"成立",ib_label_web:"官網",ref1:"喂鸡百科 官方網站",ref2:"喂鸡百科 GitHub",
-toc_title:"目錄",
-about_title:"關於我們",about_text:"維雞百科是一部自由的雞百科全書，由 Anjiu Ovieo 創立。它以獨特的雞式語言記錄萬物，連結全球讀者。",
-vision_title:"願景",vision_text:"用電影語言與未來視覺連結全球觀眾，打造具有影響力的影視作品。",
-team_title:"團隊成員",team_subtitle:"喂鸡百科 核心創作團隊由以下成員組成。",team_col_name:"姓名",team_col_role:"職位",team_col_desc:"簡介",
-films_title:"代表作品",films_sub:"以下是 喂鸡百科 的主要製作作品列表。",
-location_title:"公司位置",location_sub:"總部位於中國重慶市。",location_text:"喂鸡百科 總部位於中國重慶市，專注於電影級視覺敘事與未來感影像表達。",
-contact_title:"聯繫我們",contact_sub:"我們通常會在24-72小時內回覆。",send_btn:"發送",
-placeholder_name:"姓名",placeholder_email:"郵箱",placeholder_message:"留言內容",
-sponsor_title:"贊助商",sponsor_sub:"特別鳴謝以下合作夥伴。",
-refs_title:"參考資料",disclaimer:"本頁面由維雞百科編輯者維護。內容遵循 CC BY-SA 協議。",
-ib_hq:"中國 重慶",ib_caption:"餵雞百科 標識",
-team0_role:"導演 / 編劇",team0_desc:"擅長營造視覺衝擊與情感張力，因《世界戰爭1》《世界戰爭2》而聞名，雞巴逼影業創始人，中國大陸最佳導演獎項。",
-team1_role:"聲音設計師 / 後期音樂",team1_desc:"不知名聲音設計與混音師，說唱界黑老大，曾客串《世界戰爭1》《世界戰爭2》，參加摸來摸去說唱節目屢屢獲獎。",
-team2_role:"剪輯師 / 編劇",team2_desc:"擁有超強的節奏掌控力，曾主力《韓骨舊事》後期處理，正在醞釀新的拍攝腳本，榮獲第91屆最佳剪刀手獎項。",
-team3_role:"編劇 / 主演",team3_desc:"以創意敘事風格聞名，也曾主演《韓骨舊事》，客串《世界戰爭2》，從而一炮而紅，拿下第67屆雞斯卡最佳男主角。",
-team4_role:"視覺概念",team4_desc:"精通電影視覺概念設計，以張力為根本，曾在肥膩莫屬節目上閃瞎近500名觀眾而獲得閃的就是你獎項。",
-team5_role:"藝術指導",team5_desc:"打造震撼沉浸式場景，曾在日本榮獲最會搞顏色亞洲區冠軍獎項，一百趴的不是色盲，不然藝術指導個雞巴。",
-team6_role:"製片人",team6_desc:"負責整個專案的流程統籌，片場盒飯和道具採購，帶動成員氣氛，在假人慢打節目把評委快打成真人而聞名世界。",
-team7_role:"攝影指導/剪輯指導",team7_desc:"全地球最富有，精通各式攝像，喜劇拍攝必不可缺的笑點解析，第78屆搞笑諾貝爾獎，第91屆最佳剪刀手獎獲得者。",
-film0_title:"雞皮書",film1_title:"阿雞蒸傳",film2_title:"絕命財神",film3_title:"教禽",film4_title:"奧本海富",film5_title:"即將公開"
-},
-en:{
-article_title:"喂鸡百科",article_sub:"From Chickenpedia, the free chicken encyclopedia",crumb_home:"🐔 Home",crumb_article:"Article",ib_label_hq:"Headquarters",ib_label_est:"Established",ib_label_web:"Website",ref1:"喂鸡百科 Official Site",ref2:"喂鸡百科 GitHub",
-toc_title:"Contents",
-about_title:"About",about_text:"Chickenpedia is a free chicken encyclopedia, founded by Anjiu Ovieo. It records everything in a unique chicken language, connecting readers worldwide.",
-vision_title:"Vision",vision_text:"Connecting global audiences through cinematic language and futuristic visuals, creating impactful film and television works.",
-team_title:"Team Members",team_subtitle:"The core creative team of 喂鸡百科 consists of the following members.",team_col_name:"Name",team_col_role:"Role",team_col_desc:"Description",
-films_title:"Filmography",films_sub:"The following is a list of major productions by 喂鸡百科.",
-location_title:"Location",location_sub:"Headquartered in Chongqing, China.",location_text:"喂鸡百科 is headquartered in Chongqing, China.",
-contact_title:"Contact",contact_sub:"We usually reply within 24-72 hours.",send_btn:"Send",
-placeholder_name:"Name",placeholder_email:"Email",placeholder_message:"Message",
-sponsor_title:"Sponsors",sponsor_sub:"Proudly supported by the following partners.",
-refs_title:"References",disclaimer:"This page is maintained by Chickenpedia editors. Content is available under CC BY-SA.",
-ib_hq:"Chongqing, China",ib_caption:"Chickenpedia Logo",
-team0_role:"Director / Screenwriter",team0_desc:"Responsible for overall visual and story coordination. Participated in 'World War 1' and 'World War 2' productions. Founder of Jibabi Films.",
-team1_role:"Sound Designer / Post Music",team1_desc:"Sound design and post-mixing. Participated in 'War of the Worlds 1' and 'War of the Worlds 2'.",
-team2_role:"Editor / Screenwriter",team2_desc:"Responsible for editing and material arrangement. Participated in post-production of 'The Pain in Korean Bones'.",
-team3_role:"Screenwriter / Lead Actor",team3_desc:"Script execution and filming cooperation. Starred in 'Korean Pain', guest appearance in 'War of the Worlds 2'.",
-team4_role:"Visual Concept",team4_desc:"Visual concept design and material arrangement.",
-team5_role:"Art Director",team5_desc:"On-site art design and scene construction.",
-team6_role:"Producer",team6_desc:"Project process planning, on-site coordination and material management.",
-team7_role:"Director of Photography / Editor",team7_desc:"Photography and post-editing.",
-film0_title:"The Chicken Book",film1_title:"Forrest Cluck",film2_title:"Riching Bad",film3_title:"The Godchicken",film4_title:"Oppen Ricch",film5_title:"Coming Soon"
-},
-ja:{
-article_title:"喂鸡百科",article_sub:"チキンペディア、自由な鶏の百科事典",crumb_home:"🐔 メインページ",crumb_article:"記事",ib_label_hq:"本社",ib_label_est:"設立",ib_label_web:"公式サイト",ref1:"喂鸡百科 公式サイト",ref2:"喂鸡百科 GitHub",
-toc_title:"目次",
-about_title:"概要",about_text:"チキンペディアは自由な鶏の百科事典で、Anjiu Ovieo によって設立されました。独自の鶏式言語で万物を記録し、世界中の読者をつなぎます。",
-vision_title:"ビジョン",vision_text:"映画言語と未来的な映像で世界中の観客とつながり、影響力のある作品を生み出します。",
-team_title:"チームメンバー",team_subtitle:"喂鸡百科 のコアクリエイティブチームは以下のメンバーで構成されています。",team_col_name:"名前",team_col_role:"役職",team_col_desc:"概要",
-films_title:"作品一覧",films_sub:"以下は 喂鸡百科 の主要作品です。",
-location_title:"所在地",location_sub:"中国・重慶市に本社を構えています。",location_text:"喂鸡百科 本社は中国重慶市にあります。",
-contact_title:"連絡",contact_sub:"24〜72時間以内に返信します。",send_btn:"送信",
-placeholder_name:"名前",placeholder_email:"メール",placeholder_message:"メッセージ",
-sponsor_title:"スポンサー",sponsor_sub:"以下のパートナーに感謝します。",
-refs_title:"参考文献",disclaimer:"このページはチキンペディア編集者によって管理されています。CC BY-SA の下で利用可能です。",
-ib_hq:"中国 重慶",ib_caption:"チキンペディア ロゴ",
-team0_role:"監督・脚本家",team0_desc:"ビジュアルとストーリーの総合コーディネートを担当。「ワールド・ウォー1」「ワールド・ウォー2」の製作に参加。ジバビ・フィルムズ創設者。",
-team1_role:"サウンドデザイナー/ポストミュージック",team1_desc:"サウンドデザインとポストミキシング。「宇宙戦争1」「宇宙戦争2」に参加。",
-team2_role:"編集者/脚本家",team2_desc:"監督のペースに合わせた編集と素材の手配。「朝鮮骨の痛み」のポストプロダクションに参加。",
-team3_role:"脚本・主演",team3_desc:"脚本制作・撮影協力を担当。「Korean Pain」で主演、「宇宙戦争2」にゲスト出演。",
-team4_role:"ビジュアルコンセプト",team4_desc:"ビジュアルコンセプトデザインとマテリアルアレンジ。",
-team5_role:"アートディレクション",team5_desc:"現場でのアートデザインとシーン構築。",
-team6_role:"プロデューサー",team6_desc:"プロジェクトの工程計画、現場調整、資材管理。",
-team7_role:"撮影監督/編集者",team7_desc:"撮影とポスト編集の基本作業。",
-film0_title:"鶏皮の書",film1_title:"フォレスト・コッコ",film2_title:"ブレイキング・リッチ",film3_title:"ゴッドチキン",film4_title:"オッペンリッチ",film5_title:"近日公開"
-},
-de:{
-article_title:"喂鸡百科",article_sub:"Hühnerpedia, das freie Hühnerlexikon",crumb_home:"🐔 Startseite",crumb_article:"Artikel",ib_label_hq:"Hauptsitz",ib_label_est:"Gegründet",ib_label_web:"Webseite",ref1:"喂鸡百科 Offizielle Seite",ref2:"喂鸡百科 GitHub",
-toc_title:"Inhaltsverzeichnis",
-about_title:"Über uns",about_text:"Chickenpedia ist eine freie Hühnerenzyklopädie, gegründet von Anjiu Ovieo. Sie zeichnet alles in einzigartiger Hühnersprache auf und verbindet Leser weltweit.",
-vision_title:"Vision",vision_text:"Globale Zuschauer durch Filmsprache und futuristische Bilder verbinden und wirkungsvolle Werke schaffen.",
-team_title:"Teammitglieder",team_subtitle:"Das Kernteam von 喂鸡百科 besteht aus folgenden Mitgliedern.",team_col_name:"Name",team_col_role:"Rolle",team_col_desc:"Beschreibung",
-films_title:"Filmografie",films_sub:"Im Folgenden finden Sie eine Liste der wichtigsten Produktionen von 喂鸡百科.",
-location_title:"Standort",location_sub:"Hauptsitz in Chongqing, China.",location_text:"喂鸡百科 hat seinen Hauptsitz in Chongqing, China.",
-contact_title:"Kontakt",contact_sub:"Antwort innerhalb von 24-72 Stunden.",send_btn:"Senden",
-placeholder_name:"Name",placeholder_email:"E-Mail",placeholder_message:"Nachricht",
-sponsor_title:"Sponsoren",sponsor_sub:"Mit Stolz unterstützt von folgenden Partnern.",
-refs_title:"Referenzen",disclaimer:"Diese Seite wird von Hühnerpedia-Redakteuren gepflegt. Inhalt verfügbar unter CC BY-SA.",
-ib_hq:"Chongqing, China",ib_caption:"Chickenpedia Logo",
-team0_role:"Regisseur/Drehbuchautor",team0_desc:"Verantwortlich für visuelle und Story-Koordination. Beteiligt an 'World War 1' und 'World War 2'. Gründer von Jibabi Films.",
-team1_role:"Sounddesigner/Postmusik",team1_desc:"Sounddesign und Postmixing. Mitwirkung bei 'War of the Worlds 1' und 'War of the Worlds 2'.",
-team2_role:"Editor/Drehbuchautor",team2_desc:"Schnitt und Materialanordnung nach Tempo des Regisseurs. Postproduktion von 'The Pain in Korean Bones'.",
-team3_role:"Drehbuchautor/Hauptdarsteller",team3_desc:"Drehbuchausführung und Dreharbeiten. Hauptrolle in 'Korean Pain', Gastauftritt in 'War of the Worlds 2'.",
-team4_role:"Visuelles Konzept",team4_desc:"Gestaltung des visuellen Konzepts und Materialanordnung.",
-team5_role:"Künstlerische Leitung",team5_desc:"Kunstdesign und Szenenbau vor Ort.",
-team6_role:"Produzent",team6_desc:"Projektablaufplanung, Koordination und Materialmanagement.",
-team7_role:"Kameramann/Redakteur",team7_desc:"Fotografie und Nachbearbeitung.",
-film0_title:"Das Gockelbuch",film1_title:"Forrest Gockel",film2_title:"Breaking Cash",film3_title:"Der Geflügelpate",film4_title:"Oppenreicher",film5_title:"Demnächst"
-},
-fr:{
-article_title:"喂鸡百科",article_sub:"Poulopedia, l'encyclopédie libre du poulet",crumb_home:"🐔 Accueil",crumb_article:"Article",ib_label_hq:"Siège",ib_label_est:"Fondé",ib_label_web:"Site web",ref1:"喂鸡百科 Site officiel",ref2:"喂鸡百科 GitHub",
-toc_title:"Sommaire",
-about_title:"À propos",about_text:"Chickenpedia est une encyclopédie libre du poulet, fondée par Anjiu Ovieo. Elle documente tout dans un langage poulet unique, connectant les lecteurs du monde entier.",
-vision_title:"Vision",vision_text:"Connecter le public mondial grâce au langage cinématographique et aux visuels futuristes.",
-team_title:"Membres de l'équipe",team_subtitle:"L'équipe créative principale de 喂鸡百科 est composée des membres suivants.",team_col_name:"Nom",team_col_role:"Rôle",team_col_desc:"Description",
-films_title:"Filmographie",films_sub:"Voici la liste des principales productions de 喂鸡百科.",
-location_title:"Adresse",location_sub:"Basé à Chongqing, Chine.",location_text:"Le siège de 喂鸡百科 est à Chongqing, Chine.",
-contact_title:"Contact",contact_sub:"Réponse sous 24 à 72 heures.",send_btn:"Envoyer",
-placeholder_name:"Nom",placeholder_email:"Email",placeholder_message:"Message",
-sponsor_title:"Sponsors",sponsor_sub:"Fièrement soutenu par les partenaires suivants.",
-refs_title:"Références",disclaimer:"Cette page est maintenue par les éditeurs de Poulopedia. Contenu disponible sous CC BY-SA.",
-ib_hq:"Chongqing, Chine",ib_caption:"Logo de Chickenpedia",
-team0_role:"Réalisateur/Scénariste",team0_desc:"Coordination visuelle et narrative. Participation à 'World War 1' et 'World War 2'. Fondateur de Jibabi Films.",
-team1_role:"Concepteur sonore/Post-musique",team1_desc:"Conception sonore et post-mixage. Participation à 'La Guerre des Mondes 1' et 'La Guerre des Mondes 2'.",
-team2_role:"Monteur/Scénariste",team2_desc:"Montage et arrangement du matériel selon le rythme du réalisateur. Post-production de 'The Pain in Korean Bones'.",
-team3_role:"Scénariste/Acteur vedette",team3_desc:"Exécution du scénario et tournage. Rôle principal dans 'Korean Pain', apparition dans 'War of the Worlds 2'.",
-team4_role:"Concept visuel",team4_desc:"Conception du concept visuel et disposition des matériaux.",
-team5_role:"Direction artistique",team5_desc:"Conception artistique sur place et construction de la scène.",
-team6_role:"Producteur",team6_desc:"Planification du processus de projet, coordination et gestion du matériel.",
-team7_role:"Directeur de la photographie/Monteur",team7_desc:"Photographie et post-montage.",
-film0_title:"Le Livre Poulet",film1_title:"Forrest Glousse",film2_title:"Breaking Fric",film3_title:"Le Poussin",film4_title:"Oppenriche",film5_title:"À venir"
-},
-ru:{
-article_title:"喂鸡百科",article_sub:"Куропедия, свободная куриная энциклопедия",crumb_home:"🐔 Главная",crumb_article:"Статья",ib_label_hq:"Штаб-квартира",ib_label_est:"Основана",ib_label_web:"Сайт",ref1:"喂鸡百科 Официальный сайт",ref2:"喂鸡百科 GitHub",
-toc_title:"Содержание",
-about_title:"О нас",about_text:"Куропедия — свободная куриная энциклопедия, основанная Anjiu Ovieo. Она описывает всё уникальным куриным языком, объединяя читателей по всему миру.",
-vision_title:"Видение",vision_text:"Соединяем зрителей через язык кино и футуристические образы, создавая впечатляющие работы.",
-team_title:"Команда",team_subtitle:"Основная творческая команда 喂鸡百科 состоит из следующих участников.",team_col_name:"Имя",team_col_role:"Роль",team_col_desc:"Описание",
-films_title:"Фильмография",films_sub:"Ниже представлен список основных работ 喂鸡百科.",
-location_title:"Адрес",location_sub:"Штаб-квартира находится в Чунцине, Китай.",location_text:"Штаб-квартира 喂鸡百科 находится в Чунцине, Китай.",
-contact_title:"Контакты",contact_sub:"Ответ в течение 24-72 часов.",send_btn:"Отправить",
-placeholder_name:"Имя",placeholder_email:"Почта",placeholder_message:"Сообщение",
-sponsor_title:"Спонсоры",sponsor_sub:"При поддержке следующих партнёров.",
-refs_title:"Примечания",disclaimer:"Эта страница поддерживается редакторами Куропедии. Материалы доступны по лицензии CC BY-SA.",
-ib_hq:"Чунцин, Китай",ib_caption:"Логотип Куропедии",
-team0_role:"Режиссёр/Сценарист",team0_desc:"Общая визуальная и сюжетная координация. Участвовал в производстве «Первая мировая война» и «Вторая мировая война». Основатель Jibabi Films.",
-team1_role:"Звукорежиссёр/Пост-музыка",team1_desc:"Звуковое оформление и пост-микширование. Участвовал в «Войне миров 1» и «Войне миров 2».",
-team2_role:"Редактор/Сценарист",team2_desc:"Монтаж и аранжировка материала. Постпродакшен «Боли в корейских костях».",
-team3_role:"Сценарист / В главных ролях",team3_desc:"Написание сценария и съёмки. Главная роль в «Корейской боли», гостевое участие в «Войне миров 2».",
-team4_role:"Визуальная концепция",team4_desc:"Дизайн визуальной концепции и расположение материалов.",
-team5_role:"Художественное направление",team5_desc:"Художественное проектирование и построение сцен на месте.",
-team6_role:"Продюсер",team6_desc:"Планирование процесса проекта, координация и управление материалами.",
-team7_role:"Оператор-постановщик/Редактор",team7_desc:"Фотосъёмка и постмонтаж.",
-film0_title:"Куриная книга",film1_title:"Форрест Кудах",film2_title:"Во все богатые",film3_title:"Крёстный птенец",film4_title:"Оппенрич",film5_title:"Скоро"
-}};
-
-var teamNames=["Anjiu Ovieo","MAKESADE","楠呱","韩·士承","R4nd0m","Xone","AsakuraKaren","mA0rich"];
-
-var sponsors=[
-["Los Pollos Hermanos","lpollos","webp","","transform:scale(1.125)"],
-["HHM","hhm","webp","","transform:scale(1.5)"],
-["JMM","jmm","webp","","transform:scale(1.5)"],
-["Vought International","vought","webp","","transform:scale(1.5)"],
-["Los Santos Customs","lsc","webp","",""],
-["Black Mesa","blackmesa","svg","dark",""],
-["Aperture Science","aperture","webp","dark",""],
-["Arasaka Corporation","arasaka","webp","","transform:scale(1.25)"],
-["Stark Industries","stark","webp","dark",""],
-["Merryweather Security","merryweather","webp","",""],
-["LSPD","lspd","webp","",""],
-["NERV","nerv","webp","",""],
-["HAVVK","havvk","webp","",""],
-["Kiroshi Optics","kiroshi","webp","dark",""],
-["Trauma Team","trauma","webp","","transform:scale(1.4)"],
-["Militech","militech","webp","dark","transform:scale(1.1)"],
-["Hammond Robotics","hammond","webp","dark","margin-left:50px;transform:scale(1.65)"],
-["ATLAS","atlas","webp","",""],
-["Vault-Tec","vaulttec","webp","dark",""],
-["Umbrella Corp","Umbrella_Corporation_logo","svg","","transform:scale(0.94)"]
+// ── Team Data ──
+var teamData = [
+  {name:"Anjiu Ovieo", role:"创始人 · 导演", bio:"喂鸡百科创始人，微电影导演，铸币聚集地创始人", img:"images/Mate0.jpg"},
+  {name:"Makesade", role:"改车王 · 成员", bio:"以各种抽象行为而著名，铸币聚集地成员", img:"images/Mate1.jpg"},
+  {name:"南瓜", role:"微电影导演", bio:"铸币聚集地第一唐人，视频创作者", img:"images/Mate2.jpg"},
+  {name:"后藤", role:"成员", bio:"铸币聚集地成员，视频创作者", img:"images/Mate0.jpg"},
+  {name:"韩堡戈", role:"成员", bio:"铸币聚集地成员，视频创作者", img:"images/Mate0.jpg"},
+  {name:"AsakuraKaren", role:"成员", bio:"铸币聚集地成员", img:"images/Mate0.jpg"},
+  {name:"Envision_", role:"成员", bio:"铸币聚集地成员", img:"images/Mate0.jpg"},
+  {name:"R4nd0m", role:"技术 · 编辑", bio:"喂鸡百科技术维护与编辑", img:"images/Mate0.jpg"}
 ];
 
-var currentLang='zh';
-
-function applyLang(lang){
-currentLang=lang;
-document.documentElement.lang=lang;
-var d=T[lang];
-document.querySelectorAll('[data-i18n]').forEach(function(el){
-var key=el.dataset.i18n;
-if(d[key]) el.textContent=d[key];
-});
-document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
-var key=el.dataset.i18nPlaceholder;
-if(d[key]) el.placeholder=d[key];
-});
-document.querySelectorAll('#sidebar a').forEach(function(a){a.classList.remove('active')});
-var langLink=document.querySelector("#sidebar a[onclick=\"setLang('"+lang+"')\"]");if(langLink)langLink.classList.add("active");
-renderTeamTable(lang);
-renderFilmGallery(lang);
-renderSponsors();
+function renderTeam() {
+  var g = document.getElementById('teamGrid');
+  if (!g) return;
+  var h = '';
+  for (var i = 0; i < teamData.length; i++) {
+    var d = teamData[i];
+    h += '<div class="team-card" onclick="location.href=\'bio/' + d.name.toLowerCase().replace(/ /g,'-') + '.html\'">';
+    h += '<div class="tc-avatar"><img src="' + d.img + '" alt="' + d.name + '" loading="lazy"></div>';
+    h += '<div class="tc-name">' + d.name + '</div>';
+    h += '<div class="tc-role">' + d.role + '</div>';
+    h += '<div class="tc-desc">' + d.bio + '</div>';
+    h += '</div>';
+  }
+  g.innerHTML = h;
 }
 
-function renderTeamTable(lang){
-var d=T[lang];
-var tbody=document.querySelector('#teamTable tbody');
-var h='';
-for(var i=0;i<8;i++){
-var links={0:'anjiu-ovieo.html',1:'Makesade.html'};var nameHtml=links[i]?'<a href="'+links[i]+'"><b>'+teamNames[i]+'</b></a>':'<b>'+teamNames[i]+'</b>';
-h+='<tr><td style="text-align:center;width:96px"><img src="images/Mate'+i+'.jpg" loading="lazy" decoding="async" style="width:64px;height:64px;object-fit:cover;border-radius:50%;display:block;margin:0 auto 4px" alt="">'+nameHtml+'</td><td>'+d['team'+i+'_role']+'</td><td>'+d['team'+i+'_desc']+'</td></tr>';
-}
-tbody.innerHTML=h;
-}
-
-function renderFilmGallery(lang){
-var d=T[lang];
-var films=[
-{img:"images/film0.webp",key:"film0"},
-{img:"images/film1.webp",key:"film1"},
-{img:"images/film2.webp",key:"film2"},
-{img:"images/film3.webp",key:"film3"},
-{img:"images/film4.webp",key:"film4"},
-{img:"images/film5.webp",key:"film5"}
+// ── Sponsors ──
+var sponsorList = [
+  ["Los Pollos Hermanos","lpollos","webp",0,""],
+  ["HHM","hhm","webp",0,"transform:scale(1.5)"],
+  ["Vought International","vought","webp",0,""],
+  ["Black Mesa","blackmesa","svg",1,""],
+  ["Aperture Science","aperture","webp",0,""],
+  ["Arasaka","arasaka","webp",0,""],
+  ["Stark Industries","stark","webp",1,""],
+  ["NERV","nerv","webp",1,""],
+  ["Umbrella Corp","umbrella","webp",0,""]
 ];
-var h='';
-for(var i=0;i<films.length;i++){
-h+='<div class="film-card" onclick="openVideo(\'videos/work1.mp4\')">';
-h+='<img src="'+films[i].img+'" loading="lazy" decoding="async" alt="'+d[films[i].key+'_title']+'">';
-h+='<div class="film-label">'+d[films[i].key+'_title']+'</div>';
-h+='</div>';
-}
-document.getElementById('filmGallery').innerHTML=h;
-}
 
-function renderSponsors(){
-var g=document.getElementById('sponsorGrid');
-var isDark=document.documentElement.classList.contains('dark');
-var h='';
-for(var i=0;i<sponsors.length;i++){
-var name=sponsors[i][0], src="images/sponsors/"+sponsors[i][1]+"."+sponsors[i][2], mode=sponsors[i][3];
-var filt='';
-if(mode=='dark'){filt=isDark?'invert(1)':'';}
-h+='<div class="sponsor-item">';
-h+='<img src="'+src+'" alt="'+name+'" loading="lazy" decoding="async" class="no-blur" style="max-width:85%;max-height:60px;object-fit:contain;filter:'+filt+';'+sponsors[i][4]+'">';
-h+='</div>';
-}
-g.innerHTML=h;
+function renderSponsors() {
+  var g = document.getElementById('sponsorBar');
+  if (!g) return;
+  var isDark = document.documentElement.classList.contains('dark');
+  var h = '';
+  for (var i = 0; i < sponsorList.length; i++) {
+    var s = sponsorList[i];
+    var name = s[0], src = 'images/sponsors/' + s[1] + '.' + s[2], invert = s[3];
+    var filt = invert ? 'brightness(0) invert(1)' : '';
+    if (!isDark && invert) filt = 'brightness(1) invert(0)';
+    h += '<div class="sp-item" title="' + name + '">';
+    h += '<img src="' + src + '" alt="' + name + '" style="filter:' + filt + ';' + s[4] + '" loading="lazy">';
+    h += '</div>';
+  }
+  g.innerHTML = h;
 }
 
-function setLang(lang){applyLang(lang);}
+// ── Scroll To Element ──
+function scrollToEl(id) {
+  var el = document.getElementById(id);
+  if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+}
 
-// Preview pages for common.js
-window._previewPages={
-  'anjiu-ovieo.html':{title:'Anjiu Ovieo',img:'images/Mate0.jpg',desc:'安九·奥维奥，原名蔡洪浩，重庆市本地人，微电影导演，铸币聚集地第一唐人。'},
-  'Makesade.html':{title:'Makesade',img:'images/Mate1.jpg',desc:'马可赛德，福建人，改车王，铸币聚集地成员，以各种抽象行为而著名。'},
-};
-
-// Carousel — index only
+// ── News Ticker ──
 (function(){
-var slides=document.querySelectorAll('.location-slide');
-var cur=0;
-if(slides.length>1){
-setInterval(function(){
-slides[cur].classList.remove('active');
-cur=(cur+1)%slides.length;
-slides[cur].classList.add('active');
-},3500);
-}
+  var items = Array.from(document.querySelectorAll('.ticker-item'));
+  if (!items.length) return;
+  // Shuffle for random order
+  for (var i = items.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = items[i];
+    items[i] = items[j];
+    items[j] = tmp;
+  }
+  var idx = 0;
+  show(0);
+  function show(i) {
+    var el = items[i];
+    el.style.transition = 'none';
+    el.style.transform = 'translateY(100%)';
+    el.style.opacity = '0';
+    void el.offsetHeight;
+    el.style.transition = 'transform 0.5s cubic-bezier(.22,.61,.36,1), opacity 0.5s ease';
+    el.style.transform = 'translateY(0)';
+    el.style.opacity = '1';
+    clearTimeout(el._timer);
+    el._timer = setTimeout(function() {
+      el.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+      el.style.transform = 'translateY(-100%)';
+      el.style.opacity = '0';
+      setTimeout(function() {
+        idx = (idx + 1) % items.length;
+        show(idx);
+      }, 500);
+    }, 5000);
+  }
 })();
 
-emailjs.init("mZol6Oi89wUCLMtkw");
-function sendMail(){
-var name=document.getElementById('cname').value.trim();
-var email=document.getElementById('cemail').value.trim();
-var message=document.getElementById('cmsg').value.trim();
-if(!name||!email||!message){toast(currentLang=='en'?'Please complete all fields':'请完整填写信息','warn');return}
-var btn=document.querySelector('#contact + p + .contact-form button');
-btn.disabled=true;
-var orig=btn.textContent;
-btn.textContent=currentLang=='en'?'Sending...':'发送中...';
-emailjs.send("service_79qkr6j","template_ye0l6au",{from_name:name,from_email:email,message:message})
-.then(function(){
-toast(currentLang=='en'?'Message sent successfully':'邮件发送成功','success');
-document.getElementById('cname').value='';
-document.getElementById('cemail').value='';
-document.getElementById('cmsg').value='';
-})
-.catch(function(){toast(currentLang=='en'?'Failed to send message':'发送失败','error')})
-.finally(function(){btn.disabled=false;btn.textContent=orig});
+// ── Panel Navigation ──
+function openPanel(id) {
+  var panel = document.getElementById(id);
+  var content = document.getElementById('pageContent');
+  if (!panel || !content) return;
+  // Close all panels first
+  document.querySelectorAll('.slide-panel').forEach(function(p){ p.classList.remove('open'); });
+  // Slide content left, open panel
+  content.classList.add('slide-left');
+  panel.classList.add('open');
+  // Update nav
+  document.querySelectorAll('#mainNav a').forEach(function(a){ a.classList.remove('active'); });
+  var navLink = document.querySelector('#mainNav a[data-section="' + id.replace('Panel','').toLowerCase() + '"]');
+  if (navLink) navLink.classList.add('active');
 }
+// ── Tab Navigation ──
+(function(){
+  var tabStage = document.getElementById('tabStage');
+  if (tabStage) tabStage.classList.add('tab-ready');
+  
+  function switchTab(section) {
+    var tabIds = {home:'tabHome', team:'tabTeam', works:'tabWorks', events:'tabEvents', sponsors:'tabSponsors', contact:'tabContact'};
+    var id = tabIds[section];
+    if (!id) return;
+    var el = document.getElementById(id);
+    if (!el || !tabStage) return;
+    var idx = Array.prototype.indexOf.call(tabStage.children, el);
+    if (idx < 0) return;
+    tabStage.style.transform = 'translateX(-' + (idx * 100) + '%)';
+    // Update nav active
+    var links = document.querySelectorAll('#mainNav a[data-section]');
+    for (var i = 0; i < links.length; i++) {
+      links[i].classList.remove('active');
+      if (links[i].getAttribute('data-section') === section) {
+        links[i].classList.add('active');
+      }
+    }
+  }
 
-function sendFeedback(){
-var type=document.getElementById('ftype').value;
-var title=document.getElementById('ftitle').value.trim();
-var desc=document.getElementById('fdesc').value.trim();
-if(!title){toast('请填写一句话概括','warn');return}
-var btn=document.getElementById('feedbackBtn');
-btn.disabled=true;
-var orig=btn.textContent;
-btn.textContent='提交中...';
-var body=desc||'(无详细描述)';
-var typeMap={'enhancement':'🆕功能','bug':'🐛Bug','question':'💬其他'};
-var typeEmoji=typeMap[type]||'💬其他';
-var labels=['suggestion',type];
-var fullTitle='['+typeEmoji+'] '+title;
-fetch('/api',{
-  method:'POST',
-  headers:{'Content-Type':'application/json'},
-  body:JSON.stringify({title:fullTitle,body:body,labels:labels})
-})
-.then(function(r){if(!r.ok)throw new Error('GH API error');return r.json()})
-.then(function(data){
-  toast('反馈已提交，感谢！','success');
-  document.getElementById('ftitle').value='';
-  document.getElementById('fdesc').value='';
-})
-.catch(function(err){
-  // Fallback to EmailJS
-  var now=new Date();
-  var timeStr=now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate()+' '+now.getHours()+':'+String(now.getMinutes()).padStart(2,'0');
-  emailjs.send("service_fhsc15k","template_ghwgnns",{name:'【'+type+'】'+pri,message:title+'\n\n'+(desc||''),time:timeStr},"rERx8QqEhumlvobw7")
-  .then(function(){toast('已通过邮件提交','success')})
-  .catch(function(){toast('提交失败，请重试','error')});
-})
-.finally(function(){btn.disabled=false;btn.textContent=orig});
-}
+  document.getElementById('mainNav').addEventListener('click', function(e) {
+    var link = e.target.closest('a[data-section]');
+    if (!link) return;
+    e.preventDefault();
+    var section = link.getAttribute('data-section');
+    switchTab(section);
+    if (section === 'home') window.scrollTo({top:0, behavior:'smooth'});
+  });
+})();
 
-applyLang('zh');
-renderSponsors();
-
+// ── Init ──
+(function(){
+  renderTeam();
+  renderSponsors();
+  // Banner fade on scroll - video fades faster than text
+  var banner = document.querySelector('.portal-banner');
+  var bannerVideo = document.querySelector('.banner-bg-video');
+  var bannerText = document.querySelector('.banner-main');
+  var ticking = false;
+  function easeOut(t) { return t * (2 - t); }
+  function updateBannerFade() {
+    if (!banner) return;
+    var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+    // Video fades fast (over 400px)
+    var vProgress = Math.max(0, Math.min(1, scrollY / 350));
+    if (bannerVideo) bannerVideo.style.opacity = 1 - easeOut(vProgress);
+    // Text fades slower (over 700px), gone before nav reaches
+    var tProgress = Math.max(0, Math.min(1, scrollY / 650));
+    if (bannerText) bannerText.style.opacity = 1 - easeOut(tProgress);
+    ticking = false;
+  }
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(updateBannerFade);
+      ticking = true;
+    }
+  });
+  // Smooth wheel scroll
+  document.addEventListener('wheel', function(e) {
+    var delta = e.deltaY;
+    var start = window.scrollY;
+    var target = start + delta * 1.2;
+    var duration = 250;
+    var startTime = null;
+    function ease(t) { return t * (2 - t); }
+    function animate(time) {
+      if (!startTime) startTime = time;
+      var elapsed = time - startTime;
+      var progress = Math.min(1, elapsed / duration);
+      window.scrollTo(0, start + (target - start) * ease(progress));
+      if (progress < 1) requestAnimationFrame(animate);
+    }
+    e.preventDefault();
+    requestAnimationFrame(animate);
+  }, {passive: false});
+  // Double font size for all content text (excluding hero banner and footer)
+  var tabContent = document.querySelector('.tab-stage');
+  if (tabContent) {
+    var all = tabContent.querySelectorAll('*');
+    for (var i = 0; i < all.length; i++) {
+      // Skip elements inside footer
+      if (all[i].closest('[style*="border-top"]')) continue;
+      var fs = parseFloat(getComputedStyle(all[i]).fontSize);
+      if (fs > 0 && !isNaN(fs)) {
+        all[i].style.fontSize = (fs * 1.3) + 'px';
+      }
+    }
+  }
+  var origToggle = window.toggleTheme;
+  if (origToggle) {
+    var _origToggle = toggleTheme;
+    toggleTheme = function() {
+      _origToggle();
+      setTimeout(renderSponsors, 50);
+    };
+  }
+})();
 </script>
-<script src="js/common.js"></script>
-
 </body>
 </html>

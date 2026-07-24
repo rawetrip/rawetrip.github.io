@@ -8,7 +8,8 @@ compatibility_date = "2026-06-30"
 workers_dev = true
 
 routes = [
-  { pattern = "jbbfilm.xyz/api/*", zone_name = "jbbfilm.xyz" }
+  { pattern = "jbbfilm.xyz/api*", zone_name = "jbbfilm.xyz" },
+  { pattern = "edit.jbbfilm.xyz/*", zone_name = "jbbfilm.xyz" }
 ]
 
 [observability]
