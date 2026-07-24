@@ -20,7 +20,7 @@ function renderTeam() {
   var h = '';
   for (var i = 0; i < teamData.length; i++) {
     var d = teamData[i];
-    h += '<div class="team-card" onclick="location.href=\'bio/' + d.name.toLowerCase().replace(/ /g,'-') + '.html\'">';
+    h += '<div class="team-card" data-href="bio/' + d.name.toLowerCase().replace(/ /g,'-') + '.html' + '">';
     h += '<div class="tc-avatar"><img src="' + d.img + '" alt="' + d.name + '" loading="lazy"></div>';
     h += '<div class="tc-name">' + d.name + '</div>';
     h += '<div class="tc-role">' + d.role + '</div>';
@@ -195,6 +195,15 @@ function openPanel(id) {
     e.preventDefault();
     requestAnimationFrame(animate);
   }, {passive: false});
+  // Click delegation for cards (CSP blocks inline onclick)
+  document.addEventListener('click', function(e) {
+    var card = e.target.closest('.team-card,.content-card');
+    if (!card) return;
+    var href = card.getAttribute('data-href');
+    var video = card.getAttribute('data-video');
+    if (video) openVideo(video);
+    else if (href) location.href = href;
+  });
   var origToggle = window.toggleTheme;
   if (origToggle) {
     var _origToggle = toggleTheme;
