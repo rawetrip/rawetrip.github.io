@@ -46,6 +46,19 @@ function fadeInMusic() {
   }, 50);
 }
 
+function _onVideoReady() {
+  var v = document.getElementById('modalVideo');
+  var sp = document.getElementById('videoSpinner');
+  if (!v || !sp) return;
+  sp.style.display = 'none';
+  v.style.display = 'block';
+  v.play().catch(function(){});
+  // Clean up listeners to avoid duplicate calls
+  v.removeEventListener('canplay', _onVideoReady);
+  v.removeEventListener('loadeddata', _onVideoReady);
+  v.removeEventListener('playing', _onVideoReady);
+}
+
 function openVideo(src, title, desc) {
   var ov = document.getElementById('videoOverlay');
   var v = document.getElementById('modalVideo');
@@ -57,10 +70,32 @@ function openVideo(src, title, desc) {
     tx.querySelector('.vt-title').textContent = title || '';
     tx.querySelector('.vt-desc').textContent = desc || '';
   }
+  // 移除旧监听器防止重复绑定
+  v.removeEventListener('canplay', _onVideoReady);
+  v.removeEventListener('loadeddata', _onVideoReady);
+  v.removeEventListener('playing', _onVideoReady);
+  // 添加多事件兜底
+  v.addEventListener('canplay', _onVideoReady);
+  v.addEventListener('loadeddata', _onVideoReady);
+  v.addEventListener('playing', _onVideoReady);
   sp.style.display = 'block';
-  v.style.display = 'none';
+  v.style.display = 'block';
   v.src = src;
+  // 强制浏览器开始加载
+  v.load();
   ov.classList.add('active');
+  // 超时兜底：5秒后强制隐藏 spinner
+  if (v._spinnerTimer) clearTimeout(v._spinnerTimer);
+  v._spinnerTimer = setTimeout(function() {
+    if (sp.style.display !== 'none') {
+      sp.style.display = 'none';
+      v.style.display = 'block';
+      v.play().catch(function(){});
+      v.removeEventListener('canplay', _onVideoReady);
+      v.removeEventListener('loadeddata', _onVideoReady);
+      v.removeEventListener('playing', _onVideoReady);
+    }
+  }, 5000);
   fadeOutMusic();
 }
 
