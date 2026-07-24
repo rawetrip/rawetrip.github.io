@@ -19,11 +19,12 @@ img{max-width:100%;height:auto}video{max-width:100%}
   --portal-card-hover: rgba(255,255,255,.08);
 }
 
+html{background:var(--bg)}
 /* ── Portal Layout ── */
 .portal-wrap {
   max-width: var(--portal-w);
   margin: 0 auto;
-  padding: 8px 20px 40px;
+  padding: 8px 20px 0;
 }
 
 /* ── Spacer ── */
