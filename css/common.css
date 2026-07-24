@@ -247,7 +247,7 @@ sup a:hover{text-decoration:underline}
   flex-wrap: wrap;
   max-width: 1706px;
   margin: 16px auto 0;
-  background: var(--paper);
+  background: var(--bg);
   box-shadow: 0 2px 12px rgba(0,0,0,.08);
   position: sticky;
   top: 60px;
