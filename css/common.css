@@ -305,3 +305,5 @@ sup a:hover{text-decoration:underline}
   .portal-nav .portal-nav-search input { width: 140px; }
   .portal-nav .portal-nav-search input:focus { width: 180px; }
 }
+/* ── Bio note list ── */
+.notelist ol{margin-left:20px}.notelist li{margin:4px 0}
