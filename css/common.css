@@ -233,75 +233,8 @@ sup a:hover{text-decoration:underline}
 .cl-filter:hover{background:var(--infobox-header)}
 .cl-filter.active{background:var(--link)!important;color:#fff!important;border-color:var(--link)!important}
 @media(max-width:768px){.cl-version{padding-left:24px}.cl-ver-title{font-size:16px}}
+/* ── Bio Pages ── */
+.bio-intro{font-size:15px;line-height:1.8;margin-bottom:16px}
+.bio-notebox{text-align:center;margin:16px 0;padding:12px;background:var(--infobox-bg);border:1px solid var(--border-light);border-radius:4px;font-size:13px}
+.notelist{margin:16px 0;font-size:12px;color:var(--text2)}.notelist ol{margin-left:20px}.notelist li{margin:4px 0}
 @media print{#topbar,#sidebar,#backTop,.video-overlay,.mwe-popups,.search-dropdown,.toast-container,audio{display:none!important}#layout{display:block}#main{padding:0;max-width:100%}.infobox{float:right}.cl-toolbar{display:none}a{color:#000;text-decoration:underline}a[href^="http"]::after{content:" ("attr(href)")";font-size:.8em;color:#666}}
-
-/* ═══════════════════════════════════════════
-   Portal Navigation — Shared across all pages
-   ═══════════════════════════════════════════ */
-.portal-nav {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 10px 20px;
-  border: 2px solid var(--border);
-  flex-wrap: wrap;
-  max-width: 1706px;
-  margin: 16px auto 0;
-  background: var(--paper);
-  box-shadow: 0 2px 12px rgba(0,0,0,.08);
-  position: sticky;
-  top: 60px;
-  z-index: 100;
-}
-.portal-nav a {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  font-size: 13px;
-  color: var(--text2);
-  text-decoration: none;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  transition: all .2s;
-  font-family: "MiSans Medium", "MiSans", sans-serif;
-}
-.portal-nav a:hover {
-  color: var(--link);
-  background: var(--portal-card-bg, rgba(255,255,255,.04));
-}
-.portal-nav a.active {
-  color: var(--link);
-  border-bottom-color: var(--link);
-  font-weight: 600;
-}
-.portal-nav .portal-nav-search {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-.portal-nav .portal-nav-search input {
-  padding: 5px 12px;
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  background: var(--paper);
-  color: var(--text);
-  font-size: 12px;
-  font-family: inherit;
-  outline: none;
-  width: 200px;
-  transition: border-color .2s, width .2s;
-}
-.portal-nav .portal-nav-search input:focus {
-  border-color: var(--link);
-  width: 260px;
-}
-.portal-nav-spacer {
-  height: 12px;
-}
-@media (max-width: 768px) {
-  .portal-nav a { padding: 5px 8px; font-size: 12px; }
-  .portal-nav .portal-nav-search input { width: 140px; }
-  .portal-nav .portal-nav-search input:focus { width: 180px; }
-}
