@@ -195,22 +195,6 @@ function openPanel(id) {
     e.preventDefault();
     requestAnimationFrame(animate);
   }, {passive: false});
-  // Double font size for all content text (excluding hero banner and footer)
-  // Skip non-text elements
-  var skipTags = {'IMG':1,'VIDEO':1,'SVG':1,'INPUT':1,'TEXTAREA':1,'BUTTON':1,'BR':1,'HR':1,'SOURCE':1};
-  var tabContent = document.querySelector('.tab-stage');
-  if (tabContent) {
-    var all = tabContent.querySelectorAll('*');
-    for (var i = 0; i < all.length; i++) {
-      if (skipTags[all[i].tagName]) continue;
-      // Skip elements inside footer
-      if (all[i].closest('[style*="border-top"]')) continue;
-      var fs = parseFloat(getComputedStyle(all[i]).fontSize);
-      if (fs > 0 && !isNaN(fs)) {
-        all[i].style.fontSize = (fs * 1.3) + 'px';
-      }
-    }
-  }
   var origToggle = window.toggleTheme;
   if (origToggle) {
     var _origToggle = toggleTheme;
