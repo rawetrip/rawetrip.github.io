@@ -1,0 +1,592 @@
+/* ═══════════════════════════════════════════
+   Portal Homepage — Game Wiki Portal
+   ═══════════════════════════════════════════ */
+img{max-width:100%;height:auto}video{max-width:100%}
+:root {
+  --portal-w: 1500px;
+  --portal-gap: 20px;
+  --portal-card-bg: rgba(255,255,255,.04);
+  --portal-card-border: 1px solid rgba(255,255,255,.08);
+  --portal-card-hover: rgba(255,255,255,.08);
+  --portal-radius: 0;
+  --portal-banner-h: 750px;
+  --portal-accent: #6da3f5;
+  --portal-accent2: #a78bdb;
+}
+.dark {
+  --portal-card-bg: rgba(255,255,255,.04);
+  --portal-card-border: 1px solid rgba(255,255,255,.08);
+  --portal-card-hover: rgba(255,255,255,.08);
+}
+
+/* ── Portal Layout ── */
+.portal-wrap {
+  max-width: var(--portal-w);
+  margin: 0 auto;
+  padding: 8px 20px 40px;
+}
+
+/* ── Spacer ── */
+/* .portal-nav-spacer defined in common.css */
+
+/* ── Hero Banner ── */
+.portal-banner {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  height: 780px;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.banner-bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+  filter: brightness(0.5);
+}
+.portal-banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.3);
+  z-index: 0;
+  pointer-events: none;
+}
+.banner-spacer {
+  height: 780px;
+}
+.banner-main {
+  position: relative;
+  height: 650px;
+  padding: 30px 40px 36px;
+  max-width: 1550px;
+  margin: 74px auto 0;
+  inset: 0;
+  background: rgba(0,0,0,.3);
+  z-index: 0;
+  pointer-events: none;
+}
+.banner-main h1,
+.banner-main .banner-tagline {
+  position: relative;
+  z-index: 1;
+}
+.banner-main h1,
+.banner-main .banner-tagline {
+  position: relative;
+  z-index: 1;
+}
+.banner-main h1 {
+  font-family: "MiSans Heavy", "MiSans", sans-serif;
+  font-size: 5.2rem;
+  margin: 0 0 16px;
+  color: var(--text);
+  line-height: 1.15;
+}
+.banner-main .banner-tagline {
+  font-size: 1.47rem;
+  color: var(--text2);
+  margin-bottom: 22px;
+  white-space: nowrap;
+  line-height: 1.6;
+}
+.banner-main .banner-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.banner-main .banner-actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--portal-accent);
+  text-decoration: none;
+  transition: all .2s;
+  border: none;
+}
+.banner-main .banner-actions a:hover {
+  background: #5b8ee0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(109,163,245,.35);
+}
+.banner-main .banner-actions a.sec {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.banner-main .banner-actions a.sec:hover {
+  background: var(--portal-card-bg);
+  border-color: var(--link);
+  color: var(--link);
+  box-shadow: none;
+}
+/* ── News Ticker (Vertical) ── */
+.banner-ticker {
+  margin-top: 0;
+  margin-bottom: 24px;
+  overflow: hidden;
+  background: rgba(109,163,245,.08);
+  border-left: 3px solid var(--portal-accent);
+  height: 36px;
+  position: relative;
+}
+.banner-ticker-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.ticker-item {
+  position: absolute;
+  left: 14px;
+  right: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: var(--text2);
+  white-space: nowrap;
+  transform: translateY(100%);
+  opacity: 0;
+}
+@keyframes tickerScroll {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* ── Section Headers ── */
+.portal-section {
+  margin-bottom: 28px;
+}
+.portal-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-light);
+}
+.portal-section-header h2 {
+  font-family: "MiSans Bold", "MiSans", sans-serif;
+  font-size: 18px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+}
+.portal-section-header h2 .icon {
+  font-size: 20px;
+}
+.portal-section-header a {
+  font-size: 12px;
+  color: var(--text2);
+  text-decoration: none;
+  transition: color .2s;
+}
+.portal-section-header a:hover {
+  color: var(--link);
+}
+
+/* ── Category Cards Grid ── */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.cat-card {
+  background: var(--portal-card-bg);
+  border: var(--portal-card-border);
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: all .25s;
+  position: relative;
+  overflow: hidden;
+}
+.cat-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--portal-accent);
+  opacity: 0;
+  transition: opacity .25s;
+}
+.cat-card:hover {
+  background: var(--portal-card-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0,0,0,.25);
+}
+.cat-card:hover::after {
+  opacity: 1;
+}
+.cat-card .cat-icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+  line-height: 1;
+}
+.cat-card .cat-title {
+  font-family: "MiSans Bold", "MiSans", sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.cat-card .cat-desc {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+/* ── Content Area (2-col) ── */
+.content-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--portal-gap);
+}
+.content-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.content-card {
+  display: flex;
+  gap: 14px;
+  background: var(--portal-card-bg);
+  border: var(--portal-card-border);
+  padding: 14px;
+  transition: all .2s;
+  cursor: pointer;
+}
+.content-card:hover {
+  background: var(--portal-card-hover);
+  transform: translateX(4px);
+}
+.content-card .cc-thumb {
+  width: 120px;
+  min-height: 68px;
+  flex-shrink: 0;
+  background: var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  overflow: hidden;
+}
+.content-card .cc-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.content-card .cc-body {
+  flex: 1;
+  min-width: 0;
+}
+.content-card .cc-title {
+  font-family: "MiSans Bold", "MiSans", sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 2px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.content-card .cc-meta {
+  font-size: 11px;
+  color: var(--text2);
+  display: flex;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.content-card .cc-desc {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Featured card (large) */
+.content-card.featured {
+  flex-direction: column;
+  padding: 0;
+}
+.content-card.featured .cc-thumb {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+}
+.content-card.featured .cc-body {
+  padding: 14px;
+}
+
+/* ── Team Grid ── */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.team-card {
+  background: var(--portal-card-bg);
+  border: var(--portal-card-border);
+  padding: 24px 16px 20px;
+  text-align: center;
+  transition: all .25s;
+  cursor: pointer;
+}
+.team-card:hover {
+  background: var(--portal-card-hover);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(0,0,0,.3);
+}
+.team-card .tc-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+  overflow: hidden;
+  border: 2px solid var(--border);
+  transition: all .3s;
+}
+.team-card:hover .tc-avatar {
+  border-color: var(--portal-accent);
+  transform: scale(1.08);
+}
+.team-card .tc-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.team-card .tc-name {
+  font-family: "MiSans Bold", "MiSans", sans-serif;
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.team-card .tc-role {
+  font-size: 12px;
+  color: var(--portal-accent);
+  margin-bottom: 6px;
+}
+.team-card .tc-desc {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Info Box (Wiki style) ── */
+.info-box-wrap {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--portal-gap);
+  margin-bottom: 28px;
+}
+.portal-infobox {
+  background: var(--portal-card-bg);
+  border: 2px solid var(--border);
+  padding: 0;
+}
+.portal-infobox .ib-header {
+  background: var(--infobox-header);
+  padding: 10px 16px;
+  font-family: "MiSans Bold", "MiSans", sans-serif;
+  font-size: 15px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.portal-infobox .ib-img {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-light);
+}
+.portal-infobox .ib-img img {
+  max-width: 100%;
+  height: auto;
+}
+.portal-infobox .ib-row {
+  display: flex;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 13px;
+}
+.portal-infobox .ib-row:last-child {
+  border-bottom: none;
+}
+.portal-infobox .ib-label {
+  width: 90px;
+  flex-shrink: 0;
+  padding: 8px 12px;
+  color: var(--text2);
+  font-weight: 600;
+  background: var(--infobox-bg);
+}
+.portal-infobox .ib-value {
+  flex: 1;
+  padding: 8px 12px;
+  color: var(--text);
+  word-break: break-all;
+}
+.portal-infobox .ib-value a {
+  color: var(--link);
+}
+
+/* ── Sponsors ── */
+.sponsor-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.sponsor-bar .sp-item {
+  background: var(--portal-card-bg);
+  border: var(--portal-card-border);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 72px;
+  transition: all .2s;
+}
+.sponsor-bar .sp-item:hover {
+  background: var(--portal-card-hover);
+  transform: translateY(-2px);
+}
+.sponsor-bar .sp-item img {
+  max-width: 85%;
+  max-height: 48px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: .7;
+  transition: opacity .2s;
+}
+.sponsor-bar .sp-item:hover img {
+  opacity: 1;
+}
+
+/* ── Contact / Feedback ── */
+.contact-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--portal-gap);
+  margin-bottom: 20px;
+}
+.contact-split .contact-form {
+  background: var(--portal-card-bg);
+  border: var(--portal-card-border);
+  padding: 20px;
+}
+.contact-split .contact-form h3 {
+  font-family: "MiSans Bold", "MiSans", sans-serif;
+  font-size: 15px;
+  margin: 0 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+}
+.contact-split .contact-form input,
+.contact-split .contact-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  background: var(--paper);
+  color: var(--text);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color .2s;
+}
+.contact-split .contact-form input:focus,
+.contact-split .contact-form textarea:focus {
+  border-color: var(--link);
+}
+.contact-split .contact-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+.contact-split .contact-form button {
+  padding: 10px 24px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--portal-accent);
+  border: none;
+  cursor: pointer;
+  transition: all .2s;
+  font-family: inherit;
+}
+.contact-split .contact-form button:hover {
+  background: #5b8ee0;
+  transform: translateY(-1px);
+}
+
+/* ── Responsive ── */
+/* ── Page View (Slide) ── */
+/* ── Tab Stage ── */
+.tab-stage-wrap {
+  overflow: hidden;
+  position: relative;
+  padding-top: 16px;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+.tab-stage {
+  display: flex;
+  transition: transform .45s cubic-bezier(.22,.61,.36,1);
+  position: relative;
+  z-index: 1;
+}
+.tab-content {
+  flex: 0 0 100%;
+  max-width: 100%;
+  padding-top: 25px;
+}
+.tab-content.tab-active {
+  display: block;
+}
+/* Fallback: hide non-active tabs when JS hasn't run yet */
+.tab-stage:not(.tab-ready) .tab-content:not(.tab-active) {
+  display: none;
+}
+
+@media (max-width: 1200px) {
+  .cat-grid { grid-template-columns: repeat(3, 1fr); }
+  .team-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px) {
+  .info-box-wrap { grid-template-columns: 1fr; }
+  .content-2col { grid-template-columns: 1fr; }
+  .contact-split { grid-template-columns: 1fr; }
+  .cat-grid { grid-template-columns: repeat(2, 1fr); }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .banner-main h1 { font-size: 2rem; }
+}
+@media (max-width: 600px) {
+  .cat-grid { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr; }
+  .banner-main { padding: 24px 20px; }
+  .banner-main h1 { font-size: 1.6rem; }
+}
+</style>
