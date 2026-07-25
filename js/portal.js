@@ -154,47 +154,6 @@ function openPanel(id) {
 (function(){
   renderTeam();
   renderSponsors();
-  // Banner fade on scroll - video fades faster than text
-  var banner = document.querySelector('.portal-banner');
-  var bannerVideo = document.querySelector('.banner-bg-video');
-  var bannerText = document.querySelector('.banner-main');
-  var ticking = false;
-  function easeOut(t) { return t * (2 - t); }
-  function updateBannerFade() {
-    if (!banner) return;
-    var scrollY = window.pageYOffset || document.documentElement.scrollTop;
-    // Video fades fast (over 400px)
-    var vProgress = Math.max(0, Math.min(1, scrollY / 350));
-    if (bannerVideo) bannerVideo.style.opacity = 1 - easeOut(vProgress);
-    // Text fades slower (over 700px), gone before nav reaches
-    var tProgress = Math.max(0, Math.min(1, scrollY / 650));
-    if (bannerText) bannerText.style.opacity = 1 - easeOut(tProgress);
-    ticking = false;
-  }
-  window.addEventListener('scroll', function() {
-    if (!ticking) {
-      requestAnimationFrame(updateBannerFade);
-      ticking = true;
-    }
-  });
-  // Smooth wheel scroll
-  document.addEventListener('wheel', function(e) {
-    var delta = e.deltaY;
-    var start = window.scrollY;
-    var target = start + delta * 1.2;
-    var duration = 250;
-    var startTime = null;
-    function ease(t) { return t * (2 - t); }
-    function animate(time) {
-      if (!startTime) startTime = time;
-      var elapsed = time - startTime;
-      var progress = Math.min(1, elapsed / duration);
-      window.scrollTo(0, start + (target - start) * ease(progress));
-      if (progress < 1) requestAnimationFrame(animate);
-    }
-    e.preventDefault();
-    requestAnimationFrame(animate);
-  }, {passive: false});
   // Click delegation for cards (CSP blocks inline onclick)
   document.addEventListener('click', function(e) {
     var card = e.target.closest('.team-card,.content-card');
